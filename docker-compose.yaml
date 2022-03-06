@@ -29,8 +29,8 @@ services:
       - "8080:8080"
     tty: true
     stdin_open: true
-    command: npm run serve
-
+    command: npm run start
+    # command: npm run start
 volumes:
   mysql_data:
   bundle:
