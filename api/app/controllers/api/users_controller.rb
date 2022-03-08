@@ -1,4 +1,7 @@
 class Api::UsersController < ApplicationController
+  def index
+    cookies[:user_id] = 2
+  end
   def create
     user = User.new(user_params)
     user.save!

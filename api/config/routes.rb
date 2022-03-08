@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   # root 'home#index'
   namespace :api do
-    resources :users, only: %i[create]
+    resources :users
     resource :session, only: %i[create destroy]
   end
 end

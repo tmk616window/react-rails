@@ -97,6 +97,7 @@ GEM
     nokogiri (1.13.3)
       mini_portile2 (~> 2.8.0)
       racc (~> 1.4)
+    openssl (3.0.0)
     puma (4.3.11)
       nio4r (~> 2.0)
     racc (1.6.0)
@@ -166,6 +167,7 @@ DEPENDENCIES
   jwt
   listen (~> 3.2)
   mysql2 (>= 0.4.4)
+  openssl
   puma (~> 4.1)
   rack-cors
   rails (~> 6.0.4, >= 6.0.4.6)
