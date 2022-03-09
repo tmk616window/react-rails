@@ -1,3 +1,9 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  # root 'home#index'
+  namespace :api do
+    resource :user, only: [:show, :create]
+    get  "users"  => "users#index"
+    resource :session, only: %i[create destroy]
+  end
+  
 end
