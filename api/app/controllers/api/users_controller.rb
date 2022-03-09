@@ -1,18 +1,16 @@
 class Api::UsersController < ApplicationController
-  def index
-    cookies[:user_id] = 3
-  end
-
+  before_action :authenticate_with_token, only: :show
+  
   def show
-    user = authenticate_user_with_token!(cookies[:token])
+    user = authenticate_user_token(cookies[:token])
     if user.nil?
       render json: { message: 'unauthorized' }, status: :unauthorized
     else
       render json: {
         user: {
-          id: user.id,
-          name: user.name,
-          emai: user.email
+          id: current_user.id,
+          name: current_user.name,
+          emai: current_user.email
         }
       }, status: :ok
     end
@@ -32,7 +30,6 @@ class Api::UsersController < ApplicationController
 end
 
 # テスト用
-# curl -i -b 'token=eyJhbGciOiJSUzI1NiJ9.eyJuYW1lIjoidXNlcjIiLCJpZCI6MiwiZXhwIjoxNjQ4MDUxMzAwfQ.CPINKsFZOF0aYK5cu9NizMnMHCbAep_GuaCSx2YDVzBgidsUNvxPxTWHK2MlGWJx4RfPLtZ6dzT5qNwTLPI6LMet_TBzy6RZhi0TGPMlJ-GXNbMrluifLeMApd6CcfNenFaDollLcc2tdTS2B7MOmHlLVpI8geW4w96En51vp-aPZRvO-c8PjQOS36uk7dn8b3SuTmCU3ZOjxjHuQAe8_VWiZmQkgKQVeIkAv5_aYOio31aXHYnfl_KMfxmzJzPqXDhTlzTltbT-8VrywCgX0R194szrQTaNVcTeHIuSrLNX7rGpegksVbys1NJ9EL46AliBbkTNa3XcTPDNRg' http://localhost:3000/api/user
-
+# curl -i -b 'token=eyJhbGciOiJSUzI1NiJ9.eyJuYW1lIjoidXNlcjIiLCJpZCI6MiwiZXhwIjoxNjQ4MDUzNTM3fQ.ECGiD83GFjkxJU92SkzrXqv1hVQgp3CjBAP4ZNf_QVGOnGESXF4ZoPuM621HnH9U_j6S0JZfSc4NWcNtI5aoI9YPfTJxv99IyY_Sv9WHx11MXycSG8ZBtFZzRWeMsKxPXyY_5RswlTZhjvkLvGRghB0QuGKp7GQ1OWC7TMcjSkEhMteU734wFEx3VGObrSlV5J8uruIflULtpklOfVzR0yFA3_DU4kFNeOhfOe3FI88J_JyIox3nlTwKKwwzB6uSERwf-AoY5UBKqwMJr_U6sBfUePt88Rba1gllYxaGR6_WHiKJwk6ASZrbSPUOWuUBOdiB8s3RXAC4Yo-cbg' http://localhost:3000/api/user
 # curl -i  -X POST -H "Content-Type: application/json" -d '{"user":{"name": user3, "email" : "user3", "password" : "user3", "password_confirmation": "user3" }}' localhost:3000/api/user
 # curl -i  -X POST -H "Content-Type: application/json" -d '{"session":{ "email" : "user2", "password" : "user2" }}' localhost:3000/api/session
