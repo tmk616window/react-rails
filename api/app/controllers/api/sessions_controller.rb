@@ -12,19 +12,10 @@ class Api::SessionsController < ApplicationController
 
       # JWTの作成
       token = JWT.encode(payload, rsa_private, "RS256")
-      puts "成功"
-      puts "成功"
-      puts "成功"
-      puts "成功"
-      puts "成功"
-      puts "成功"
-      puts "成功"
-      puts token
       # JWTをCookieにセット
       cookies[:token] = token
-      cookies[:user_name] = "david"  
-      render status: :created
-			# render json: { id:2, token: token, age: 22 }
+      # render status: :created
+			render json: {token: token}
     else
 			a = { id:2, nickname: "失敗", age: 22 }
 			render json: a
