@@ -1,29 +1,10 @@
 class Api::UsersController < ApplicationController
   def index
-    cookies[:user_id] = 2
+    cookies[:user_id] = 3
   end
 
   def show
-    # CookieからJWTを取得
-    token = cookies[:token]
-
-    # 秘密鍵の取得
-    rsa_private = OpenSSL::PKey::RSA.new(File.read(Rails.root.join('auth/service.key')))
-
-    # JWTのデコード。JWTからペイロードが取得できない場合は認証エラーにする
-    begin
-      decoded_token = JWT.decode(token, rsa_private, true, { algorithm: 'RS256' })
-    rescue JWT::DecodeError, JWT::ExpiredSignature, JWT::VerificationError
-      return render json: { message: 'unauthorized' }, status: :unauthorized
-    end
-
-    # subクレームからユーザーIDを取得
-    user_id = decoded_token.first["id"]
-
-    # ユーザーを検索
-    user = User.find(user_id)
-
-    # userが取得できた場合はユーザー情報を返す、取得できない場合は認証エラー
+    user = authenticate_user_with_token!(cookies[:token])
     if user.nil?
       render json: { message: 'unauthorized' }, status: :unauthorized
     else
@@ -46,10 +27,12 @@ class Api::UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:name, :email, :password, :password_confirmation)
+    params.permit(:name, :email, :password, :password_confirmation)
   end
 end
 
 # テスト用
-# curl -b 'token=eyJhbGciOiJSUzI1NiJ9.eyJuYW1lIjoidXNlcjIiLCJpZCI6MiwiZXhwIjoxNjQ4MDQxNDIwfQ.kMjA4pfLpt1LkMwgjBmjd_1X7w6GSIBAygB_ohK0ipOZYKRqEEoFspsxd4Jk_MGN7PfGChhnyJ1tERDkJthWzFYNkBYrNPIki2Xg2CBF2rpBPOjMuwDoXBQfUIim_Ns2u-7c8TA97I1zPi8pRBshxYE-8zyh2AUqtKbxPGtlV8TCMLflgn0EYl8j13Mqoh2sy2ArZdKqEbAilGmruMkGgMWqMWgYKftdgS6dZgDtI3EewcLa65YizCZ3ESNQSvJO_0AAchJXNnmI4QrLcjRwdFBIJgnSAQjhYqeHE7by8KCLCp916ki_jAAyNxU1wrBfTUr45mA3gwhNRtQNG8GeIQ' http://localhost:3001/api/user
+# curl -i -b 'token=eyJhbGciOiJSUzI1NiJ9.eyJuYW1lIjoidXNlcjIiLCJpZCI6MiwiZXhwIjoxNjQ4MDUxMzAwfQ.CPINKsFZOF0aYK5cu9NizMnMHCbAep_GuaCSx2YDVzBgidsUNvxPxTWHK2MlGWJx4RfPLtZ6dzT5qNwTLPI6LMet_TBzy6RZhi0TGPMlJ-GXNbMrluifLeMApd6CcfNenFaDollLcc2tdTS2B7MOmHlLVpI8geW4w96En51vp-aPZRvO-c8PjQOS36uk7dn8b3SuTmCU3ZOjxjHuQAe8_VWiZmQkgKQVeIkAv5_aYOio31aXHYnfl_KMfxmzJzPqXDhTlzTltbT-8VrywCgX0R194szrQTaNVcTeHIuSrLNX7rGpegksVbys1NJ9EL46AliBbkTNa3XcTPDNRg' http://localhost:3000/api/user
 
+# curl -i  -X POST -H "Content-Type: application/json" -d '{"user":{"name": user3, "email" : "user3", "password" : "user3", "password_confirmation": "user3" }}' localhost:3000/api/user
+# curl -i  -X POST -H "Content-Type: application/json" -d '{"session":{ "email" : "user2", "password" : "user2" }}' localhost:3000/api/session
