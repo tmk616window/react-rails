@@ -1,0 +1,9 @@
+class UsersController < ApplicationController
+  def index
+    cookies[:user_id] = 2
+  end
+end
+
+# テスト用
+# curl -b 'token=eyJhbGciOiJSUzI1NiJ9.eyJuYW1lIjoidXNlcjIiLCJpZCI6MiwiZXhwIjoxNjQ4MDQ1NTc3fQ.WwH3mo25PN8-kejtRzNXeSg-y8yC8CDCTETSRVKJvCqnf403MEBnVtMVX87giIxG4b9X55tnukb65qv6WA9Xd6-D26tPavSMQuh2G9IxEM6azDtxYwfNHyF1oEwJEBH2LPP5twwia-9Y3RAaF_VCE2lsjnD7mAL_XvWJjvQLtYWCxphvwrZiMIAJe9Ts_FbXPyOzdtAoVrwALTjDbK4vv4SWlWL2VK7uWlJnVWv5kzDvFz6JerFqws9uv-l1z6QudJZG_GnhgQlP7VDYu-0VTgSfhLClwjXvuOB6cMO1r3IGlCcht_REOlKPV0WvZfStqeXaLLTaiR1ADPjPEw' http://localhost:3000/api/user
+

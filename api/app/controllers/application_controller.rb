@@ -23,7 +23,6 @@ class ApplicationController < ActionController::API
       raise AuthenticationError
     end
     user_id = decoded_token.first["id"]
-    puts decoded_token
     user = User.find(user_id)
     raise AuthenticationError if user.nil?
 

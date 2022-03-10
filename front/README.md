@@ -1,40 +1,34 @@
-## Minimal [(Free version)](https://minimal-kit-react.vercel.app/)
+This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-![license](https://img.shields.io/badge/license-MIT-blue.svg)
+## Getting Started
 
-> Free React Admin Dashboard made with Material-UI components and React.
+First, run the development server:
 
-![preview](public/static/preview.png)
+```bash
+npm run dev
+# or
+yarn dev
+```
 
-| [Minimal Free](https://minimal-kit-react.vercel.app/) | [Minimal](https://material-ui.com/store/items/minimal-dashboard/) |
-| ----------------------------------------------------- | :---------------------------------------------------------------- |
-| **7** Demo pages                                      | **42+** demo pages                                                |
-| -                                                     | ✓ Multi-language                                                  |
-| -                                                     | ✓ Dark/Light Mode 🌓                                              |
-| -                                                     | ✓ [More components](https://minimals.cc/components)               |
-| -                                                     | ✓ TypeScript version                                              |
-| -                                                     | ✓ Design files (Figma & Sketch)                                   |
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-## Page demo
+You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
 
-- [Dashboard](https://minimal-kit-react.vercel.app/dashboard/app)
-- [Users](https://minimal-kit-react.vercel.app/dashboard/user)
-- [Product](https://minimal-kit-react.vercel.app/dashboard/products)
-- [Blog](https://minimal-kit-react.vercel.app/dashboard/blog)
-- [Login](https://minimal-kit-react.vercel.app/login)
-- [Register](https://minimal-kit-react.vercel.app/register)
-- [Not Found](https://minimal-kit-react.vercel.app/404)
+[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
 
-## Getting started
+The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
 
-- Recommended `node js 14+` and `npm 6+`
-- Install dependencies: `npm install` or `yarn install`
-- Start the server: `npm run start` or `yarn start`
+## Learn More
 
-## License
+To learn more about Next.js, take a look at the following resources:
 
-Distributed under the MIT License. See [LICENSE](https://github.com/minimal-ui-kit/minimal.free/blob/main/LICENSE.md) for more information.
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-## Contact us
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
-Email Us: support@minimals.cc
+## Deploy on Vercel
+
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.

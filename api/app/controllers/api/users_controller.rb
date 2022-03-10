@@ -18,8 +18,13 @@ class Api::UsersController < ApplicationController
 
   def create
     user = User.new(user_params)
-    user.save!
-    # render json: user, serializer: UserSerializer
+    if user.save
+      token = get_token(user_params[:email], user_params[:password])
+      cookies[:token] = token
+      render json: { token: token} 
+    else
+      render json: { errors: "保存できませんでした"} 
+    end
   end
 
   private

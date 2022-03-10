@@ -1,12 +1,12 @@
 class Api::SessionsController < ApplicationController
-  def create   
+  def create
     token = get_token(session_params[:email], session_params[:password])
     cookies[:token] = token
-    render status: :created
+    render json: { token: token} 
   end
 
   def destroy
-
+    cookies.delete :token
   end
   private
   
