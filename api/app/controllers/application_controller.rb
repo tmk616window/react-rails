@@ -68,14 +68,4 @@ class ApplicationController < ActionController::API
   def access_token
     token_and_options(request)&.first
   end
-
-  # protected
-  # def authenticate(email, password)
-  #   authenticate_or_request_with_http_token do |token, options|
-  #     token == Cookies[:token]
-        # token == access_token
-  #   end
-  # end
-
-
 end

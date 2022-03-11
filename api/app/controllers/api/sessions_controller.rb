@@ -1,4 +1,5 @@
 class Api::SessionsController < ApplicationController
+  before_action :authenticate_with_token, except: :create
   def create
     token = get_token(session_params[:email], session_params[:password])
     cookies[:token] = token
