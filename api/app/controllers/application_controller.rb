@@ -1,11 +1,16 @@
 class ApplicationController < ActionController::API
 	include ActionController::Cookies
   class AuthenticationError < StandardError; end
-  
+  include ActionController::HttpAuthentication::Token::ControllerMethods
+  include ActionController::HttpAuthentication::Token
+
+
 	rescue_from AuthenticationError, with: :render_unauthorized_error
 
-	def render_unauthorized_error
-	  render json: { message: 'unauthorized' }, status: :unauthorized
+  def render_unauthorized_error
+    if @current_user.nil?
+      render json: { message: 'unauthorized' }, status: :unauthorized
+    end
 	end
 
   def authenticate_user_password(email, password)
@@ -50,12 +55,8 @@ class ApplicationController < ActionController::API
     raise AuthenticationError if unauthorized?
   end
 
-  def authenticate_with_token
-    raise AuthenticationError if unauthorized?
-  end
-
   def current_user
-    authenticate_user_token(cookies[:token])
+    @current_user = authenticate_user_token(access_token)
   rescue AuthenticationError
     nil
   end
@@ -63,4 +64,18 @@ class ApplicationController < ActionController::API
   def unauthorized?
     current_user.nil?
   end
+
+  def access_token
+    token_and_options(request)&.first
+  end
+
+  # protected
+  # def authenticate(email, password)
+  #   authenticate_or_request_with_http_token do |token, options|
+  #     token == Cookies[:token]
+        # token == access_token
+  #   end
+  # end
+
+
 end
