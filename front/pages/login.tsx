@@ -7,6 +7,7 @@ import { signIn, gustSignIn } from "../src/api/login/auth";
 import { AuthContext } from "./_app"
 import React, { useContext } from "react"
 import { useRouter } from 'next/router'
+import { setCookie } from 'nookies';
 
 
 import {
@@ -34,10 +35,14 @@ const Login: React.FC = () => {
       console.log(res.data.token)
 
       if (res.status === 200) {
-        Cookies.set("_access_token", res.data.token)    
-        setIsSignedIn(true)
-        setCurrentUser(res.data)
-        router.push({ pathname: '/tasks'})
+        Cookies.set("token", res.data.token)
+        setCookie(null, 'auth', res.data.token, {
+          maxAge: 30 * 24 * 60 * 60, // お好きな期限を
+          path: '/',
+        }); 
+        // setIsSignedIn(true)
+        // setCurrentUser(res.data)
+        router.push({ pathname: '/'})
         console.log("Signed in successfully!")
       }
     } catch (err) {

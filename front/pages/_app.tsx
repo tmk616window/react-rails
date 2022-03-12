@@ -12,6 +12,10 @@ import {execTest} from '../src/api/test'
 import Cookies from "js-cookie"
 import {getTasks} from '../src/api/task/GetTasks'
 import {Task} from '../src/type/interfaces/task'
+import { parseCookies, setCookie } from 'nookies';
+import { NextPageContext } from 'next';
+import Axios from 'axios'
+
 
 export const AuthContext = createContext({} as {
   loading: boolean
@@ -23,159 +27,76 @@ export const AuthContext = createContext({} as {
 })
 
 
-function MyApp({ Component, pageProps }: AppProps) {
-
-  const router = useRouter()
-
-  const [isSignedIn, setIsSignedIn] = useState<boolean>(false)
+const MyApp = ({ Component, pageProps }: AppProps, ctx: NextPageContext) => {
   const [currentUser, setCurrentUser] = useState<User | undefined>()
-  const [loading, setLoading] = useState<boolean>(false)
-  const _access_token = Cookies.get("_access_token")
-  const _client = Cookies.get("_client")
-  const _uid = Cookies.get("_uid")
+  const [isSignedIn, setIsSignedIn] = useState<boolean>(false)
 
-
-
-  const skipAuthPaths = [
-    '/login',
-    '/register',
-    '/top'
-  ]
-
-  const AuthPaths = [
-    '/login',
-    '/register',
-    '/top'
-  ]
-
-  const authPath = async () => {
-
-  }
-
-
-  const isPermitted = isSignedIn || skipAuthPaths.includes(router.asPath)
-
-  // const handleGetCurrentUser = async () => {
-    
-  //   try {
-  //     // const _access_token = Cookies.get("_access_token")
-  //     // const _client = Cookies.get("_client")
-  //     // const _uid = Cookies.get("_uid")
-  //     const _access_token = localStorage.getItem("_access_token")
-  //     const _client = localStorage.getItem("_client")
-  //     const _uid = localStorage.getItem("_uid")
-      
-
-  //     console.log(_access_token,_client, _uid)
-  //     const res = await getCurrentUser(_access_token, _client, _uid)
-  //     console.log(res?.data.currentUser.isLogin)
-
-  //     if (res?.data.currentUser.isLogin === true) {
-  //       setIsSignedIn(true)
-  //       setCurrentUser(res?.data.currentUser.user)
-
-  //       console.log(res?.data.currentUser)
-  //     } else {
-  //       console.log("No current user")
-  //     }
-  //   } catch (err) {
-  //     console.log(err)
-  //   }
-  //   setLoading(false)
-
-  // }
-
-  // useEffect(() => {
-  //   execTest()
-  //   console.log()
-  //   handleGetCurrentUser()
-  // }, [setCurrentUser])
-
-
-
-
-
-
-
-
-
+  const api = Axios.create({
+    baseURL: "http://localhost:3000/",
+    headers: {
+        'Accept': 'application/json',
+        'Authorization': 'Bearer ' + Cookies.get('token'),
+        'Content-Type': 'application/json'
+    }
+});
 
   const handleGetCurrentUser = async () => {
-    
-    try {
-      const _access_token = Cookies.get("_access_token")
-      
-
-
-      if (_access_token) {
-        setIsSignedIn(true)
-        console.log("current user")
-      } else {
-        setIsSignedIn(false)
-        console.log("No current user")
-      }
-    } catch (err) {
-      console.log(err)
-    }
-    setLoading(false)
-
+    api.get('/api/session')
+    .then( (response) => {
+      const{data: getCurrentUser}: any = response
+      console.log(getCurrentUser);
+      setIsSignedIn(true)
+      setCurrentUser(getCurrentUser)  
+    })
+    .catch( (error) => {
+      console.log(error);
+      setIsSignedIn(false)
+      setCurrentUser(undefined)
+      Cookies.set('token', '')
+    })
   }
 
   useEffect(() => {
     handleGetCurrentUser()
-    console.log("isSignedIn", isSignedIn)
-  }, [])
+  }, []);
 
+  const component =
+    typeof pageProps === 'undefined' ? null : <Component {...pageProps} />;
+  return component;
+};
 
+MyApp.getInitialProps = async (appContext: any) => {
+  const cookies = parseCookies(appContext.ctx);
 
-
-  const Private = ({ children }: any) => {
-    if (!loading) {
-      if (isSignedIn) {
-        return children
-      } else {
-        return router.replace('/register') 
-      }
-    } else {
-      return <></>
+  if(cookies.token === '') {
+    if (
+      appContext.ctx.pathname !== '/' &&
+      appContext.ctx.pathname !== '/login' &&
+      appContext.ctx.pathname !== '/register' &&
+      appContext.ctx.pathname !== '/_error'
+    ) {
+      appContext.ctx.res.statusCode = 302;
+      appContext.ctx.res.setHeader('Location', '/login');
+    }
+  } else {
+    if (
+      appContext.ctx.pathname !== '/' &&
+      appContext.ctx.pathname !== '/tasks' &&
+      appContext.ctx.pathname !== '/profile' &&
+      appContext.ctx.pathname !== '/_error'
+    ) {
+      appContext.ctx.res.statusCode = 302;
+      appContext.ctx.res.setHeader('Location', '/');
     }
   }
+  return {
+    pageProps: {
+      ...(appContext.Component.getInitialProps
+        ? await appContext.Component.getInitialProps(appContext.ctx)
+        : {}),
+      pathname: appContext.ctx.pathname,
+    },
+  };
+};
 
-
-
-  return (
-    <div className={"app"}>
-      <AuthContext.Provider value={{ loading, setLoading, isSignedIn, setIsSignedIn, currentUser, setCurrentUser}}>
-      <Navbar/>
-
-      {/* { isPermitted
-            ? <Component {...pageProps} />
-            : <div>unauthorized<br/><br/><br/><br/><br/><br/><br/><br/><div>dwxswcdwcwqdw</div></div>
-        } */}
-
-{/* { isSignedIn && (
-                    <Component {...pageProps} />
-                )}
-{ isSignedIn == false  && (
-                    <div>unauthorized<br/><br/><br/><br/><br/><br/><br/><br/><div>dwxswcdwcwqdw</div></div>
-                )} */}
-
-
-            <Component {...pageProps} />
-
-
-            <br/><br/><br/><br/><br/><br/><br/><br/>
-
-
-      { isSignedIn
-            ? <div>a{isSignedIn}</div>
-            : <div>b{isSignedIn}</div>
-        }
-
-
-            
-      </AuthContext.Provider>
-    </div>
-  )
-}
-export default MyApp
+export default MyApp;

@@ -62,102 +62,96 @@ const ProfilePage =(props:any) => {
   }, [])
 
   return (
-  <>
-    <Box
-      sx={{
-        minHeight: '100%',
-        py: 3
-      }}
-    >
-      <Container maxWidth="lg">
+<>
+  <Box
+    sx={{
+      minHeight: '100%',
+      py: 3
+    }}
+  >
+    <Container maxWidth="lg">
+      <Grid
+        container
+        spacing={3}
+      >
         <Grid
-          container
-          spacing={3}
+          item
+          lg={4}
+          md={6}
+          xs={12}
         >
-          <Grid
-            item
-            lg={4}
-            md={6}
-            xs={12}
-          >
-            <AccountProfile user={user} rooms={rooms}/>
+          <AccountProfile user={user} rooms={rooms}/>
+          <br/>
+          <Card>
+            <CardContent>
+            <h2>投稿したポートフォリオ</h2>
+            <Divider />
             <br/>
-            <Card>
-              <CardContent>
-              <h2>投稿したポートフォリオ</h2>
-              <Divider />
-              <br/>
-                {t.map((task:Task, index:number) =>
-                <div key={index}>
-                    <Link href={{ pathname: '/task', query: { id: task.id } }} >{task.title}</Link>
-                    <br/>
-                </div>
-                )}
-              </CardContent>    
-            </Card>
-          </Grid>
-          <Grid
-            item
-            lg={8}
-            md={6}
-            xs={12}
-          >
-            {edit
-                  ? <EditAccountProfileDetails user={user} userMessage={userMessage} setEdit={setEdit} />
-
-                  
-                    : <AccountProfileDetails user={user} setEdit={setEdit} setUser={setUser}/>
-                }
-            
-            <h2>メッセージ一覧</h2>
-            {(() => {
-                    if (currentId === user.id) {
-                      return (
-                        <>
-            {userMessage.map((message:Message, index:number) =>
-                                <Link href={{ pathname: '/chatroom', query: { id: message.message_id } }} >
-                                      <div key={index} className={classes.customButton}>
-                                      <Card>
-                                      <CardContent>
-                                      <p >{message.text}</p>
-                                      <Box
-                                      sx={{
-                                        display: 'flex',
-                                        justifyContent: 'flex-end',
-                                        p: 2
-                                      }}
-                                      >    
-                                        ユーザー：<Link href={{ pathname: '/profile', query: { id: message.user_id } }}>{message.user.email}</Link>
-                                      </Box>
-                                      
-                                        </CardContent>
-                                      </Card>
-                                      <br/>
-                                    </div>
-                                  </Link>
-                                  )}
-                        </>
-                      )
-                    } 
-                  })()}
-
-
-
-
-          </Grid>
+              {t.map((task:Task, index:number) =>
+              <div key={index}>
+                  <Link href={{ pathname: '/task', query: { id: task.id } }} >{task.title}</Link>
+                  <br/>
+              </div>
+              )}
+            </CardContent>    
+          </Card>
         </Grid>
         <Grid
-            spacing={3}
-            lg={4}
-            md={6}
-            xs={12}
-          >
+          item
+          lg={8}
+          md={6}
+          xs={12}
+        >
+          {edit
+                ? <EditAccountProfileDetails user={user} userMessage={userMessage} setEdit={setEdit} />
 
-
+                
+                  : <AccountProfileDetails user={user} setEdit={setEdit} setUser={setUser}/>
+              }
+          
+          <h2>メッセージ一覧</h2>
+          {(() => {
+                  if (currentId === user.id) {
+                    return (
+                      <>
+          {userMessage.map((message:Message, index:number) =>
+                              <Link href={{ pathname: '/chatroom', query: { id: message.message_id } }} >
+                                    <div key={index} className={classes.customButton}>
+                                    <Card>
+                                    <CardContent>
+                                    <p >{message.text}</p>
+                                    <Box
+                                    sx={{
+                                      display: 'flex',
+                                      justifyContent: 'flex-end',
+                                      p: 2
+                                    }}
+                                    >    
+                                      ユーザー：<Link href={{ pathname: '/profile', query: { id: message.user_id } }}>{message.user.email}</Link>
+                                    </Box>
+                                    
+                                      </CardContent>
+                                    </Card>
+                                    <br/>
+                                  </div>
+                                </Link>
+                                )}
+                      </>
+                    )
+                  } 
+                })()}
         </Grid>
-      </Container>
-    </Box>
-  </>
+      </Grid>
+      <Grid
+          spacing={3}
+          lg={4}
+          md={6}
+          xs={12}
+        >
+      </Grid>
+    </Container>
+  </Box>
+</>
 );
 }
 
