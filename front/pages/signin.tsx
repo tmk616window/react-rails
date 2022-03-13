@@ -31,11 +31,6 @@ const Login = () => {
     axios
       .post('/api/login', payload)
       .then((res) => {
-        // ログインフラグをクッキーへ、「auth」というキーで登録
-        setCookie(null, 'auth', 'true', {
-          maxAge: 30, // お好きな期限を
-          path: '/',
-        });
         router.push('/');
       })
       .catch((e) => {

@@ -2,6 +2,7 @@ import {client} from "../common/client"
 import Cookies from "js-cookie"
 import axios from 'axios'
 import { SignUpParams, SignInParams, currentUser,User, SignIn } from "../../type/interfaces"
+import api from '../../contexts/api'
 
 // サインアップ（新規アカウント作成）
 export const signUp = (params: SignUpParams) => {
@@ -19,8 +20,8 @@ export const gustSignIn = ()  => {
 }
 
 // サインアウト（ログアウト）
-export const signOut = (params:any) => {
-  return axios.delete<{success: boolean}>("https://enjob.work/api/v1/auth/sign_out", {headers: params})  
+export const signOut = () => {
+  return api.delete("/api/session")
 }
 
 // 認証済みのユーザーを取得

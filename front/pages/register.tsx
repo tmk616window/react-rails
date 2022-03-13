@@ -35,7 +35,7 @@ const Register = () => {
       console.log(res)
 
       if (res.status === 200) {
-        Cookies.set("_access_token", res.data.token)
+        Cookies.set("token", res.data.token)
         setIsSignedIn(true)
         setCurrentUser(res.data)
 

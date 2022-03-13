@@ -4,25 +4,17 @@ import type { AppProps } from 'next/app'
 import Navbar from '../src/components/Navbar'
 import React, { useState, useEffect, createContext } from "react"
 import { User } from "../src/type/interfaces"
-import {getCurrentUser} from '../src/api/login/auth'
-import {useRouter} from 'next/router'
-import Register from './register'
-import Login from './login'
-import {execTest} from '../src/api/test'
 import Cookies from "js-cookie"
-import {getTasks} from '../src/api/task/GetTasks'
-import {Task} from '../src/type/interfaces/task'
 import { parseCookies, setCookie } from 'nookies';
 import { NextPageContext } from 'next';
 import Axios from 'axios'
+import  api  from '../src/contexts/api'
 
 
 export const AuthContext = createContext({} as {
-  loading: boolean
-  setLoading: React.Dispatch<React.SetStateAction<boolean>>
   isSignedIn: boolean
   setIsSignedIn: React.Dispatch<React.SetStateAction<boolean>>
-  currentUser: User | undefined
+  currentUser: any
   setCurrentUser: React.Dispatch<React.SetStateAction<any>>
 })
 
@@ -31,28 +23,20 @@ const MyApp = ({ Component, pageProps }: AppProps, ctx: NextPageContext) => {
   const [currentUser, setCurrentUser] = useState<User | undefined>()
   const [isSignedIn, setIsSignedIn] = useState<boolean>(false)
 
-  const api = Axios.create({
-    baseURL: "http://localhost:3000/",
-    headers: {
-        'Accept': 'application/json',
-        'Authorization': 'Bearer ' + Cookies.get('token'),
-        'Content-Type': 'application/json'
-    }
-});
 
   const handleGetCurrentUser = async () => {
     api.get('/api/session')
     .then( (response) => {
-      const{data: getCurrentUser}: any = response
-      console.log(getCurrentUser);
+      const user: any = response.data
       setIsSignedIn(true)
-      setCurrentUser(getCurrentUser)  
+      setCurrentUser(user)
     })
     .catch( (error) => {
       console.log(error);
       setIsSignedIn(false)
       setCurrentUser(undefined)
       Cookies.set('token', '')
+
     })
   }
 
@@ -60,9 +44,15 @@ const MyApp = ({ Component, pageProps }: AppProps, ctx: NextPageContext) => {
     handleGetCurrentUser()
   }, []);
 
-  const component =
-    typeof pageProps === 'undefined' ? null : <Component {...pageProps} />;
-  return component;
+
+  return (
+    <>
+      <AuthContext.Provider value={{ isSignedIn, setIsSignedIn, currentUser, setCurrentUser}}>
+        <Navbar/>
+        <Component {...pageProps} />;
+      </AuthContext.Provider>
+    </>
+  )
 };
 
 MyApp.getInitialProps = async (appContext: any) => {
@@ -75,18 +65,34 @@ MyApp.getInitialProps = async (appContext: any) => {
       appContext.ctx.pathname !== '/register' &&
       appContext.ctx.pathname !== '/_error'
     ) {
-      appContext.ctx.res.statusCode = 302;
-      appContext.ctx.res.setHeader('Location', '/login');
+      const isServer = typeof window === 'undefined';
+      if (isServer) {
+        console.log('in ServerSide');
+        appContext.ctx.res.statusCode = 302;
+        appContext.ctx.res.setHeader('Location', '/login');
+        return {};
+      } else {
+        console.log('in ClientSide');
+      }
     }
   } else {
     if (
       appContext.ctx.pathname !== '/' &&
+      appContext.ctx.pathname !== '/task/new' &&
       appContext.ctx.pathname !== '/tasks' &&
+      appContext.ctx.pathname !== '/task' &&
       appContext.ctx.pathname !== '/profile' &&
       appContext.ctx.pathname !== '/_error'
     ) {
-      appContext.ctx.res.statusCode = 302;
-      appContext.ctx.res.setHeader('Location', '/');
+      const isServer = typeof window === 'undefined';
+      if (isServer) {
+        console.log('in ServerSide');
+        appContext.ctx.res.statusCode = 302;
+        appContext.ctx.res.setHeader('Location', '/');
+        return {};
+      } else {
+        console.log('in ClientSide');
+      }
     }
   }
   return {

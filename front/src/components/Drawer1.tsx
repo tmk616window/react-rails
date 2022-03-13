@@ -10,6 +10,9 @@ import {
 import MenuIcon from "@material-ui/icons/Menu"
 import Link from 'next/link'
 import Cookies from 'js-cookie'
+import  { useContext, useEffect } from "react"
+import { AuthContext } from "../../pages/_app"
+ 
 
 type Anchor = 'top' | 'left' | 'bottom' | 'right';
 
@@ -28,7 +31,11 @@ const signInMenu = [
   {
     title: "ログイン",
     href: "/login"
-  }
+  },
+  {
+    title: "一覧",
+    href: "/tasks"
+  },
 ]
 
 const signOutMenu = [
@@ -53,13 +60,7 @@ const signOutMenu = [
 
 
 const SwipeableTemporaryDrawer = ({handleSignOut}: any) => {
-  const _access_token = Cookies.get("_access_token")
-  const _client = Cookies.get("_client")
-  const _uid = Cookies.get("_uid")
-  const id = Cookies.get("id")
-
-
-
+  const { isSignedIn, setIsSignedIn } = useContext(AuthContext)
   const [state, setState] = React.useState({
     right: false,
   });
@@ -94,7 +95,7 @@ const SwipeableTemporaryDrawer = ({handleSignOut}: any) => {
 
       {
         (() => {
-          if (_access_token && _client && _uid && id) {
+          if (isSignedIn) {
             return ( 
               <List>
               {signOutMenu.map((text, index) => (

@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useContext } from "react";
+import { AuthContext } from "./_app"
 import {getTasks} from '../src/api/task/GetTasks'
 import Image from 'next/image'
 import Logo from '../img/logo.png'
@@ -18,7 +19,11 @@ export async function getServerSideProps() {
 
 
 export const TaskList = (props:any) => {
-  // const[tasks, setTasks] = useState<Task[]>([])
+  const { isSignedIn, currentUser } = useContext(AuthContext)
+  useEffect(() => {
+    console.log(isSignedIn, currentUser)
+  }, []);
+
 
   const tasks = props.tasks.tasks
 

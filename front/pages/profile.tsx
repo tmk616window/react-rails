@@ -10,7 +10,7 @@ import AccountProfile from '../src/components/Account/AccountProfile';
 import AccountProfileDetails from '../src/components/Account/AccountProfileDetails';
 import EditAccountProfileDetails from '../src/components/Account/EditAccountProfileDetails';
 import {getUser} from '../src/api/user/GetUser'
-import {useEffect, useState} from 'react'
+import {useEffect, useState, useContext} from 'react'
 import Link from 'next/link'
 import {getProLangs} from '../src/api/prolang/GetProLang'
 import {Task, Message} from '../src/type/interfaces'
@@ -18,6 +18,7 @@ import {getUserMessage} from '../src/api/chat/GetUserMessage'
 import {getRooms} from '../src/api/chat/room/GetRooms'
 import Cookies from 'js-cookie'
 import { makeStyles } from '@material-ui/core/styles'
+import { AuthContext } from "./_app"
 
 const useStyles = makeStyles({
   customButton: {
@@ -59,6 +60,7 @@ const ProfilePage =(props:any) => {
   
   useEffect(() => {
     console.log(currentId, user.id)
+    // const { IsSignedIn, CurrentUser } = useContext(AuthContext)
   }, [])
 
   return (

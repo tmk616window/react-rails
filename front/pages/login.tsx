@@ -7,7 +7,6 @@ import { signIn, gustSignIn } from "../src/api/login/auth";
 import { AuthContext } from "./_app"
 import React, { useContext } from "react"
 import { useRouter } from 'next/router'
-import { setCookie } from 'nookies';
 
 
 import {
@@ -26,22 +25,21 @@ let style = {
 
 const Login: React.FC = () => {
   const router = useRouter()
-  const { setIsSignedIn, setCurrentUser } = useContext(AuthContext)
+  const {isSignedIn, setIsSignedIn, setCurrentUser } = useContext(AuthContext)
   const handleSubmit = async (params:any) => {
     console.log(params)
+    setIsSignedIn(true)
 
     try {
       const res = await signIn(params)
       console.log(res.data.token)
 
       if (res.status === 200) {
-        Cookies.set("token", res.data.token)
-        setCookie(null, 'auth', res.data.token, {
-          maxAge: 30 * 24 * 60 * 60, // お好きな期限を
-          path: '/',
-        }); 
-        // setIsSignedIn(true)
-        // setCurrentUser(res.data)
+        Cookies.set("token", res.data.token)    
+        setIsSignedIn(true)
+        setIsSignedIn(true)
+        setCurrentUser(res.data)
+        console.log("dnwqhbdw", isSignedIn)
         router.push({ pathname: '/'})
         console.log("Signed in successfully!")
       }
@@ -49,17 +47,11 @@ const Login: React.FC = () => {
       console.log(err)
       alert("パスワードとメールアドレスが一致していない可能性があります")
     }
-
   }
 
   const handleGustSubmit = async () => {
     const res = await gustSignIn()
     console.log(res.data)
-    // Cookies.set("_access_token", res.data.data.token)
-    // Cookies.set("_client", res.headers["client"])
-    // Cookies.set("_uid", res.headers["uid"])
-    // Cookies.set("id", res.data.data.id)
-    // router.push({ pathname: '/profile', query: { id: res.data.data.id } })
   }
 
 
