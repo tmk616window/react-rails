@@ -17,6 +17,9 @@ class Api::SessionsController < ApplicationController
 
   def destroy
     cookies.delete :token
+    render json: {
+      message: "ログアウトしました"
+    }, status: :ok
   end
   private
   
