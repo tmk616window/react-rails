@@ -31,7 +31,6 @@ function Dashboard() {
     return (
         <>
             <div>
-
                     <div className="row">
                         <div className="col-md-12">
                             <h1 test-id="dashboard-title">

@@ -32,11 +32,10 @@ const MyApp = ({ Component, pageProps }: AppProps, ctx: NextPageContext) => {
       setCurrentUser(user)
     })
     .catch( (error) => {
-      console.log(error);
+      console.log("error", error);
       setIsSignedIn(false)
       setCurrentUser(undefined)
       Cookies.set('token', '')
-
     })
   }
 

@@ -17,9 +17,7 @@ interface RankingParam{
   
 
 const Top:React.FC<RankingParam> = ({rTasks}) => {
-    const _access_token = Cookies.get("_access_token")
-    const _client = Cookies.get("_client")
-    const _uid = Cookies.get("_uid")      
+    const token = Cookies.get("token")
 
 
   return (
@@ -96,7 +94,7 @@ const Top:React.FC<RankingParam> = ({rTasks}) => {
                 </section>
                 <section className="page-section bg-light" id="team">
                 
-                {_access_token && _client && _uid
+                {token
                     ? <a className="taskButton btn" href="/tasks">他のポートフォリオを見る</a>
                     : <a className="taskButton btn" href="/login">他のポートフォリオを見る</a>
                 }

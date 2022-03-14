@@ -1,23 +1,20 @@
-import React, { useContext, useEffect } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import { makeStyles, Theme } from "@material-ui/core/styles"
-import Link from 'next/link'
 import AppBar from "@material-ui/core/AppBar"
 import Toolbar from "@material-ui/core/Toolbar"
 import Typography from "@material-ui/core/Typography"
-import Button from "@material-ui/core/Button"
-import IconButton from "@material-ui/core/IconButton"
 import { signOut } from "../api/login/auth"
 import Cookies from "js-cookie"
 import { AuthContext } from "../../pages/_app"
-// import TemporaryDrawer from './Drawer'
 import SwipeableTemporaryDrawer from './Drawer1'
 import { useRouter } from 'next/router'
-// import api from "../contexts/api"
 import Axios from 'axios'
 
 
  const Navbar = () => {
   const router = useRouter()    
+  const { isSignedIn, setIsSignedIn, currentUser } = useContext(AuthContext)
+  const [user, setUser] = useState(currentUser)
     const useStyles = makeStyles((theme: Theme) => ({
       nabvarBottom: {
         
@@ -35,10 +32,9 @@ import Axios from 'axios'
         textTransform: "none"
       }
     }))
-    
-
-    const { isSignedIn, setIsSignedIn } = useContext(AuthContext)
     const classes = useStyles()
+
+
 
 
   const handleSignOut = async () => {
@@ -58,22 +54,23 @@ import Axios from 'axios'
     console.log("aaaaaa")
     api.delete('/api/session')
     .then( () => {
-      Cookies.remove("token")
+      Cookies.set("token", "")
       setIsSignedIn(false)
-      // location.reload();
       router.push("/")
       console.log("Succeeded in sign out")
     })
     .catch( () => {
       console.log("Failed in sign out")
     })
+
   }
 
 
   return (
   <>
     <AppBar position="absolute" className={classes.nabvarBottom}>
-      <Toolbar>   
+      <Toolbar>
+
         <Typography
           // component={Link}
           // to="/"
@@ -82,7 +79,6 @@ import Axios from 'axios'
         >
           エンジョブ
         </Typography>
-        
         <SwipeableTemporaryDrawer handleSignOut={handleSignOut}/>
       </Toolbar>
     </AppBar>
