@@ -1,5 +1,5 @@
 class Api::UsersController < ApplicationController
-  before_action :authenticate_with_token, except: :create
+  skip_before_action :authenticate_with_token, only: :create
   def index; end
   
   def show
@@ -37,7 +37,7 @@ end
 # curl -i  -X POST -H "Content-Type: application/json" -d '{"session":{ "email" : "user2", "password" : "user2" }}' localhost:3000/api/session
 
 # curl -X DELETE 'http://localhost:3000/api/session' -H 'Content-Type:application/json;charset=utf-8' -H 'Authorization: Bearer eyJhbGciOiJSUzI1NiJ9.eyJuYW1lIjoiYWFhYWFhYWFhQGV4YW1wbGUuY29tIiwiaWQiOjI1LCJleHAiOjE2NDgzNzU1NDB9.SRcVbjrf6PD9wIDCuGwyd3GwaJlfvn9_0dpMeKmJ52xLGyk6FOx0MWpRxVwr9xOsi4unr93WdlThCohnESV2ZGPeCe2TCYJhEKeChMNVL6X0BhlLPrfL1Pr9KSImUFQdLOm_NcGNN7X7qD1vy4E65IZkkuZdT4TtyMLT8ck9gYSBb0tFlm27EzGxOmGtgYH5fp6vMe0drpvZOIQNP00P8q6nXG4jZfYDW610xMiItSi7L2aTUDxDwdAu_HTG-hLrdvoWy78tyoSJhv_m3q9S93G1NV5_875ADD53b2CuWybu17YRDce_5BgE8aybv81iPIZttLlNwSPR9dO74A'
-# curl -i -H 'Authorization: Bearer eyJhbGciOiJSUzI1NiJ9.eyJuYW1lIjoidXNlcjIiLCJpZCI6MiwiZXhwIjoxNjQ4MjE1MDEzfQ.Pw-zezjntmRSxQmy9mPhl072RtpFmfmJKFpnwFA-bn6JKbLxEZMKntivKwe3f6J1PaL5zbTmUq0_Zg3fYYtf1vjBC4bA_7DH3fG70ZUzTHsjGtHF-b5WHUQYWkCE2YN3MEaF80Cx27by9KyifTevdqOOPzwWcY94EPu1c_XZ2wvduS-mgyOpMtlQiIAp7yF_DEJQJ25HuFTxJ8MrBQx-pWRBAUzzZdy9giXRqROtDer-h0qOxXAYwfjKT3Z4BKx8C0HSPcSR_J_mE-VMyu_dQ4Iird7mzMikPwtT7fOFV6BTDZUOxMWK7E6qua3mOkCZlFjC1hbV9tvyLMZPZw' http://localhost:3000/api/users
+# curl -i -H 'Authorization: Bearer eyJhbGciOiJSUzI1NiJ9.eyJuYW1lIjoidXNlcjIiLCJpZCI6MiwiZXhwIjoxNjQ4NDU5NzE1fQ.qROhUXU_lr_L3rdVKY2DFb4hNJs7rDTzG7P4iVz04f1OKgW5V7u8xR3vKJ9ZatQTXkgKmwAYyi0TTZv0rv0UYBNOubNIXGoB8-4VD5rkYBtiZnTAUtoSEO127RCmKEe_AJ-7nSLehhu7hUI27ozB6LPXDexQQQvY3EHkxz6zozuCrMIv3HBd651SFxVKXj3si-w1gocS9LH1AYo86zstLnBY9uCtKSeGoNanv5OuRJoBZE1tVJq2RMuEBjG7XdUxo7YzIZr7Cx8gZ2-N13amjFC2NrF0THNBLbXNSCyRj0fQA0WqaydSEC95ysQ0uUc0l_S3DY9QwJbbUiw7dQ' http://localhost:3000/api/users
 
 
 # curl -b 'token=eyJhbGciOiJSUzI1NiJ9.eyJuYW1lIjoidXNlcjIiLCJpZCI6MiwiZXhwIjoxNjQ4MTk5Nzg4fQ.MFEa_uwtsafJo_us73ErqbLRa_pFrbsYaRHWn_ngVCLmeXjMsCbdvBw1Qwj0LcppopSAqSuQvVN9oR3XULLEcAp-qUQRoDwne-T94O6VBqUdMHtN8hGODGxfOMOT2nL2ZyD1Z4Pje2RO-UQJAxV2SUhCRwx5MJcleSubYxXAv4D5kX5bFjoUgmd4ez3Yb74jwmyeG5mETmBQ3u1j8IOfTfd4hmDGj8vBH9HB2MxVJH695m_QpdIrPzCtZXNTZz2zd8aYhFaBJqfjB_ii2HFJ7KCsWV3M-KMQcJ4WEUi8_UUg-693_Vo0OQbRe0qPF1Z_GIKj5RkD5W0uqZ_hLQ' -X GET -H 'Content-Type:application/json' http://localhost:3000/api/user

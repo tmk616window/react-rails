@@ -1,5 +1,5 @@
 class Api::SessionsController < ApplicationController
-  before_action :authenticate_with_token, except: :create
+  skip_before_action :authenticate_with_token, only: :create
 
   def show
     render json: {
