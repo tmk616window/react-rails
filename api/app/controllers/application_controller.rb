@@ -4,7 +4,7 @@ class ApplicationController < ActionController::API
   include ActionController::HttpAuthentication::Token
   class AuthenticationError < StandardError; end
 	rescue_from AuthenticationError, with: :render_unauthorized_error
-  before_action :authenticate_with_token, except: :create
+  before_action :authenticate_with_token
 
 
   def render_unauthorized_error

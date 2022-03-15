@@ -1,8 +1,9 @@
-import {api} from '../common/client'
+// import {api} from '../common/client'
 import {Task} from '../../type/interfaces/task'
 import axios from 'axios'
+import api from '../../contexts/api'
 
 export const getTasks =  () => {
-    return axios.get<{tasks: Task[]}>("https://enjob.work//api/v1/tasks")
-  }
+  return api.get("api/tasks")
+}
   

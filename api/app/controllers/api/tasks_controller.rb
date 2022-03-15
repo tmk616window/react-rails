@@ -1,6 +1,15 @@
 class Api::TasksController < ApplicationController
   def index
     tasks = Task.all
+    # puts tasks
+    # puts tasks
+    # puts tasks
+    # puts tasks
+    # puts tasks
+    # puts tasks
+    # puts tasks
+    # puts json: {tasks: tasks}
+
     render json: {
       tasks: tasks
     }, status: :ok
@@ -24,4 +33,5 @@ class Api::TasksController < ApplicationController
 
   def destroy
   end
+  
 end

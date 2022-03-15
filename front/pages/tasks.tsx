@@ -6,10 +6,13 @@ import Logo from '../img/logo.png'
 import {Task, ProLang} from '../src/type/interfaces'
 import Link from 'next/link';
 import {displayImage} from '../src/api/common/DisplayImage'
+import  api  from '../src/contexts/api'
+
 //サーバーサイドレンダリング
 export async function getServerSideProps() {
-  const tasks = (await getTasks()).data
-  console.log(tasks)
+  const tasks = (await api.get('/api/session')).data
+  
+
   return {
     props: {
       tasks: tasks,
@@ -20,16 +23,17 @@ export async function getServerSideProps() {
 
 export const TaskList = (props:any) => {
   const { isSignedIn, currentUser } = useContext(AuthContext)
-  useEffect(() => {
+    useEffect(() => {
+      const tasks = api.get('/api/session')
+      console.log(tasks)  
     console.log(isSignedIn, currentUser)
   }, []);
 
 
-  const tasks = props.tasks.tasks
 
     return (
       <div >
-        <ul className="list-group">
+        {/* <ul className="list-group">
           {tasks.map((task:Task ,index:number)=> (
             <Link href={{ pathname: '/task', query: { id: task.id } }}>
             <li key={index} className="list-group-item list-group-item-primary list-item" >
@@ -42,15 +46,12 @@ export const TaskList = (props:any) => {
                 <p className="description">{task.description}</p>
                 <p>使用技術</p>
                 <div className="langArticle">
-                {task.prolongs.map((proLang:ProLang ,index:number)=> (  
-                  <span className="article" key={index}>{proLang.lange}</span>
-                ))}
                 </div>
               </div>
             </li>
             </Link>
           ))}
-        </ul>
+        </ul> */}
       </div>
     );
   }

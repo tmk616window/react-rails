@@ -31,15 +31,16 @@ const Register = () => {
 
   const handleSubmit = async (params:any) => {
     try {
+      console.log(params)
       const res = await signUp(params)
-      console.log(res)
+      console.log(res.data.errors)
 
-      if (res.status === 200) {
+      if (res.data.errors !== "保存できませんでした") {
         Cookies.set("token", res.data.token)
         setIsSignedIn(true)
         setCurrentUser(res.data)
 
-        // router.push({ pathname: '/profile', query: { id: res.data.data.id } })
+        router.push({ pathname: '/'})
 
         console.log("Signed in successfully!")
       }
@@ -64,10 +65,10 @@ const Register = () => {
         <Container maxWidth="sm">
           <Formik
             initialValues={{
-              name: '',
-              email: '',
-              password: '',
-              password_confirmation: '',
+                name: '',
+                email: '',
+                password: '',
+                password_confirmation: '',  
             }}
             validationSchema={
             Yup.object().shape({

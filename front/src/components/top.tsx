@@ -17,7 +17,7 @@ interface RankingParam{
   
 
 const Top:React.FC<RankingParam> = ({rTasks}) => {
-    const token = Cookies.get("token")
+  const token = Cookies.get("token")
 
 
   return (

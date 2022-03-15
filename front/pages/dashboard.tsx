@@ -16,7 +16,7 @@ function Dashboard() {
         production: 'https://your-production-url.com/'
     }
     const api = Axios.create({
-        baseURL: "http://localhost:3000/",
+        baseURL: "http://localhost/",
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'

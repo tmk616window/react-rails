@@ -27,8 +27,7 @@ const Login: React.FC = () => {
   const router = useRouter()
   const {isSignedIn, setIsSignedIn, setCurrentUser } = useContext(AuthContext)
   const handleSubmit = async (params:any) => {
-    console.log(params)
-    setIsSignedIn(true)
+    console.log({"user":{params}})
 
     try {
       const res = await signIn(params)
