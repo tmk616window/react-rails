@@ -6,17 +6,13 @@ class ApplicationController < ActionController::API
 	rescue_from AuthenticationError, with: :render_unauthorized_error
   before_action :authenticate_with_token
 
-
   def render_unauthorized_error
-    if @current_user.nil?
-      render json: { message: 'unauthorized' }, status: :unauthorized
-    end
+    render json: { message: 'unauthorized' }, status: :unauthorized
 	end
 
   def authenticate_user_password(email, password)
     user = User.find_by(email: email)&.authenticate(password)
     raise AuthenticationError if user.nil?
-
     return user
   end
 
@@ -30,13 +26,20 @@ class ApplicationController < ActionController::API
     user_id = decoded_token.first["id"]
     user = User.find(user_id)
     raise AuthenticationError if user.nil?
-
     return user
 	end
-  
+
   def get_token(email, password)
     user = authenticate_user_password(email, password)
     endoce_token(user)
+  end
+
+  def current_user
+    begin
+      current_user = authenticate_user_token(access_token)
+    rescue AuthenticationError
+      nil
+    end
   end
 
   private
@@ -52,16 +55,10 @@ class ApplicationController < ActionController::API
   end
 
   def authenticate_with_token
-    raise AuthenticationError if unauthorized?
+    raise AuthenticationError if unauthorized
   end
 
-  def current_user
-    @current_user = authenticate_user_token(access_token)
-  rescue AuthenticationError
-    nil
-  end
-
-  def unauthorized?
+  def unauthorized
     current_user.nil?
   end
 

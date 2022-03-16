@@ -41,7 +41,7 @@ import Axios from 'axios'
     const token = Cookies.get('token')
 
     const api = Axios.create({
-        baseURL: 'http://localhost/',
+        baseURL: 'http://localhost:8080/',
         headers: {
             'Accept': 'application/json',
             'Authorization': 'Bearer ' + token,

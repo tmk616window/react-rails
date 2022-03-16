@@ -3,7 +3,6 @@ import {Task} from '../../type/interfaces/task'
 import axios from 'axios'
 import api from '../../contexts/api'
 
-export const getTasks =  () => {
-  return api.get("api/tasks")
+export const getTasks = () => {
+  return api.get("/api/tasks")
 }
-  

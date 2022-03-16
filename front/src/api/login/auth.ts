@@ -6,12 +6,12 @@ import api from '../../contexts/api'
 
 // サインアップ（新規アカウント作成）
 export const signUp = (params: SignUpParams) => {
-  return axios.post<{data: SignIn}>("http://localhost/api/users", params)
+  return axios.post<{data: SignIn}>("http://localhost:8080/api/users", params)
 }
 
 // サインイン（ログイン）
 export const signIn = (params: SignInParams)  => {
-  return axios.post<{data: SignIn}>("http://localhost/api/session", params)
+  return axios.post<{data: SignIn}>("http://localhost:8080/api/session", params)
 }
 
 // サインイン（ゲストログイン）

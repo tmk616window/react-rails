@@ -48,6 +48,7 @@ const MyApp = ({ Component, pageProps }: AppProps, ctx: NextPageContext) => {
     <>
       <AuthContext.Provider value={{ isSignedIn, setIsSignedIn, currentUser, setCurrentUser}}>
         <Navbar/>
+        
         <Component {...pageProps} />;
       </AuthContext.Provider>
     </>

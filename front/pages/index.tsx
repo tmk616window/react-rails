@@ -5,17 +5,16 @@ import {execTest} from '../src/api/test'
 import {useEffect} from 'react'
 import {getProLangs} from '../src/api/prolang/GetProLang'
 
-  //サーバーサイドレンダリング
-  export async function getServerSideProps() {
-    const rTasks = (await execTest()).data
-    console.log(rTasks)
-
-    return {
-      props: {
-        rTasks: rTasks,
-      }
+//サーバーサイドレンダリング
+export async function getServerSideProps() {
+  const rTasks = (await execTest()).data
+  console.log(rTasks)
+  return {
+    props: {
+      rTasks: rTasks,
     }
   }
+}
 
 
 const Home: NextPage =  (props:any) => {
