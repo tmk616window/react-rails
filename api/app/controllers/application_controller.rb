@@ -13,7 +13,7 @@ class ApplicationController < ActionController::API
   def authenticate_user_password(email, password)
     user = User.find_by(email: email)&.authenticate(password)
     raise AuthenticationError if user.nil?
-    return user
+    user
   end
 
 	def authenticate_user_token(token)
@@ -25,8 +25,6 @@ class ApplicationController < ActionController::API
     end
     user_id = decoded_token.first["id"]
     user = User.find(user_id)
-    raise AuthenticationError if user.nil?
-    return user
 	end
 
   def get_token(email, password)
@@ -51,7 +49,7 @@ class ApplicationController < ActionController::API
       exp: (DateTime.current + 14.days).to_i
     }
     rsa_private = OpenSSL::PKey::RSA.new(File.read(Rails.root.join('auth/service.key')))
-    return JWT.encode(payload, rsa_private, "RS256")
+    JWT.encode(payload, rsa_private, "RS256")
   end
 
   def authenticate_with_token

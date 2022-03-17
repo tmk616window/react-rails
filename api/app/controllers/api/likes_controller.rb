@@ -11,14 +11,14 @@ class Api::LikesController < ApplicationController
   def destroy
     like = Like.find(params[:id])
     if like.destroy
-        render json: status: ok
+      render json: status: ok
     else
-        render json: status: error
+      render json: status: error
     end
   end
 
   private
   def like_params
-     params.require(:like).permit(:user_id, :task_id)
+    params.require(:like).permit(:user_id, :task_id)
   end    
 end

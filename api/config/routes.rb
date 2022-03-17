@@ -9,5 +9,6 @@ Rails.application.routes.draw do
     resources :contents, only: [:create, :destroy]
     resources :comments, only: [:create, :destroy]
     resources :likes, only: [:create, :destroy]
+    resources :ranking, only: %i[index]
   end
 end

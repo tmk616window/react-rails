@@ -16,7 +16,6 @@ class Api::CommentsController < ApplicationController
       render json: {message: "commentの作成に失敗しました" }, status: error
     end
   end
-      
 
   def destroy
     comment = Comment.find(params[:id])
@@ -28,7 +27,6 @@ class Api::CommentsController < ApplicationController
   end
 
   private
-
   def comment_params
     params.require(:comment).permit(:text, :task_id, :user_id)
   end
