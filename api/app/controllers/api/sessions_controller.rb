@@ -1,4 +1,5 @@
 class Api::SessionsController < ApplicationController
+  include Authenticatable
   skip_before_action :authenticate_with_token, only: :create
 
   def show

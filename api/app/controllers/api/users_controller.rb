@@ -1,16 +1,17 @@
 class Api::UsersController < ApplicationController
   skip_before_action :authenticate_with_token, only: :create
+  before_action :set_user, only: [:show, :update, :destroy]
+
   def index; end
-  
+
   def show
-      user = User.find(params[:id])
-      render json: {
-        user: {
-          id: user.id,
-          name: user.name,
-          email: user.email
-        }
-      }, status: :ok
+    render json: {
+      user: {
+        id: @user.id,
+        name: @user.name,
+        email: @user.email
+      }
+    }, status: :ok
   end
 
   def create
@@ -24,10 +25,34 @@ class Api::UsersController < ApplicationController
     end
   end
 
+  def update
+    if @user.update(user_params)
+      render json: {
+        user: {
+          id: @user.id,
+          name: @user.name,
+          email: @user.email
+        }
+      }, status: :ok  
+    else
+      render json: { errors: "更新できませんでした"} 
+    end
+  end
+  
+  def destroy
+    @user.destroy
+    render json: { message: "削除しました"}, status: :ok
+  end
+
+
   private
 
   def user_params
     params.permit(:name, :email, :password, :password_confirmation)
+  end
+
+  def set_user
+    @user = User.find(params[:id])
   end
 end
 

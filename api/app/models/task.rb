@@ -6,6 +6,12 @@ class Task < ApplicationRecord
   has_many :contents, dependent: :destroy
   has_many :likes, dependent: :destroy
 
+  validates :title, presence: true
+  validates :image, presence: true
+  validates :details, presence: true
+  validates :url, presence: true
+  validates :user_id, presence: true
+
   def self.taskRankingTop3
     find(Like.group(:task_id).select(:task_id).order('count(task_id) desc').limit(3).pluck(:task_id))
   end
