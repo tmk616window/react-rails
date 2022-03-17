@@ -1,8 +1,4 @@
 class Api::ProLanguagesController < ApplicationController
-  def index
-    render json: {prolanguage: ProLanguage.where(params[:task_id]) }, status: :ok
-  end
-
   def create
     proLanguage = ProLanguage.new(prolong_params)
     if prolong.save
@@ -11,7 +7,7 @@ class Api::ProLanguagesController < ApplicationController
       render json: { message: "Prolongの作成に失敗しました" }, status: error
     end
   end
-      
+
   def destroy
     proLanguage = ProLanguage.find(params[:id])
     if proLanguage.destroy
