@@ -4,10 +4,10 @@ Rails.application.routes.draw do
     resources :tasks
     resource :session, only: %i[create destroy show]
     resources :ranking, only: %i[index]
-    resources :pro_languages, only: [:index,  :create, :destroy]
-    resources :tools, only: [:index, :create, :destroy]
-    resources :contents, only: [:index, :update, :create, :destroy]
-    resources :comments, only: [:index, :update, :create, :destroy]
+    resources :pro_languages, only: [:create, :destroy]
+    resources :tools, only: [:create, :destroy]
+    resources :contents, only: [:create, :destroy]
+    resources :comments, only: [:create, :destroy]
     resources :likes, only: [:create, :destroy]
   end
 end
