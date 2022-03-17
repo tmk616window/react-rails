@@ -16,10 +16,9 @@ import Axios from 'axios'
   const { isSignedIn, setIsSignedIn, currentUser } = useContext(AuthContext)
   const [user, setUser] = useState(currentUser)
     const useStyles = makeStyles((theme: Theme) => ({
-      nabvarBottom: {
-        
+      topMargin:{
+        paddingBottom: "65px",
       },
-
       iconButton: {
         marginRight: theme.spacing(2),
       },
@@ -67,8 +66,9 @@ import Axios from 'axios'
 
 
   return (
-  <>
-    <AppBar position="absolute" className={classes.nabvarBottom}>
+  <div className={classes.topMargin}>
+
+    <AppBar position="absolute">
       <Toolbar>
 
         <Typography
@@ -82,7 +82,7 @@ import Axios from 'axios'
         <SwipeableTemporaryDrawer handleSignOut={handleSignOut}/>
       </Toolbar>
     </AppBar>
-  </>
+  </div>
   )
 }
 

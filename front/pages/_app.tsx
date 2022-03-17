@@ -8,7 +8,7 @@ import Cookies from "js-cookie"
 import { parseCookies, setCookie } from 'nookies';
 import { NextPageContext } from 'next';
 import Axios from 'axios'
-import  api  from '../src/contexts/api'
+import  { api }  from '../src/contexts/api'
 
 
 export const AuthContext = createContext({} as {
@@ -48,7 +48,7 @@ const MyApp = ({ Component, pageProps }: AppProps, ctx: NextPageContext) => {
     <>
       <AuthContext.Provider value={{ isSignedIn, setIsSignedIn, currentUser, setCurrentUser}}>
         <Navbar/>
-        
+
         <Component {...pageProps} />;
       </AuthContext.Provider>
     </>
@@ -70,7 +70,6 @@ MyApp.getInitialProps = async (appContext: any) => {
         console.log('in ServerSide');
         appContext.ctx.res.statusCode = 302;
         appContext.ctx.res.setHeader('Location', '/login');
-        return {};
       } else {
         console.log('in ClientSide');
       }
@@ -89,7 +88,6 @@ MyApp.getInitialProps = async (appContext: any) => {
         console.log('in ServerSide');
         appContext.ctx.res.statusCode = 302;
         appContext.ctx.res.setHeader('Location', '/');
-        return {};
       } else {
         console.log('in ClientSide');
       }
