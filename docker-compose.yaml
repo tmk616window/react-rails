@@ -23,7 +23,6 @@ services:
   web:
     build: ./api
     container_name: rails
-    # command: /bin/sh -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
     command: puma -b unix:/app/tmp/sockets/puma.sock
     ports:
       - "3000:3000"
@@ -60,9 +59,6 @@ services:
     networks:
       - default
       - web
-
-    # command: npm run start
-
 volumes:
   mysql_data:
   bundle:
