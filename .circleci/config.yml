@@ -38,6 +38,8 @@ jobs:
       RAILS_ENV: test
     steps:
       - setup
+      - checkout
+      - run: gem install bundler:2.1.4
       - run:
           name: rails db:migrate
           command: bundle exec rails db:migrate
