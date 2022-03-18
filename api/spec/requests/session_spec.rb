@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Authentication', type: :request do
+RSpec.describe 'Session', type: :request do
   let(:user) { FactoryBot.create :user }
   let(:payload) {  {name: user.email, id: user.id, exp: (DateTime.current + 14.days).to_i}}
   let(:api_secret) { OpenSSL::PKey::RSA.new(File.read(Rails.root.join('auth/service.key'))) }
@@ -8,7 +8,7 @@ RSpec.describe 'Authentication', type: :request do
   let(:token) { JWT.encode payload, api_secret, algorithm }
   let(:headers) { { 'Authorization' => "Bearer #{token}" } }
 
-  describe 'ApplicationController#authenticate' do
+  describe 'create' do
     describe 'response status' do
       subject do
         get '/api/session', headers: headers
