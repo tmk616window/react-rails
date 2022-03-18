@@ -1,26 +1,58 @@
-# Use the latest 2.1 version of CircleCI pipeline process engine.
-# See: https://circleci.com/docs/2.0/configuration-reference
 version: 2.1
 
-# Define a job to be invoked later in a workflow.
-# See: https://circleci.com/docs/2.0/configuration-reference/#jobs
-jobs:
-  say-hello:
-    # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
-    # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
-    docker:
-      - image: cimg/base:stable
-    # Add steps to the job
-    # See: https://circleci.com/docs/2.0/configuration-reference/#steps
+orbs:
+  ruby: circleci/ruby@1.1.2
+  node: circleci/node@2
+
+# setup
+commands:
+  setup:
     steps:
       - checkout
-      - run:
-          name: "Say hello"
-          command: "echo Hello, World!"
+      - ruby/install-deps
+      - node/install-packages:
+          pkg-manager: yarn
+          cache-key: "yarn.lock"
 
-# Invoke jobs via workflows
-# See: https://circleci.com/docs/2.0/configuration-reference/#workflows
+jobs:
+  build:
+    docker:
+      - image: circleci/ruby:2.7-node
+    steps:
+      - setup
+  test:
+    docker:
+      - image: circleci/ruby:2.7-node
+      - image: circleci/mysql:5.7
+        name: "db"
+        environment:
+          MYSQL_ROOT_USER: root
+          MYSQL_ROOT_DB: app_test
+          MYSQL_ROOT_PASSWORD: "password"
+    environment:
+      BUNDLE_JOBS: "4"
+      BUNDLE_RETRY: "3"
+      PGHOST: 127.0.0.1
+      PGUSER: mysql
+      PGPASSWORD: "password"
+      RAILS_ENV: test
+    steps:
+      - setup
+      - run:
+          name: rails db:migrate
+          command: bundle exec rails db:migrate
+      - run:
+          name: Database setup
+          command: bundle exec rails db:schema:load --trace
+      - run:
+          name: Rspec
+          command: bundle exec rspec
+
 workflows:
-  say-hello-workflow:
+  version: 2
+  test_and_deploy:
     jobs:
-      - say-hello
+      - build
+      - test:
+          requires:
+            - build
