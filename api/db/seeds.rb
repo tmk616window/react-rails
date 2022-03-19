@@ -13,6 +13,14 @@
 
 # ProLanguage.create(language:"ruby", task_id:1)
 # Like.create(user_id:1, task_id: 1)
-Comment.create(text: "test", user_id:1 ,task_id:1)
-Tool.create(name: "tool", task_id:1)
-Content.create(title: "lange", text: "test#",task_id:1)
+
+5.times do |i|
+  Task.create(title: "Task#{i + 1}", image: "Task#{i + 1}", url: "Task#{i + 1}", details: "Task#{i + 1}", user_id: 1)
+end
+
+5.times do |i|
+  Comment.create(text: "test", user_id:1 ,task_id:1)
+  Tool.create(name: "tool", task_id:1)
+  Content.create(title: "lange", text: "test#",task_id:1)
+end
+
