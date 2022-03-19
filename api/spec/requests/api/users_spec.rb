@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "UsersController", type: :request do
+RSpec.describe "User", type: :request do
 
   let(:payload) {{name: user.email, id: user.id, exp: (DateTime.current + 14.days).to_i}}
   let(:api_secret) { OpenSSL::PKey::RSA.new(File.read(Rails.root.join('auth/service.key')))}
@@ -9,7 +9,7 @@ RSpec.describe "UsersController", type: :request do
   let(:headers) {{ 'Authorization' => "Bearer #{token}" }}
 
   describe 'GET #show' do
-  let(:user) { FactoryBot.create :user }
+    let(:user) { FactoryBot.create :user }
     context 'ユーザーが存在する場合' do
       it '正常に通る' do
         get "/api/users/#{user.id}", headers: headers
@@ -19,7 +19,7 @@ RSpec.describe "UsersController", type: :request do
   end
 
   describe 'POST #create' do
-    context '名前がある時' do
+    context '正常に通る' do
       it 'usersをリダイレクトする' do
         expect{
           post '/api/users', params: { name: 'test', email: 'test', password: 'password', password_confirmation: 'password' } 

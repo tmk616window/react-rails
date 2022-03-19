@@ -12,7 +12,7 @@
 # Task.create(title: "task1", image: "task1", url: "task1", details: "task1", user_id: 1)
 
 # ProLanguage.create(language:"ruby", task_id:1)
-Like.create(user_id:1, task_id: 1)
+# Like.create(user_id:1, task_id: 1)
 Comment.create(text: "test", user_id:1 ,task_id:1)
 Tool.create(name: "tool", task_id:1)
 Content.create(title: "lange", text: "test#",task_id:1)

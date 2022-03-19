@@ -14,32 +14,28 @@ class Api::TasksController < ApplicationController
     if task.save
         render json: { status: 200, task: task }
     else
-        render json: { status: 500, message: "Taskの作成に失敗しました" }
+      render json: {message: "保存できませんでした" }
     end
   end
 
   def destroy
     task = Task.find(params[:id])
-    if task.destroy
-        render json: { status: 200, task: task }
-    else
-        render json: { status: 500, message: "Taskの削除に失敗しました" }
-    end
+    task.destroy
+    render json: { message: "削除しました"}, status: :ok
   end
-
 
   def update
     task = Task.find(params[:id])
     if task.update(task_params)
-      render json: { status: 200, task: task }
+      render json: {task: task }, status: 200
     else
-        render json: { status: 500, message: "userの更新に失敗しました" }
+        render json: {message: "更新に失敗しました" }
     end
   end
 
   private
 
   def task_params
-    params.permit(:title, :image, :description, :purl, :user_id)
+    params.permit(:title, :image, :details, :url, :user_id)
   end
 end

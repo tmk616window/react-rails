@@ -1,21 +1,22 @@
 class Api::ToolsController < ApplicationController
+  def show
+    tool = Tool.where(task_id: params[:id])
+    render json: { tool: tool }
+  end
 
   def create
     tool = Tool.new(tool_params)
     if tool.save
-      render json: { tool: tool },status: ok
+      render json: { tool: tool }
     else
-      render json: { message: "Toolの作成に失敗しました" }, status: error
+      render json: { message: "作成に失敗しました" }
     end
   end
 
   def destroy
     tool = Tool.find(params[:id])
-    if tool.destroy
-      render json: status: ok
-    else
-      render json: status: error
-    end    
+    tool.destroy
+    render json: {message: "削除しました" }
   end
 
   private

@@ -1,25 +1,28 @@
 class Api::ProLanguagesController < ApplicationController
+
+  def show
+    pro_Language = ProLanguage.where(task_id: params[:id])
+    render json: { pro_Language: pro_Language }
+  end
+
   def create
-    proLanguage = ProLanguage.new(prolong_params)
-    if prolong.save
-      render json: {proLanguage: proLanguage },status: ok
+    pro_Language = ProLanguage.new(pro_language_params)
+    if pro_Language.save
+      render json: {pro_Language: pro_Language }
     else
-      render json: { message: "Prolongの作成に失敗しました" }, status: error
+      render json: { message: "作成に失敗しました" }
     end
   end
 
   def destroy
-    proLanguage = ProLanguage.find(params[:id])
-    if proLanguage.destroy
-      render json: status: ok
-    else
-      render json: status: error
-    end
+    pro_Language = ProLanguage.find(params[:id])
+    pro_Language.destroy
+    render json: { message: "削除しました" }
   end
 
-    private
+  private
 
-    def proLanguage_params
-        params.require(:proLanguage).permit(:language, :task_id)
-     end
+  def pro_language_params
+    params.require(:pro_language).permit(:language, :task_id)
+  end
 end

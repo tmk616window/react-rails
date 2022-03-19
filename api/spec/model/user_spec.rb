@@ -23,7 +23,7 @@ RSpec.describe 'Userモデルのテスト', type: :model do
         user.valid?
         expect(user.errors[:email]).to include("can't be blank")
       end  
-      
+
       it "パスワードがない" do
         user.password_digest = nil
         user.valid?
