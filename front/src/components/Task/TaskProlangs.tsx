@@ -1,56 +1,45 @@
-import {useState, useEffect} from 'react'
-import {getProLangs} from '../../api/prolang/GetProLang'
+import {useState} from 'react'
 import {ProlLanguage, User} from '../../type/interfaces'
-import {destroyProLang} from '../../api/prolang/DestroyProLang'
-import Cookies from 'js-cookie'
-import {getTask} from '../../api/task/GetTask'
-import Image from 'next/image'
+import {destroyProLanguage} from '../../api/prolang/DestroyProLang'
 import {
-    Avatar,
-    Box,
-    Button,
-    Card,
-    CardActions,
-    CardContent,
-    Divider,
-    TextField,
-    IconButton,
-    Grid
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  Divider,
+  IconButton,
 } from '@material-ui/core';
-import {createProLang} from '../../api/prolang/CreateProLang'
+import {createProLanguage} from '../../api/prolang/CreateProlLanguage'
 import DeleteIcon from '@material-ui/icons/Delete';
 interface Props{
   proLanguages: ProlLanguage[]
-  taskId: number
-  taskUser: User | undefined
   setProLanguages: any
+  taskId: string | string[] | undefined
+  taskUser: User | undefined
   currentUser: User
 }
 const TaskProlangs:React.FC<Props> = ({proLanguages, taskId, taskUser, setProLanguages, currentUser}) => {
-  const [proLangs, setProLangs] = useState<ProlLanguage[]>(proLanguages)
-  useEffect( () => {
-    setProLangs(proLanguages)
-  }, []);
-console.log("proLanguages", proLanguages)
 const [form, setForm] = useState<string>("")
 
 const destroyContent = async (index:number, proLanguage:ProlLanguage) => {
-  destroyProLang(proLangs[index].id)
-  proLangs.splice(index, 1)
-  setProLangs(proLangs.filter((x:ProlLanguage) => x !== proLanguage)) 
+  destroyProLanguage(proLanguages[index].id)
+  proLanguages.splice(index, 1)
+  setProLanguages(proLanguages.filter((x:ProlLanguage) => x !== proLanguage)) 
 }
 
 const addContent = async () => {
-  const prolong = (await createProLang(form, taskId)).data.prolong
-  setProLangs([...proLangs, prolong]);
+  console.log(form, taskId)
+  const proLanguage = (await createProLanguage(form, taskId)).data.pro_Language
+  console.log(proLanguage)
+  setProLanguages([...proLanguages, proLanguage]);
   setForm("")
 };
 
 const aproLangs = () => {
-  if (taskUser?.email === taskUser?.email) {
+  if (taskUser?.email === currentUser?.email) {
     return (
     <>
-      {proLangs.map((proLanguage:ProlLanguage, index:number) =>
+      {proLanguages.map((proLanguage:ProlLanguage, index:number) =>
         <p key={index} className="article">{proLanguage.language}< IconButton onClick={() =>destroyContent(index, proLanguage)}><DeleteIcon fontSize="small"/></IconButton></p>
       )}
       <Divider />
@@ -77,7 +66,6 @@ return (
       <CardContent>
       <h4>プログラミング言語</h4>
         {aproLangs()}
-        
       </CardContent>
     </Card>
   </>

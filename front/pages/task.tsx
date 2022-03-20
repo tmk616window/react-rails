@@ -23,7 +23,7 @@ import {
 
 const Tasks = () => {
   const router = useRouter();
-  const {taskrId}:any = router.query.id
+  const taskrId = router.query.id
   const {currentUser} = useContext(AuthContext)
   const[edit, setEdit] = useState<boolean>(true)
   const[task, setTask] = useState<Task | undefined>()
@@ -79,9 +79,9 @@ const Tasks = () => {
             >
               <TaskProlangs proLanguages={proLanguages} taskId={taskrId} taskUser={taskUser} setProLanguages={setProLanguages} currentUser={currentUser}/>
               <br/>
-              {/* <TaskTools  tools={tools} setTools={setTools} taskId={taskrId} taskUser={taskUser} />
+              <TaskTools  tools={tools} setTools={setTools} taskId={taskrId} taskUser={taskUser} />
               <br/>
-              <TaskProfile taskUser={taskUser}/> */}
+              <TaskProfile taskUser={taskUser}/>
             </Grid>
           </Grid>
           {/* <TaskLikes likes={likes} setLikes={setLikes} currentId={currentId} taskId={pTask.id}/> */}

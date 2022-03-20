@@ -1,5 +1,6 @@
-import {api} from '../common/client'
+import {api} from '../../contexts/api'
 import {Tool} from '../../type/interfaces'
 
-export const destroyTool = (id: number) =>  {
-    return api.delete<{tool: Tool}>('/tools/' + id )}
+export const destroyTool = (taskId:string | string[] | undefined) =>  {
+  return api.delete<{tool: Tool}>('/api/tools/' + taskId )
+}

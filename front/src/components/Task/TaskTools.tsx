@@ -19,60 +19,54 @@ import {
   import {createTool} from '../../api/tool/CreatTool'
   import DeleteIcon from '@material-ui/icons/Delete';
 
-  interface ToolsParams{
-    tools: Tool[]
-    taskId: number
-    taskUser: User | undefined
-    setTools: any
+interface Props{
+  tools: Tool[]
+  setTools: any
+  taskId: string | string[] | undefined
+  taskUser: User | undefined
+  currentUser: User
+}
+  
+  
+ const TaskTools:React.FC<Props> = ({tools, setTools, taskId, taskUser, currentUser}) => {
+  const [toolForm, setToolForm] = useState<string>("")
+
+  const deleteContent = async (index:number, tool:Tool) => {
+    destroyTool(tools[index].id)
+    tools.splice(index, 1)
+    setTools(tools.filter((x:Tool) => x !== tool))
   }
 
+  const addContent = async () => {
+    const tool = (await createTool(toolForm, taskId)).data.tool
+    setTools([...tools, tool])
+    setToolForm("")
+  };
   
- const TaskTools:React.FC<ToolsParams> = ({tls, id, user, setPtools}) => {
-
-    const [toolForm, setToolForm] = useState<string>("")
-    const [tools, setTools] = useState<Tool[]>(tls)
-    const _uid = Cookies.get("_uid")
-
-
-    const deleteContent = async (index:number, tool:Tool) => {
-      destroyTool(tools[index].id)
-      tools.splice(index, 1)
-      setTools(tools.filter((x:Tool) => x !== tool))
+  const atools = () => {
+    if (taskUser?.email === taskUser?.email) {
+      return (
+        <>
+          {tools.map((tool:Tool, index:number) =>
+            <p key={index} className="toolArticle">{tool.name}< IconButton onClick={() =>deleteContent(index, tool)}><DeleteIcon fontSize="small"/></IconButton></p>
+          )}
+          <Divider />
+          <CardActions>
+            <input value={toolForm} onChange={(e) => setToolForm(e.target.value)}/>
+            <Button onClick={() =>addContent()}>追加</Button>
+          </CardActions>
+        </>
+      );
+    } else {
+      return (
+        <>
+          {tools.map((tool:Tool, index:number) =>
+            <p key={index} className="toolArticle">{tool.name}</p>
+          )}
+        </>
+      );
     }
-    const addContent = async () => {
-      const tool = (await createTool(toolForm, id)).data.tool
-      setTools([...tools, tool])
-      setToolForm("")
-    };
-
-      const atools = () => {
-        if (user.email === _uid) {
-          return (
-            <>
-              {tools.map((tool:Tool, index:number) =>
-                    <p key={index} className="toolArticle">{tool.name}< IconButton onClick={() =>deleteContent(index, tool)}><DeleteIcon fontSize="small"/></IconButton></p>
-                  )}
-              <Divider />
-              <CardActions>
-                  <input value={toolForm} onChange={(e) => setToolForm(e.target.value)}/>
-                  <Button onClick={() =>addContent()}>追加</Button>
-              </CardActions>
-          </>
-          );
-        } else {
-          return (
-            <>
-              {tls.map((tool:Tool, index:number) =>
-                    <p key={index} className="toolArticle">{tool.name}</p>
-                  )}
-          </>
-          );
-        }
-      };              
-
-
-
-
+  }
   return (
     <>
     <Card>
