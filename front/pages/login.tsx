@@ -7,8 +7,6 @@ import { signIn, gustSignIn } from "../src/api/login/auth";
 import { AuthContext } from "./_app"
 import React, { useContext } from "react"
 import { useRouter } from 'next/router'
-
-
 import {
   Box,
   Button,
@@ -25,22 +23,16 @@ let style = {
 
 const Login: React.FC = () => {
   const router = useRouter()
-  const {isSignedIn, setIsSignedIn, setCurrentUser } = useContext(AuthContext)
+  const {setIsSignedIn, setCurrentUser } = useContext(AuthContext)
   const handleSubmit = async (params:any) => {
-    console.log({"user":{params}})
 
     try {
       const res = await signIn(params)
-      console.log(res.data.token)
-
       if (res.status === 200) {
         Cookies.set("token", res.data.token)    
         setIsSignedIn(true)
-        setIsSignedIn(true)
         setCurrentUser(res.data)
-        console.log("dnwqhbdw", isSignedIn)
         router.push({ pathname: '/'})
-        console.log("Signed in successfully!")
       }
     } catch (err) {
       console.log(err)
@@ -52,8 +44,6 @@ const Login: React.FC = () => {
     const res = await gustSignIn()
     console.log(res.data)
   }
-
-
 
   return (
     <div>

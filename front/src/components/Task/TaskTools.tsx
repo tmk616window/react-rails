@@ -20,10 +20,10 @@ import {
   import DeleteIcon from '@material-ui/icons/Delete';
 
   interface ToolsParams{
-    tls: Tool[]
-    id: number
-    user: User
-    setPtools: any
+    tools: Tool[]
+    taskId: number
+    taskUser: User | undefined
+    setTools: any
   }
 
   

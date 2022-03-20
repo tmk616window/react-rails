@@ -4,22 +4,22 @@ import Hire from '../../img/hire.jpg'
 import Image from 'next/image'
 import Link from 'next/link';
 import {execTest} from '../api/test'
-import {useEffect} from 'react'
-import {Task} from '../type/interfaces'
-import {getProLangs} from '../api/prolang/GetProLang'
-import Cookies from 'js-cookie'
+import {useEffect, useState} from 'react'
+import {Task, ProLang} from '../type/interfaces'
 import {displayImage} from '../api/common/DisplayImage'
+import  {api}  from '../contexts/api'
 
 
-interface RankingParam{
-    rTasks: Task[]
-  }
+const Top:React.FC = () => {
+    const[rankingTasks, setRankingTasks] = useState<Task[]>([])
+    useEffect(() => {
+      api.get("http://localhost:8080/api/ranking")
+      .then((res:any) => {
+        console.log(res.data.tasks)
+        setRankingTasks(res.data.tasks)
+      })
+    }, []);
   
-
-const Top:React.FC<RankingParam> = ({rTasks}) => {
-  const token = Cookies.get("token")
-
-
   return (
     <div className="App">
         <html lang="en">
@@ -69,49 +69,36 @@ const Top:React.FC<RankingParam> = ({rTasks}) => {
                         <h2 className="section-heading text-uppercase">ポートフォリオランキング</h2>
                         </div>
                         <div className="container">
-                            <div className="row">
-
-                                {rTasks.map((task:Task, index:number) => 
-                                    <div className="col-md-4" key={index}>
-                                        <p>{index + 1}位</p>
-                                        <div className="card card-1">
-                                        <img src={displayImage(`https://enjob.work/${task.logoImage?.url}`)} alt="..." width="100%" height="200%"  />   
-                                        {/* <Image alt="alt" src={displayImage(`https://enjob.work/${task.logoImage?.url}`)}  /> */}
-                                        <div className="cardContent">
-                                            <h3>タイトル：{task.title}</h3>
-                                            {task.prolongs.map((proLang:any ,index:number)=> (  
-                                                <span className="article" key={index}>{proLang.lange}</span>
-                                                ))}
-                                        </div>
-                                        <h4>{task.user.email}</h4>
-
-                                        </div>
-                                    </div>
-                                )}
-                            </div>
+                          <div className="row">
+                            {rankingTasks.map((task:Task, index:number) => 
+                              <div className="col-md-4" key={index}>
+                                <p>{index + 1}位</p>
+                                <div className="card card-1">
+                                  <div className="cardContent">                                  
+                                    <h3>タイトル：{task.title}</h3>
+                                    {task.pro_languages.map((proLang:ProLang ,index:number)=> (  
+                                      <span className="article" key={index}>{proLang.language}</span>
+                                    ))}
+                                  </div>
+                                </div>
+                              </div>
+                            )}
+                          </div>
                         </div>
                     </div>
-                </section>
-                <section className="page-section bg-light" id="team">
-                
-                {token
-                    ? <a className="taskButton btn" href="/tasks">他のポートフォリオを見る</a>
-                    : <a className="taskButton btn" href="/login">他のポートフォリオを見る</a>
-                }
-
                 </section>
                 <footer className="footer py-4">
                     <div className="container">
                         <div className="row align-items-center">
                             <div className="col-lg-4 text-lg-start">Copyright &copy; Your Website 2021</div>
                             <div className="col-lg-4 my-3 my-lg-0">
-                                <a className="btn btn-dark btn-social mx-2" href="#!"><i className="fab fa-twitter"></i></a>
-                                <a className="btn btn-dark btn-social mx-2" href="#!"><i className="fab fa-facebook-f"></i></a>
-                                <a className="btn btn-dark btn-social mx-2" href="#!"><i className="fab fa-linkedin-in"></i></a>
+                              <a className="btn btn-dark btn-social mx-2" href="#!"><i className="fab fa-twitter"></i></a>
+                              <a className="btn btn-dark btn-social mx-2" href="#!"><i className="fab fa-facebook-f"></i></a>
+                              <a className="btn btn-dark btn-social mx-2" href="#!"><i className="fab fa-linkedin-in"></i></a>
                             </div>
                             <div className="col-lg-4 text-lg-end">
-                                <a className="link-dark text-decoration-none me-3" href="#!">Privacy Policy</a>
-                                <a className="link-dark text-decoration-none" href="#!">Terms of Use</a>
+                              <a className="link-dark text-decoration-none me-3" href="#!">Privacy Policy</a>
+                              <a className="link-dark text-decoration-none" href="#!">Terms of Use</a>
                             </div>
                         </div>
                     </div>

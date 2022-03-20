@@ -11,13 +11,9 @@ import {
   } from '@material-ui/core';
 import {User} from '../../type/interfaces'
 import {displayImage} from '../../api/common/DisplayImage'
-interface UserParams{
-  user: User
-}
 
   
- const TaskProfile = ({user}: UserParams) => {
-
+ const TaskProfile = (props:any) => {
 
    return (
     <>
@@ -32,7 +28,7 @@ interface UserParams{
         >
 
         <Avatar 
-        src={displayImage(`https://enjob.work/${user.image?.url}`)}
+        // src={displayImage(`https://enjob.work/${user.image?.url}`)}
         />
         
           <Typography
@@ -40,7 +36,7 @@ interface UserParams{
             gutterBottom
             variant="h5"
           >
-            <Link href={{ pathname: '/profile', query: { id: user.id } }}>{user.email}</Link>
+            <Link href={{ pathname: '/profile', query: { id: props.taskUser.id } }}>{props.taskUser.email}</Link>
           </Typography>
           <Typography
             color="textSecondary"

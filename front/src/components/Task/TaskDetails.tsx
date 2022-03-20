@@ -15,43 +15,34 @@ import {
   TextField
 } from '@material-ui/core';
 
-interface TaskItem {
-  task: Task
+interface Props {
+  task: Task | undefined
   setEdit: any
-  contents: Content[]
-  user :User
 }
 
-
- const TaskDetails:React.FC<TaskItem> = ({task, setEdit, contents, user}) => {
-  const _uid = Cookies.get("_uid")
-  // useEffect(() => {
-  //   console.log("task.logoImage?.url", _uid, user.email)
-  // }, [])
-  const[pcontests, setPContents] = useState(contents)
+const TaskDetails:React.FC<Props> = ({task, setEdit}) => {
+  // const _uid = Cookies.get("_uid")
+  // const[pcontests, setPContents] = useState(contents)
   
-  const patchButton = () => {
-    if (user.email === _uid) {
-      return (
-        <>
-        <Button
-          color="secondary"
-          variant="contained"
-          onClick={()=>{setEdit(false)}}
-        >
-          編集
-        </Button>
-      </>
-      );
-    } 
-  };
-
-
-
+  // const patchButton = () => {
+  //   if (user.email === _uid) {
+  //     return (
+  //       <>
+  //       <Button
+  //         color="secondary"
+  //         variant="contained"
+          // onClick={()=>{setEdit(false)}}
+  //       >
+  //         編集
+  //       </Button>
+  //     </>
+  //     );
+  //   } 
+  // };
   return (
       <Card>
         <CardHeader
-          title={task.title}
+          title={task?.title}
         />
         <Divider />
         <CardContent>
@@ -64,7 +55,7 @@ interface TaskItem {
               md={12}
               xs={12}
             >
-              <img alt="logo" src={displayImage(`https://enjob.work/${task.logoImage?.url}`)} height="400px" width="100%"/>
+              <img alt="logo"  height="400px" width="100%"/>
             </Grid>
             <Grid
               item
@@ -79,7 +70,7 @@ interface TaskItem {
               xs={12}
             >
               <h3>ポートフォリオURL</h3>
-                <a href={task.purl}>{task.purl}</a>
+                <a href={task?.url}>{task?.url}</a>
             </Grid>
             <Grid
               item
@@ -87,7 +78,7 @@ interface TaskItem {
               xs={12}
             >
               <h3>ポートフォリオ概要</h3>
-                <p>{task.description}</p>
+                <p>{task?.details}</p>
             </Grid>
           </Grid>
           <Grid
@@ -99,7 +90,7 @@ interface TaskItem {
             <br/>
             <br/>
             <br/>
-            {pcontests.map((content:Content, index:number) =>
+            {task?.contents.map((content:Content, index:number) =>
                   <div className="content" key={index}>
                     <h3>{content.title}</h3>
                     <Divider />
@@ -115,7 +106,7 @@ interface TaskItem {
                   p: 2
                 }}
               >
-                {patchButton()}
+                {/* {patchButton()} */}
               </Box>
 
           <Grid>

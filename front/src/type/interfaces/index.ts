@@ -36,13 +36,13 @@ export interface SignUpParams {
   export interface Task {
     id: number
     title: string
-    description: string
+    details: string
     logoImage?: {
       url: string
     }
-    purl: string
+    url: string
     user_id: number
-    prolongs: ProLang[]
+    pro_languages: ProlLanguage[]
     user: User
     tools: Tool[]
     likes: Like[]
@@ -55,9 +55,9 @@ export interface SignUpParams {
     task_id: number
   }
 
-  export interface ProLang {
+  export interface ProlLanguage {
     id: number
-    lange: string
+    language: string
     task_id: number
   }
 
@@ -76,9 +76,8 @@ export interface SignUpParams {
     task_id?: number,
   }
 
-export interface SignIn {
+export interface Token {
     token: string
-    id: any
 }
 
 export interface Like {

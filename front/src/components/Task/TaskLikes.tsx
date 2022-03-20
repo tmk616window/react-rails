@@ -41,7 +41,6 @@ import {useState, useEffect} from 'react'
   }
 
   useEffect(() => {
-    console.log("swqdwdqaaaaaa")
     likes.filter(likes => {
       if(likes.user_id === currentId) {
         setSlike(likes.id)

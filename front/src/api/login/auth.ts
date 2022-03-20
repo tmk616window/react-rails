@@ -1,7 +1,7 @@
 import {client} from "../common/client"
 import Cookies from "js-cookie"
 import axios from 'axios'
-import { SignUpParams, SignInParams, currentUser,User, SignIn } from "../../type/interfaces"
+import { SignUpParams, SignInParams, currentUser,User, Token } from "../../type/interfaces"
 import api from '../../contexts/api'
 
 // サインアップ（新規アカウント作成）
@@ -11,7 +11,7 @@ export const signUp = (params: SignUpParams) => {
 
 // サインイン（ログイン）
 export const signIn = (params: SignInParams)  => {
-  return axios.post<{data: SignIn}>("http://localhost:8080/api/session", params)
+  return axios.post<{token: Token}>("http://localhost:8080/api/session", params)
 }
 
 // サインイン（ゲストログイン）

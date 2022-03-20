@@ -14,7 +14,7 @@ import  { api }  from '../src/contexts/api'
 export const AuthContext = createContext({} as {
   isSignedIn: boolean
   setIsSignedIn: React.Dispatch<React.SetStateAction<boolean>>
-  currentUser: any
+  currentUser: User
   setCurrentUser: React.Dispatch<React.SetStateAction<any>>
 })
 
