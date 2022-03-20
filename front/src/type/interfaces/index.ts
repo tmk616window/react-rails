@@ -88,6 +88,11 @@ export interface Like {
   user_id: number
 }
 
+export interface ResLike {
+  likeId: number
+  is_like: boolean
+}
+
 export interface Room {
   id: number
   user: any

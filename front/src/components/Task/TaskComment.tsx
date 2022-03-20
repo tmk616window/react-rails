@@ -15,7 +15,6 @@ import {createComment} from '../../api/task/comment/CreateComment'
 import {Comment, User} from '../../type/interfaces'
 import DeleteIcon from '@material-ui/icons/Delete';
 import {destroyComment} from '../../api/task/comment/DestroyComment'
-import Cookies from 'js-cookie'
 
 interface CommentParam{
   comments: Comment[]

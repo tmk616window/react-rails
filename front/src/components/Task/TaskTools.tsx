@@ -1,10 +1,7 @@
-import {useState, useEffect} from 'react'
+import {useState} from 'react'
 import {Tool, User} from '../../type/interfaces'
-import Logo from '../../../img/logo.png'
 import Image from 'next/image'
 import {destroyTool} from '../../api/tool/DestroyTool'
-import Cookies from 'js-cookie'
-import {getTask} from '../../api/task/GetTask'
 import {
     Avatar,
     Box,

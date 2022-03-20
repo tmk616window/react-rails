@@ -5,7 +5,6 @@ import Logo from '../img/logo.png'
 import {Task, ProlLanguage} from '../src/type/interfaces'
 import Link from 'next/link';
 import {displayImage} from '../src/api/common/DisplayImage'
-import  {api}  from '../src/contexts/api'
 import { useRouter } from "next/router";
 
 export const  TaskList = () => {

@@ -1,5 +1,5 @@
 import {Like, User} from '../../type/interfaces'
-import {getTask} from '../../api/task/GetTask'
+import {getLikes} from '../../api/like/GetLike'
 import {createLike} from '../../api/like/CreateLike'
 import {deleteLike} from '../../api/like/DeleteLike'
 import {
@@ -20,30 +20,33 @@ import {useState, useEffect} from 'react'
 
  const TaskLikes:React.FC<LikesProps> = ({likes, setLikes, currentUser, taskId }) => {
   const [isLike, setIsLike] = useState<boolean>()
-  const destroyLike = async (id:number) => {
+  const [likeId, setLikeId] = useState<number[]>([])
+  const destroyLike = async (id:number | undefined) => {
     deleteLike(id)
-    console.log(like)
-    setIsLike(like)
+    const gLikes = await getLikes(taskId)
+    if(gLikes.status == 200) {
+      console.log(gLikes.data)
+      setLikeId([])
+    }
   }
 
   const postLike = async () => {
-    const like = (await createLike(taskId, currentUser?.id)).data.is_like
-    console.log(like)
-    setIsLike(like)
+    const likeIs =  (await createLike(taskId, currentUser?.id)).data.like.id
+    setLikeId([likeIs])
   }
 
-  useEffect(() => {
-
-    setIsLike()
-  }, [])
-
-  useEffect(() => {
-  }, [postLike, destroyLike])
-
+  useEffect( () => {
+    (async() => {
+      const gLikes = await getLikes(taskId)
+      if(gLikes.status == 200) {
+        setLikeId(gLikes.data.current_user_like)
+      }
+    })()
+  }, []);
 
   const likeButton = () => {
-    if(isLike) {
-      return <Button onClick={() => {destroyLike()}}><FavoriteBorderIcon color="error" fontSize="large"/>いいね取り消し</Button>
+    if(likeId.length !== 0) {
+      return <Button onClick={() => {destroyLike(likeId[0])}}><FavoriteBorderIcon color="error" fontSize="large"/>いいね取り消し</Button>
     } else {
       return <Button onClick={() => {postLike()}}><FavoriteBorderIcon  fontSize="large"/>いいね</Button>
     }

@@ -1,8 +1,5 @@
 Rails.application.routes.draw do
   namespace :api do
-    get 'content/show'
-  end
-  namespace :api do
     resources :users
     resources :tasks
     resource :session, only: %i[create destroy show]
@@ -11,7 +8,7 @@ Rails.application.routes.draw do
     resources :tools, only: [:create, :destroy]
     resources :contents, only: [:show, :create, :update,:destroy]
     resources :comments, only: [:show, :create, :update,:destroy]
-    resources :likes, only: [:create, :destroy]
+    resources :likes, only: [:show ,:create, :destroy]
     resources :ranking, only: %i[index]
   end
 end

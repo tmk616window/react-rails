@@ -11,12 +11,7 @@ class Api::SessionsController < ApplicationController
   end
 
   def create
-    puts"dewmdelwmldpew"
-    puts"dewmdelwmldpew"
-
     token = get_token(session_params[:email], session_params[:password])
-    puts token
-    puts "11111"
     render json: { token: token} 
   end
 
