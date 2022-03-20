@@ -14,7 +14,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 interface Props{
   proLanguages: ProlLanguage[]
   setProLanguages: any
-  taskId: string | string[] | undefined
+  taskId: number
   taskUser: User | undefined
   currentUser: User
 }

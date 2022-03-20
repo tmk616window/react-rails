@@ -22,9 +22,9 @@ import {
 interface Props{
   tools: Tool[]
   setTools: any
-  taskId: string | string[] | undefined
+  taskId: number
   taskUser: User | undefined
-  currentUser: User
+  currentUser: User | undefined
 }
   
   

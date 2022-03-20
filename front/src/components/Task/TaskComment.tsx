@@ -19,32 +19,29 @@ import Cookies from 'js-cookie'
 
 interface CommentParam{
   comments: Comment[]
-  id: number
-  user: User
+  setComments: any
+  taskId: number
+  taskUser: User | undefined
+  currentUser: User | undefined
 }
 
-const TaskComment:React.FC<CommentParam> = ({comments, id, user}) => {
-  
-  const[comment, setComment] = useState<string[]>([])
+const TaskComment:React.FC<CommentParam> = ({comments, setComments,taskId, taskUser, currentUser}) => {  
   const [form, setForm] = useState<string>("")
-  const _uid = Cookies.get("_uid")
-  const currentId = Number(Cookies.get("id"))
 
-  const addContent = () => {
-    setComment([...comment, form]);
-    console.log(comment)
-    createComment(form, id, currentId)
+  const addContent = async () => {
+    const comment = (await createComment(form, taskId, currentUser?.id)).data.comment
+    setComments([...comments, comment]);
     setForm("")
-    location.reload();
-    };
+  };
 
-  const deleteComment = (index:number) => {
+  const deleteComment = (index:number, comment:Comment) => {
     destroyComment(comments[index].id)
-    location.reload();
+    comments.splice(index, 1)
+    setComments(comments.filter((x:Comment) => x !== comment)) 
   }
   
   const commentForm = () => {
-    if (user.email !== _uid) {
+    if (taskUser?.email !== currentUser?.email) {
       return (
         <>
           <h3>コメント</h3>
@@ -73,47 +70,45 @@ const TaskComment:React.FC<CommentParam> = ({comments, id, user}) => {
       </>
       );
     } 
-  };              
+  };
 
-
-    return (
-        <>
-            <Grid
-                spacing={3}
-                lg={10}
-                md={10}
-                xs={12}
-              >
-              <br/>
-              <h3>コメント一覧</h3>     
-              {comments.map((comment:Comment, index:number) =>
-                <div key={index}>
-                <Card>
-                <CardContent>
-                <p >{comment.text}</p>
-                <Box
-                sx={{
-                  display: 'flex',
-                  justifyContent: 'flex-end',
-                  p: 2
-                }}
-                >    
-                  ユーザー：<Link href={{ pathname: '/profile', query: { id: comment.user_id } }}>{comment.user.email}</Link>
-                </Box>
-                {comment.user.email === _uid
-                  ? < IconButton onClick={() =>deleteComment(index)}><DeleteIcon fontSize="small"/></IconButton>
-                  : <div className='normalButtonInner'></div>
-                }
-                
-                  </CardContent>
-                </Card>
-                <br/>
-              </div>
-              )}
-            </Grid>
-            {commentForm()}
-        </>
-    );
+  return (
+      <>
+        <Grid
+            spacing={3}
+            lg={10}
+            md={10}
+            xs={12}
+          >
+          <br/>
+          <h3>コメント一覧</h3>     
+          {comments.map((comment:Comment, index:number) =>
+            <div key={index}>
+            <Card>
+            <CardContent>
+            <p >{comment.text}</p>
+            <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'flex-end',
+              p: 2
+            }}
+            >    
+              {/* ユーザー：<Link href={{ pathname: '/profile', query: { id: comment.user_id } }}>{comment.user.email}</Link> */}
+            </Box>
+            {currentUser?.email === currentUser?.email
+              ? < IconButton onClick={() =>deleteComment(index, comment)}><DeleteIcon fontSize="small"/></IconButton>
+              : <div className='normalButtonInner'></div>
+            }
+              </CardContent>
+            </Card>
+            <br/>
+          </div>
+          )}
+        </Grid>
+          {commentForm()}
+      </>
+  );
   }
 
   export default TaskComment

@@ -29,6 +29,7 @@ const Login: React.FC = () => {
     try {
       const res = await signIn(params)
       if (res.status === 200) {
+        console.log("token", res.data.token)
         Cookies.set("token", res.data.token)    
         setIsSignedIn(true)
         setCurrentUser(res.data)

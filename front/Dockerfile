@@ -4,5 +4,6 @@ ENV APP_HOME /app
 RUN mkdir -p $APP_HOME
 WORKDIR $APP_HOME
 
-RUN apt update && npm install
-# RUN apt update
+RUN apt-get update -qq && apt-get install -y
+RUN apt update
+RUN npm install

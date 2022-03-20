@@ -12,7 +12,7 @@ import {AuthContext}from './_app'
 import Cookies from 'js-cookie'
 import { useRouter } from "next/router";
 import  {api}  from '../src/contexts/api'
-import {Task, ProlLanguage, Tool, Like, Content, User} from '../src/type/interfaces'
+import {Task, ProlLanguage, Tool, Like, Content, Comment,User} from '../src/type/interfaces'
 import {
   Box,
   Container,
@@ -23,7 +23,7 @@ import {
 
 const Tasks = () => {
   const router = useRouter();
-  const taskrId = router.query.id
+  const taskrId = Number(router.query.id)
   const {currentUser} = useContext(AuthContext)
   const[edit, setEdit] = useState<boolean>(true)
   const[task, setTask] = useState<Task | undefined>()
@@ -32,6 +32,7 @@ const Tasks = () => {
   const[likes, setLikes] = useState<Like[]>([])
   const[content, setContent] = useState<Content[]>([])
   const[taskUser, setTaskUser] = useState<User | undefined>()
+  const[comments, setComments] = useState<Comment[]>([])
 
   useEffect( () => {
     (async() => {
@@ -43,6 +44,7 @@ const Tasks = () => {
         setLikes(gtask.data.task.likes)
         setContent(gtask.data.task.contents)
         setTaskUser(gtask.data.task.user)
+        setComments(gtask.data.task.comments)
       }
     })()
   }, []);
@@ -79,21 +81,21 @@ const Tasks = () => {
             >
               <TaskProlangs proLanguages={proLanguages} taskId={taskrId} taskUser={taskUser} setProLanguages={setProLanguages} currentUser={currentUser}/>
               <br/>
-              <TaskTools  tools={tools} setTools={setTools} taskId={taskrId} taskUser={taskUser} />
+              <TaskTools  tools={tools} setTools={setTools} taskId={taskrId} taskUser={taskUser} currentUser={currentUser}/>
               <br/>
               <TaskProfile taskUser={taskUser}/>
             </Grid>
           </Grid>
           {/* <TaskLikes likes={likes} setLikes={setLikes} currentId={currentId} taskId={pTask.id}/> */}
-          {/* <Grid
+          <Grid
             spacing={3}
             lg={10}
             md={10}
             xs={12}
           >
             <br/>
-            <TaskComment id={pTask.id} comments={comments} user={user}/>
-          </Grid> */}
+            <TaskComment taskId={taskrId} comments={comments} setComments={setComments} taskUser={taskUser} currentUser={currentUser}/>
+          </Grid>
           <Grid
               spacing={3}
               lg={10}
