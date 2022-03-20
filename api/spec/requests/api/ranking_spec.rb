@@ -11,16 +11,8 @@ RSpec.describe 'Task', type: :request do
   describe 'GET #index' do
     context 'ユーザーが存在する場合' do
       it '正常に通る' do
-        get "/api/ranking", headers: headers
-        expect(response).to have_http_status 200
-      end
-    end
-
-    context 'トークンを持っていない' do
-      it '401を返す' do
         get "/api/ranking"
-        response_json = JSON.parse(response.body)
-        expect(response_json['message']).to eq "unauthorized"
+        expect(response).to have_http_status 200
       end
     end
   end

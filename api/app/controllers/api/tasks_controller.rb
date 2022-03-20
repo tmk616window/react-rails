@@ -6,7 +6,7 @@ class Api::TasksController < ApplicationController
 
   def show
     task = Task.find(params[:id])
-    render json: {task: task, proLanguages: task.pro_languages, tools: task.tools, contents: task.contents, comments: task.comments, user: task.user, likes: task.likes}, status: :ok
+    render json: { task:{title: task.title, details: task.details, image: task.image, url: task.url, pro_languages: task.pro_languages, tools: task.tools, contents: task.contents, comments: task.comments, user: task.user, likes: task.likes}}, status: :ok
   end
 
   def create
