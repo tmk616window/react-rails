@@ -30,6 +30,7 @@ export interface SignUpParams {
     details: string
     live:string
     age: number
+    tasks: Task[]
   }
   
 

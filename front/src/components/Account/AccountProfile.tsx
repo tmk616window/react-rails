@@ -19,30 +19,13 @@ import { useRouter } from 'next/router'
 import Cookies from 'js-cookie'
 
 interface UserProfile {
-  user: User
-  rooms: Room[]
+  profileUser: User | undefined
 }
 
- const AccountProfile:React.FC<UserProfile> = ({user, rooms}) => {
-  const currentId = Number(Cookies.get("id"))
-  const router = useRouter()
-
-  const room = rooms.filter(room => {
-    return room.user === currentId && room.chat_id === user.id || room.user === user.id && room.chat_id === currentId
-  })
-
-
+ const AccountProfile:React.FC<UserProfile> = ({profileUser}) => {
 
   useEffect(() => {
-    console.log("user", room)
   }, [])
-
-  const postRoom = async () => {
-    const room = (await createRoom(currentId, user.id)).data
-    console.log(room,"dataa")
-    // router.push("/")
-    router.push({ pathname: '/chatroom', query: { id: room.room.id } })
-  }
 
   return (
   <>
@@ -55,9 +38,8 @@ interface UserProfile {
           flexDirection: 'column'
         }}
       >
-        
         <Avatar 
-        src={displayImage(`https://enjob.work/${user.image?.url}`)}
+        // src={displayImage(`https://enjob.work/${user.image?.url}`)}
         />
         <br/>
         <Typography
@@ -65,7 +47,7 @@ interface UserProfile {
           gutterBottom
           variant="h3"
         >
-          {user.name}
+          {profileUser?.name}
         </Typography>
         <Typography
           color="textSecondary"
@@ -76,38 +58,16 @@ interface UserProfile {
           color="textSecondary"
           variant="body1"
         >
-          <p>{user.email}</p>
+          <p>{profileUser?.email}</p>
         </Typography>
         <Typography
           color="textSecondary"
           variant="body1"
         >
         </Typography>
-
-
-
-
       </Box>
     </CardContent>
     <Divider />
-
-
-    <CardActions>
-    {(() => {
-        if (currentId !== user.id && room.length == 0) {
-          return (
-            <Button
-            color="secondary"
-            fullWidth
-            variant="text"
-            onClick={postRoom}
-          >
-              メッセージを送る
-          </Button>    
-          )
-        } 
-      })()}
-    </CardActions>
   </Card>
   </>
   )

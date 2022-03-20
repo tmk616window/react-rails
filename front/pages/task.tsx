@@ -12,7 +12,7 @@ import {AuthContext}from './_app'
 import Cookies from 'js-cookie'
 import { useRouter } from "next/router";
 import  {api}  from '../src/contexts/api'
-import {Task, ProlLanguage, Tool, Like, Content, Comment,User} from '../src/type/interfaces'
+import {Task, ProlLanguage, Tool, Like, Content, Comment, User} from '../src/type/interfaces'
 import {
   Box,
   Container,
@@ -69,7 +69,7 @@ const Tasks = () => {
               xs={12}
             >
             {edit
-              ? <TaskDetails task={task} taskUser={taskUser} setEdit={setEdit}/>
+              ? <TaskDetails task={task} taskUser={taskUser} setEdit={setEdit} currentUser={currentUser}/>
                 : <EditTaskDetails  task={task} setEdit={setEdit} contents={contents} setContents={setContents} setTask={setTask} taskId={taskId}/>
             }
             </Grid>

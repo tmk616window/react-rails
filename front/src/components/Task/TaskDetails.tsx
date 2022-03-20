@@ -19,11 +19,12 @@ interface Props {
   task: Task | undefined
   taskUser: User | undefined
   setEdit: any
+  currentUser: User | undefined
 }
 
-const TaskDetails:React.FC<Props> = ({task, taskUser, setEdit}) => {
+const TaskDetails:React.FC<Props> = ({task, taskUser, setEdit, currentUser}) => {
   const patchButton = () => {
-    if (taskUser?.email === taskUser?.email) {
+    if (taskUser?.email === currentUser?.email) {
       return (
         <>
         <Button

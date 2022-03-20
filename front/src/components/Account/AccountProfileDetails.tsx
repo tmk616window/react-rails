@@ -15,19 +15,19 @@ import {
 } from '@material-ui/core';
 
 interface UserProfile {
-  user: User
+  profileUser: User | undefined
+  setProfileUser: any
   setEdit: any
-  setUser: any
 }
 
- const AccountProfileDetails:React.FC<UserProfile> = ({user, setEdit, setUser}) => {
+ const AccountProfileDetails:React.FC<UserProfile> = ({profileUser, setProfileUser, setEdit}) => {
   const [image, setImage] = useState<File>()
   const [values, setValues] = useState<any>({
-    name: user.name,
-    email: user.email,
-    live: user.live,
-    details: user.details,
-    age: user.age
+    name: profileUser?.name,
+    email: profileUser?.email,
+    // live: user.live,
+    // details: user.details,
+    // age: user.age
   });
    
   const handleChange = (event: any) => {    
@@ -46,7 +46,6 @@ interface UserProfile {
     formData.append("details", values.details)
     formData.append("age", values.age)
     if (image) formData.append("image", image)
-
     return formData
   }
 
@@ -58,13 +57,11 @@ interface UserProfile {
 
   const patchUser  = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-
     const data = createFormData()
-
-    await updateUser(user.id, data)
+    await updateUser(Number(profileUser?.id), data)
     .then((res) => {
       console.log("成功")
-      setUser(res.data.user)
+      setProfileUser(res.data.user)
       setEdit(true)
     })
   }
@@ -84,7 +81,6 @@ interface UserProfile {
               md={12}
               xs={12}
             >
-            
             <input
               accept="image/*"
               id="icon-button-file" 

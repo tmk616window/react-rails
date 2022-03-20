@@ -17,28 +17,26 @@ import {
 } from '@material-ui/core';
 
 interface UserProfile {
-  user: User
-  userMessage: Message[]
+  profileUser: User | undefined
+  currentUser: User | undefined
   setEdit: any
 }
 
- const EditAccountProfileDetails:React.FC<UserProfile> = ({user, userMessage,setEdit}) => {
+ const EditAccountProfileDetails:React.FC<UserProfile> = ({profileUser, currentUser, setEdit}) => {
 
-  const _uid = Cookies.get("_uid")
   useEffect(() => {
-    console.log(user.email, _uid)
   }, [])
 
   const [values, setValues] = useState<any>({
-    name: user.name,
-    email: user.email,
-    live: user.live,
-    details: user.details,
-    age: user.age
+    name: profileUser?.name,
+    email: profileUser?.email,
+    // live: profileUser?.live,
+    // details: profileUser.details,
+    // age: user.age
   });
   
   const patchButton = () => {
-    if(user.email === _uid) {
+    if(profileUser?.email === currentUser?.email) {
       return (
         <Box
           sx={{
@@ -86,28 +84,28 @@ interface UserProfile {
               md={12}
               xs={12}
             >
-              <p>{user.name}</p>
+              <p>{profileUser?.name}</p>
             </Grid>
             <Grid
               item
               md={12}
               xs={12}
             >
-              <p>メールアドレス：{user.email}</p>
+              <p>メールアドレス：{profileUser?.email}</p>
             </Grid>
             <Grid
               item
               md={6}
               xs={12}
             >
-              <p>年齢：{user.age}歳</p>
+              {/* <p>年齢：{user.age}歳</p> */}
             </Grid>
             <Grid
               item
               md={6}
               xs={12}
             >
-              <p>居住都道府県：{user.live}</p>
+              {/* <p>居住都道府県：{user.live}</p> */}
             </Grid>
             <Grid
             item
@@ -123,7 +121,7 @@ interface UserProfile {
             xs={12}
           >
             <p>詳細プロフィール</p>
-            <p>{user.details}</p>
+            {/* <p>{user.details}</p> */}
           </Grid>
 
           </Grid>

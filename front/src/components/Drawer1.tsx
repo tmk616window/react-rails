@@ -12,58 +12,54 @@ import Link from 'next/link'
 import Cookies from 'js-cookie'
 import  { useContext, useEffect } from "react"
 import { AuthContext } from "../../pages/_app"
- 
 
 type Anchor = 'top' | 'left' | 'bottom' | 'right';
 
-const id = Cookies.get("id")
-
-
-const signInMenu = [
-  {
-    title: "トップ",
-    href: "/"
-  },
-  {
-    title: "新規登録",
-    href: "/register"
-  },
-  {
-    title: "ログイン",
-    href: "/login"
-  },
-  {
-    title: "一覧",
-    href: "/tasks"
-  },
-]
-
-const signOutMenu = [
-  {
-    title: "トップ",
-    href: "/"
-  },
-  {
-    title: "一覧",
-    href: "/tasks"
-  },
-  {
-    title: "投稿",
-    href: "/task/new"
-  },
-  {
-    title: "プロフィール",
-    href: { pathname: '/profile', query: { id: id } }
-  },
-]
-
-
-
 const SwipeableTemporaryDrawer = ({handleSignOut}: any) => {
+  const {currentUser} = useContext(AuthContext)
   const { isSignedIn, setIsSignedIn } = useContext(AuthContext)
   const [state, setState] = React.useState({
     right: false,
   });
+
+  const signInMenu = [
+    {
+      title: "トップ",
+      href: "/"
+    },
+    {
+      title: "新規登録",
+      href: "/register"
+    },
+    {
+      title: "ログイン",
+      href: "/login"
+    },
+    {
+      title: "一覧",
+      href: "/tasks"
+    },
+  ]
+  
+  const signOutMenu = [
+    {
+      title: "トップ",
+      href: "/"
+    },
+    {
+      title: "一覧",
+      href: "/tasks"
+    },
+    {
+      title: "投稿",
+      href: "/task/new"
+    },
+    {
+      title: "プロフィール",
+      href: { pathname: '/profile', query: { id: currentUser?.id } }
+    },
+  ]
+  
 
   const toggleDrawer =
     (anchor: Anchor, open: boolean) =>

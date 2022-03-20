@@ -13,9 +13,6 @@ import {
     setEdit: any
   }
   
-  
-  
-
   const EditTask:React.FC<TaskItem> = ({task, setEdit}) => {
 
     return(

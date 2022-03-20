@@ -43,8 +43,8 @@ interface Props{
     setToolForm("")
   };
   
-  const atools = () => {
-    if (taskUser?.email === taskUser?.email) {
+  const editTools = () => {
+    if (taskUser?.email === currentUser?.email) {
       return (
         <>
           {tools.map((tool:Tool, index:number) =>
@@ -72,7 +72,7 @@ interface Props{
     <Card>
       <CardContent>
       <h4>使用ツール</h4>
-      {atools()}
+      {editTools()}
      </CardContent>      
     </Card>
     </>

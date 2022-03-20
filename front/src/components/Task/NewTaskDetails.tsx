@@ -1,9 +1,9 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useContext } from 'react';
 import Image from 'next/image'
 import {createTask} from '../../api/task/CreateTask'
 import {createContent} from '../../api/task/content/CreateContent'
 import { useRouter } from 'next/router';
-import Cookies from "js-cookie";
+import { AuthContext } from "../../../pages/_app"
 import {
   Box,
   Button,
@@ -15,21 +15,6 @@ import {
   TextareaAutosize,
   TextField
 } from '@material-ui/core';
-
-const states = [
-  {
-    value: 'alabama',
-    label: 'Alabama'
-  },
-  {
-    value: 'new-york',
-    label: 'New York'
-  },
-  {
-    value: 'san-francisco',
-    label: 'San Francisco'
-  }
-];
 
 type content = {
     title :string,
@@ -43,19 +28,18 @@ type content = {
   const [desc, setDesc] = useState<string>("")
   const [purl, setPurl] = useState<string>("")
   const [image, setImage] = useState<string>("")
-  const currentId = Cookies.get("id")
-  const [cid, setCId] = useState<any>(currentId)
-  const addContent = () => {
-    setContents([...contents, {title:"", text:""}]);
-    console.log(contents)
-    };
+  const {currentUser} = useContext(AuthContext)
 
-    const changeHandle = (key: string, value: string, index:number) => {
-      const _contents = [...contents]
-      _contents[index] = {...contents[index], [key]: value}
-      setContents(_contents)
-    }
-  
+  const addContent = () => {
+  setContents([...contents, {title:"", text:""}]);
+    console.log(contents)
+  };
+
+  const changeHandle = (key: string, value: string, index:number) => {
+    const _contents = [...contents]
+    _contents[index] = {...contents[index], [key]: value}
+    setContents(_contents)
+  }
 
   const deleteContent = (id:number) => {
     setContents(contents.filter((_, i) => i !== id))
@@ -66,40 +50,27 @@ type content = {
     country: 'USA'
   });
 
-
-const handleChange = (event: any) => {
+  const handleChange = (event: any) => {
     setValues({
       ...values,
       [event.target.name]: event.target.value
     });
   };
 
-
-
-  const handleImageChange = (event: any) => {
-    const imageFile = event.target.files[0];
-    const imageUrl = URL.createObjectURL(imageFile);
-    setImage(imageUrl)
- }
-
- const postContent = (id: number) => {
-  for (const content of contents) {
-    createContent(content['title'], content['text'], id)
+  const postContent = (taskId: number) => {
+    for (const content of contents) {
+      createContent(content['title'], content['text'], taskId)
+    }
   }
-}
-
-
 
   // FormData形式でデータを作成
   const createFormData = (): FormData => {
     const formData = new FormData()
     formData.append("title", title)
-    if (image) formData.append("logoImage", image)
-    formData.append("purl", purl)
-    formData.append("description", desc)
-    formData.append("user_id", cid)
-
-
+    if (image) formData.append("image", image)
+    formData.append("url", purl)
+    formData.append("details", desc)
+    formData.append("user_id", String(currentUser.id))
     return formData
   }
 
@@ -108,19 +79,16 @@ const handleChange = (event: any) => {
     setImage(file)
   }, [])
 
-
- const postTask = async (e: React.FormEvent<HTMLFormElement>) => {
-  e.preventDefault()
-
-  const data = createFormData()
-  const taskPesp = (await createTask(data)).data.task
-  postContent(taskPesp.id)
-  router.push({
-    pathname:"/task",       
-    query: {id : taskPesp.id} 
-  });
-
-}
+  const postTask = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    const data = createFormData()
+    const taskRes = (await createTask(data)).data.task
+    postContent(taskRes.id)
+    router.push({
+      pathname:"/task",       
+      query: {id : taskRes.id} 
+    });
+  }
 
   return (
       <Card>
@@ -128,18 +96,18 @@ const handleChange = (event: any) => {
         <Divider />
         <CardContent>
         <Grid
-            item
-            md={12}
-            xs={12}
+          item
+          md={12}
+          xs={12}
         >
         <TextField
-            fullWidth
-            label="タイトル"
-            name="タイトル"
-            required
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            variant="outlined"
+          fullWidth
+          label="タイトル"
+          name="タイトル"
+          required
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          variant="outlined"
         />
         </Grid>
         <br/>
@@ -147,24 +115,22 @@ const handleChange = (event: any) => {
             container
             spacing={3}
           >
-
             <Grid
               item
               md={12}
               xs={12}
             >
-
               <Button
-                  component="label"
-                >
-                ロゴ画像を貼ってください
-                  <input 
-                    type="file" 
-                    accept="image/*" 
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                      uploadImage(e)
-                    }}
-                  />
+                component="label"
+              >
+              ロゴ画像を貼ってください
+              <input 
+                type="file" 
+                accept="image/*" 
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  uploadImage(e)
+                }}
+              />
               </Button>
               {/* <Image alt="admin" src={image} height="450" width="100%"/> */}
               {/* <Image src={image} height="800"/> */}
@@ -185,9 +151,7 @@ const handleChange = (event: any) => {
                 onChange={(e) => setPurl(e.target.value)}
                 variant="outlined"
               />
-
             </Grid>
-
             <Grid
               item
               md={12}
@@ -201,7 +165,6 @@ const handleChange = (event: any) => {
                 style={{ width: "100%" }}
               />
             </Grid>
-    
                 <Button onClick={addContent}>追加</Button>
                 {contents.map((c:{title:string, text:string}, index:number) => (
                     <Grid
@@ -224,7 +187,6 @@ const handleChange = (event: any) => {
                             />
                         <br/>
                         <br/>
-
                         <TextareaAutosize
                         // label="コンテンツ"
                         name="コンテンツ"
