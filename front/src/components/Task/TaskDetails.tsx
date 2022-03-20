@@ -17,28 +17,26 @@ import {
 
 interface Props {
   task: Task | undefined
+  taskUser: User | undefined
   setEdit: any
 }
 
-const TaskDetails:React.FC<Props> = ({task, setEdit}) => {
-  // const _uid = Cookies.get("_uid")
-  // const[pcontests, setPContents] = useState(contents)
-  
-  // const patchButton = () => {
-  //   if (user.email === _uid) {
-  //     return (
-  //       <>
-  //       <Button
-  //         color="secondary"
-  //         variant="contained"
-          // onClick={()=>{setEdit(false)}}
-  //       >
-  //         編集
-  //       </Button>
-  //     </>
-  //     );
-  //   } 
-  // };
+const TaskDetails:React.FC<Props> = ({task, taskUser, setEdit}) => {
+  const patchButton = () => {
+    if (taskUser?.email === taskUser?.email) {
+      return (
+        <>
+        <Button
+          color="secondary"
+          variant="contained"
+          onClick={()=>{setEdit(false)}}
+        >
+          編集
+        </Button>
+      </>
+      );
+    } 
+  };
   return (
       <Card>
         <CardHeader
@@ -62,7 +60,6 @@ const TaskDetails:React.FC<Props> = ({task, setEdit}) => {
               md={12}
               xs={12}
             >
-
             </Grid>
             <Grid
               item
@@ -91,12 +88,12 @@ const TaskDetails:React.FC<Props> = ({task, setEdit}) => {
             <br/>
             <br/>
             {task?.contents.map((content:Content, index:number) =>
-                  <div className="content" key={index}>
-                    <h3>{content.title}</h3>
-                    <Divider />
-                    <p >{content.text}</p>
-                  </div>
-                  )}
+              <div className="content" key={index}>
+                <h3>{content.title}</h3>
+                <Divider />
+                <p>{content.text}</p>
+              </div>
+            )}
           </Grid>
           <Divider />
               <Box
@@ -106,7 +103,7 @@ const TaskDetails:React.FC<Props> = ({task, setEdit}) => {
                   p: 2
                 }}
               >
-                {/* {patchButton()} */}
+                {patchButton()}
               </Box>
 
           <Grid>

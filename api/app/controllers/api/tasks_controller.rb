@@ -6,7 +6,7 @@ class Api::TasksController < ApplicationController
 
   def show
     task = Task.find(params[:id])
-    render json: { task:{title: task.title, details: task.details, image: task.image, url: task.url, pro_languages: task.pro_languages, tools: task.tools, contents: task.contents, comments: task.comments, user: task.user, likes: task.likes}}, status: :ok
+    render json: { task:{title: task.title, details: task.details, image: task.image, url: task.url, pro_languages: task.pro_languages, tools: task.tools, contents: task.contents, comments: task.comments, user: task.user, likes: task.likes}}
   end
 
   def create
@@ -27,7 +27,7 @@ class Api::TasksController < ApplicationController
   def update
     task = Task.find(params[:id])
     if task.update(task_params)
-      render json: {task: task }, status: 200
+      render json: { task:{title: task.title, details: task.details, image: task.image, url: task.url, pro_languages: task.pro_languages, tools: task.tools, contents: [], comments: task.comments, user: task.user, likes: task.likes}}
     else
         render json: {message: "更新に失敗しました" }
     end

@@ -1,4 +1,4 @@
-import {Like} from '../../type/interfaces'
+import {Like, User} from '../../type/interfaces'
 import {getTask} from '../../api/task/GetTask'
 import {createLike} from '../../api/like/CreateLike'
 import {deleteLike} from '../../api/like/DeleteLike'
@@ -11,46 +11,39 @@ import {
   import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import {useState, useEffect} from 'react'
 
-  interface LikesParams{
+  interface LikesProps{
     likes : Like[]
-    currentId: number
-    taskId: number
     setLikes: any
+    currentUser: User | undefined
+    taskId: number
   }
 
- const TaskLikes:React.FC<LikesParams> = ({likes, currentId, taskId, setLikes}) => {
-  const [slike, setSlike] = useState<number>()
-
+ const TaskLikes:React.FC<LikesProps> = ({likes, setLikes, currentUser, taskId }) => {
+  const [isLike, setIsLike] = useState<boolean>()
   const destroyLike = async (id:number) => {
     deleteLike(id)
-    const {data} = await getTask(taskId)
-    setLikes(data.task.likes)
-    setSlike(0)
+    console.log(like)
+    setIsLike(like)
   }
 
   const postLike = async () => {
-    createLike(taskId,currentId)
-    const {data} = await getTask(taskId)
-    setLikes(data.task.likes)
-    console.log("create", data)
-    data.task.likes.filter(likes => {
-      if(likes.user_id === currentId) {
-        setSlike(likes.id)
-      }
-    })
+    const like = (await createLike(taskId, currentUser?.id)).data.is_like
+    console.log(like)
+    setIsLike(like)
   }
 
   useEffect(() => {
-    likes.filter(likes => {
-      if(likes.user_id === currentId) {
-        setSlike(likes.id)
-      }
-    })
+
+    setIsLike()
   }, [])
 
+  useEffect(() => {
+  }, [postLike, destroyLike])
+
+
   const likeButton = () => {
-    if(slike) {
-      return <Button onClick={() => {destroyLike(slike)}}><FavoriteBorderIcon color="error" fontSize="large"/>いいね取り消し</Button>
+    if(isLike) {
+      return <Button onClick={() => {destroyLike()}}><FavoriteBorderIcon color="error" fontSize="large"/>いいね取り消し</Button>
     } else {
       return <Button onClick={() => {postLike()}}><FavoriteBorderIcon  fontSize="large"/>いいね</Button>
     }

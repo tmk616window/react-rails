@@ -1,6 +1,6 @@
-import {api} from '../common/client'
-import {Task} from '../../type/interfaces/task'
+import {api} from '../../contexts/api'
+import {Like} from '../../type/interfaces'
 
 export const deleteLike =  (id: number) => {
-    return api.delete("/likes/" + id)
-  }
+  return api.delete<{like: Like}>("/api/likes/" + id) 
+}

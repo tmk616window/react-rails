@@ -58,7 +58,7 @@ end
 
 # テスト用
 # curl -i  -X POST -H "Content-Type: application/json" -d '{"name": "user", "email" : "user", "password" : "user", "password_confirmation": "user" }' http://localhost:8080/api/users
-# curl -i  -X POST -H "Content-Type: application/json" -d '{"session":{"email":"user", "password":"user"}}' http://localhost:8080/api/session
+# curl -i  -X POST -H "Content-Type: application/json" -d '{"session":{"email":"user1", "password":"user1"}}' http://localhost:8080/api/session
 
 # curl -X DELETE 'http://localhost/api/session' -H 'Content-Type:application/json;charset=utf-8' -H 'Authorization: Bearer eyJhbGciOiJSUzI1NiJ9.eyJuYW1lIjoiYWFhYWFhYWFhQGV4YW1wbGUuY29tIiwiaWQiOjI1LCJleHAiOjE2NDgzNzU1NDB9.SRcVbjrf6PD9wIDCuGwyd3GwaJlfvn9_0dpMeKmJ52xLGyk6FOx0MWpRxVwr9xOsi4unr93WdlThCohnESV2ZGPeCe2TCYJhEKeChMNVL6X0BhlLPrfL1Pr9KSImUFQdLOm_NcGNN7X7qD1vy4E65IZkkuZdT4TtyMLT8ck9gYSBb0tFlm27EzGxOmGtgYH5fp6vMe0drpvZOIQNP00P8q6nXG4jZfYDW610xMiItSi7L2aTUDxDwdAu_HTG-hLrdvoWy78tyoSJhv_m3q9S93G1NV5_875ADD53b2CuWybu17YRDce_5BgE8aybv81iPIZttLlNwSPR9dO74A'
 # curl -i -H 'Authorization: Bearer eyJhbGciOiJSUzI1NiJ9.eyJuYW1lIjoidXNlciIsImlkIjozLCJleHAiOjE2NDg3NDE0MTN9.aOYI0eVnpl92ucGcSy_5XqWN3zPmELQDVnjXbFXl3ZjthLCsbFNEZVA0SET4nN9WxI0Zs5fXeu30Mjllvyr3Zklka8-Hl5Ef4iJLE_vDBi77lqJMpQb5EioNmjHsIC8a2WSBRw9v4OXnNYrWgdF6FKBb8uSJBQ1kPLFJriw3ioaJyXIaKUlegkRNn5_C09GSOuuqv3kwhFiAa9AUpvKPqblh1s8KRUHUKE45JoAdXvWC_3nfQvLnRxb1zHgMeFCcp_E0Z_RJjv85eBiXI3kQ6diHEXOU2svt1nwG3n6n1-Fi3zbxEwaNnYl5JMKkxWQV1UckR0rIBPqPjw3F2g' http://localhost:8080/api/tasks

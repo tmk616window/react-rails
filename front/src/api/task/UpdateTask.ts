@@ -1,5 +1,6 @@
-import {api} from '../common/client'
-import axios from 'axios'
+import {api} from '../../contexts/api'
+import {Task} from '../../type/interfaces'
 
-export const updateTask = (id:number, data:FormData) =>  {
-    return api.patch<{task: any}>("/tasks/" + id, data)}
+export const updateTask = (id:number | undefined, data:FormData) =>  {
+  return api.patch<{task: Task}>("/api/tasks/" + id, data)
+}

@@ -1,5 +1,5 @@
 class Api::SessionsController < ApplicationController
-  include Authenticatable
+  # include Authenticatable
   skip_before_action :authenticate_with_token, only: :create
 
   def show
@@ -11,8 +11,12 @@ class Api::SessionsController < ApplicationController
   end
 
   def create
+    puts"dewmdelwmldpew"
+    puts"dewmdelwmldpew"
+
     token = get_token(session_params[:email], session_params[:password])
-    cookies[:token] = token
+    puts token
+    puts "11111"
     render json: { token: token} 
   end
 

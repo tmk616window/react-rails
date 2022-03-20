@@ -19,6 +19,7 @@ import {getRooms} from '../src/api/chat/room/GetRooms'
 import Cookies from 'js-cookie'
 import { makeStyles } from '@material-ui/core/styles'
 import { AuthContext } from "./_app"
+import { useRouter } from "next/router";
 
 const useStyles = makeStyles({
   customButton: {
@@ -28,38 +29,39 @@ const useStyles = makeStyles({
 
 
 //サーバーサイドレンダリング
-export async function getServerSideProps(context:any) {
-  const id = context.query.id;
-  const user = (await getUser(id)).data
-  const p = (await getProLangs(id)).data
-  const userMessage = (await getUserMessage(id)).data
-  const rooms = (await getRooms()).data
+// export async function getServerSideProps(context:any) {
+//   const id = context.query.id;
+//   const user = (await getUser(id)).data
+//   const p = (await getProLangs(id)).data
+//   const userMessage = (await getUserMessage(id)).data
+//   const rooms = (await getRooms()).data
 
-  return {
-    props: {
-      user: user,
-      p: p,
-      id: id,
-      userMessage:userMessage,
-      rooms:rooms                
-    }
-  }
-}
+//   return {
+//     props: {
+//       user: user,
+//       p: p,
+//       id: id,
+//       userMessage:userMessage,
+//       rooms:rooms                
+//     }
+//   }
+// }
 
 
 const ProfilePage =(props:any) => {
+  const router = useRouter();
+  const userId = Number(router.query.id)
   const [edit, setEdit] = useState<boolean>(true)
-  const u = props.user.user.user
-  const t = props.user.user.task
-  const userMessage = props.userMessage.messages
-  const[user, setUser] = useState(u)
-  const rooms = props.rooms.rooms
-  const currentId = Number(Cookies.get("id"))
-  const classes = useStyles()
+  // const u = props.user.user.user
+  // const t = props.user.user.task
+  // const userMessage = props.userMessage.messages
+  // const[user, setUser] = useState(u)
+  // const rooms = props.rooms.rooms
+  // const currentId = Number(Cookies.get("id"))
+  // const classes = useStyles()
 
   
   useEffect(() => {
-    console.log(currentId, user.id)
     // const { IsSignedIn, CurrentUser } = useContext(AuthContext)
   }, [])
 

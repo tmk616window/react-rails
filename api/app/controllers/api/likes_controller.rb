@@ -2,7 +2,7 @@ class Api::LikesController < ApplicationController
 
   def show
     like = Like.where(task_id: params[:id])
-    render json: { like: like }
+    render json: { like: like ,is_like: is_like}
   end
 
   def create
@@ -10,16 +10,21 @@ class Api::LikesController < ApplicationController
     if like.save
         render json: {like: like }
     else
-      render json: { message: "作成に失敗しました" }
+      render json: { message: "作成に失敗しました" is_like: is_like}
     end
   end
 
   def destroy
     like = Like.find(params[:id])
     like.destroy
-    render json: { message: "削除しました"}
+    render json: { message: "削除しました", is_like: is_like}
   end
   
+  def is_like
+    like = Like.where(task_id: params[:id])
+    like.include?(current_user.id)
+  end
+
   private
   def like_params
     params.require(:like).permit(:user_id, :task_id)
