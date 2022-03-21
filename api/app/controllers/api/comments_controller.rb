@@ -7,18 +7,18 @@ class Api::CommentsController < ApplicationController
   def create
     comment = Comment.new(comment_params)
     if comment.save
-      render json: {comment: comment }
+      render json: { comment: comment }
     else
-      render json: {message: "作成に失敗しました" }
+      render json: { message: '作成に失敗しました' }
     end
   end
 
   def update
     comment = Comment.find(params[:id])
     if comment.update(comment_params)
-      render json: {comment: comment }
+      render json: { comment: comment }
     else
-      render json: {message: "更新できませんでした" }
+      render json: { message: '更新できませんでした' }
     end
   end
 
@@ -27,11 +27,12 @@ class Api::CommentsController < ApplicationController
     if comment.destroy
       render json: { comment: comment }
     else
-      render json: {message: "削除に失敗しました" }
+      render json: { message: '削除に失敗しました' }
     end
   end
 
   private
+
   def comment_params
     params.require(:comment).permit(:text, :task_id, :user_id)
   end

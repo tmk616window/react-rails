@@ -9,14 +9,14 @@ class Api::ToolsController < ApplicationController
     if tool.save
       render json: { tool: tool }
     else
-      render json: { message: "作成に失敗しました" }
+      render json: { message: '作成に失敗しました' }
     end
   end
 
   def destroy
     tool = Tool.find(params[:id])
     tool.destroy
-    render json: {message: "削除しました" }
+    render json: { message: '削除しました' }
   end
 
   private

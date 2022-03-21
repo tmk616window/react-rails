@@ -1,6 +1,6 @@
 class Api::UsersController < ApplicationController
   skip_before_action :authenticate_with_token, only: :create
-  before_action :set_user, only: [:show, :update, :destroy]
+  before_action :set_user, only: %i[show update destroy]
 
   def index; end
 
@@ -10,6 +10,9 @@ class Api::UsersController < ApplicationController
         id: @user.id,
         name: @user.name,
         email: @user.email,
+        live: @user.live,
+        age: @user.age,
+        details: @user.details,
         tasks: @user.tasks
       }
     }, status: :ok
@@ -20,9 +23,9 @@ class Api::UsersController < ApplicationController
     if user.save
       token = get_token(user_params[:email], user_params[:password])
       cookies[:token] = token
-      render json: { token: token} 
+      render json: { token: token }
     else
-      render json: { errors: "保存できませんでした"} 
+      render json: { errors: '保存できませんでした' }
     end
   end
 
@@ -32,24 +35,27 @@ class Api::UsersController < ApplicationController
         user: {
           id: @user.id,
           name: @user.name,
-          email: @user.email
+          email: @user.email,
+          live: @user.live,
+          age: @user.age,
+          details: @user.details,
+          tasks: @user.tasks
         }
-      }, status: :ok  
+      }, status: :ok
     else
-      render json: { errors: "更新できませんでした"} 
+      render json: { errors: '更新できませんでした' }
     end
   end
-  
+
   def destroy
     @user.destroy
-    render json: { message: "削除しました"}, status: :ok
+    render json: { message: '削除しました' }, status: :ok
   end
-
 
   private
 
   def user_params
-    params.permit(:name, :email, :password, :password_confirmation)
+    params.permit(:name, :email, :password, :password_confirmation, :details, :age, :live, :image)
   end
 
   def set_user

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'Session', type: :request do
   let(:user) { FactoryBot.create :user }
-  let(:payload) {  {name: user.email, id: user.id, exp: (DateTime.current + 14.days).to_i}}
+  let(:payload) {  { name: user.email, id: user.id, exp: (DateTime.current + 14.days).to_i } }
   let(:api_secret) { OpenSSL::PKey::RSA.new(File.read(Rails.root.join('auth/service.key'))) }
   let(:algorithm) { 'RS256' }
   let(:token) { JWT.encode payload, api_secret, algorithm }

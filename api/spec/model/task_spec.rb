@@ -5,38 +5,38 @@ RSpec.describe 'Taskモデルのテスト', type: :model do
 
   describe 'バリデーションのテスト' do
     context '成功' do
-      it "値が正常である" do
+      it '値が正常である' do
         task.valid?
         expect(task).to be_valid
       end
     end
 
     context '失敗' do
-      it "タイトルがない" do
+      it 'タイトルがない' do
         task.title = nil
         task.valid?
         expect(task.errors[:title]).to include("can't be blank")
       end
 
-      it "imageがない" do
+      it 'imageがない' do
         task.image = nil
         task.valid?
         expect(task.errors[:image]).to include("can't be blank")
       end
 
-      it "detailsがない" do
+      it 'detailsがない' do
         task.details = nil
         task.valid?
         expect(task.errors[:details]).to include("can't be blank")
       end
 
-      it "urlがない" do
+      it 'urlがない' do
         task.details = nil
         task.valid?
         expect(task.errors[:details]).to include("can't be blank")
       end
 
-      it "user_idがない" do
+      it 'user_idがない' do
         task.details = nil
         expect(task.valid?).to eq(false)
       end
