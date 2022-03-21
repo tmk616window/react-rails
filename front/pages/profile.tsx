@@ -4,105 +4,99 @@ import {
   Grid,
   Card,
   CardContent,
-  Divider
-} from '@material-ui/core';
-import AccountProfile from '../src/components/Account/AccountProfile';
-import AccountProfileDetails from '../src/components/Account/AccountProfileDetails';
-import EditAccountProfileDetails from '../src/components/Account/EditAccountProfileDetails';
-import {getUser} from '../src/api/user/GetUser'
-import {useEffect, useState, useContext} from 'react'
-import Link from 'next/link'
-import {getProLangs} from '../src/api/prolang/GetProLang'
-import {getUserMessage} from '../src/api/chat/GetUserMessage'
-import {getRooms} from '../src/api/chat/room/GetRooms'
-import Cookies from 'js-cookie'
-import { makeStyles } from '@material-ui/core/styles'
-import { AuthContext } from "./_app"
+  Divider,
+} from "@material-ui/core";
+import AccountProfile from "../src/components/Account/AccountProfile";
+import AccountProfileDetails from "../src/components/Account/AccountProfileDetails";
+import EditAccountProfileDetails from "../src/components/Account/EditAccountProfileDetails";
+import { getUser } from "../src/api/user/GetUser";
+import { useEffect, useState, useContext } from "react";
+import Link from "next/link";
+import { getProLangs } from "../src/api/prolang/GetProLang";
+import { getUserMessage } from "../src/api/chat/GetUserMessage";
+import { getRooms } from "../src/api/chat/room/GetRooms";
+import Cookies from "js-cookie";
+import { makeStyles } from "@material-ui/core/styles";
+import { AuthContext } from "./_app";
 import { useRouter } from "next/router";
-import {User, Task} from '../src/type/interfaces'
+import { User, Task } from "../src/type/interfaces";
 
 const useStyles = makeStyles({
   customButton: {
-    cursor:"pointer"
+    cursor: "pointer",
   },
-})
+});
 
-const ProfilePage =() => {
+const ProfilePage = () => {
   const router = useRouter();
-  const userId = Number(router.query.id)
-  const {currentUser} = useContext(AuthContext)
-  const [edit, setEdit] = useState<boolean>(true)
-  const[profileUser, setProfileUser] = useState<User | undefined>()
-  const[profileUserTasks, setProfileUserTasks] = useState<Task[]>([])
+  const userId = Number(router.query.id);
+  const { currentUser } = useContext(AuthContext);
+  const [edit, setEdit] = useState<boolean>(true);
+  const [profileUser, setProfileUser] = useState<User | undefined>();
+  const [profileUserTasks, setProfileUserTasks] = useState<Task[]>([]);
 
-  useEffect( () => {
-    (async() => {
-      const gUser = await getUser(userId)
-      if(gUser.status == 200) {
-        setProfileUser(gUser.data.user)
-        setProfileUserTasks(gUser.data.user.tasks)
+  useEffect(() => {
+    (async () => {
+      const gUser = await getUser(userId);
+      if (gUser.status == 200) {
+        setProfileUser(gUser.data.user);
+        setProfileUserTasks(gUser.data.user.tasks);
       }
-    })()
+    })();
   }, []);
-console.log(currentUser)
+  console.log(currentUser);
   return (
-<>
-  <Box
-    sx={{
-      minHeight: '100%',
-      py: 3
-    }}
-  >
-    <Container maxWidth="lg">
-      <Grid
-        container
-        spacing={3}
+    <>
+      <Box
+        sx={{
+          minHeight: "100%",
+          py: 3,
+        }}
       >
-        <Grid
-          item
-          lg={4}
-          md={6}
-          xs={12}
-        >
-          <AccountProfile profileUser={profileUser} />
-          <br/>
-          <Card>
-            <CardContent>
-            <h2>投稿したポートフォリオ</h2>
-            <Divider />
-            <br/>
-              {profileUserTasks.map((task:Task, index:number) =>
-              <div key={index}>
-                  <Link href={{ pathname: '/task', query: { id: task.id } }} >{task.title}</Link>
-                  <br/>
-              </div>
+        <Container maxWidth="lg">
+          <Grid container spacing={3}>
+            <Grid item lg={4} md={6} xs={12}>
+              <AccountProfile profileUser={profileUser} />
+              <br />
+              <Card>
+                <CardContent>
+                  <h2>投稿したポートフォリオ</h2>
+                  <Divider />
+                  <br />
+                  {profileUserTasks?.map((task: Task, index: number) => (
+                    <div key={index}>
+                      <Link
+                        href={{ pathname: "/task", query: { id: task.id } }}
+                      >
+                        {task.title}
+                      </Link>
+                      <br />
+                    </div>
+                  ))}
+                </CardContent>
+              </Card>
+            </Grid>
+            <Grid item lg={8} md={6} xs={12}>
+              {edit ? (
+                <EditAccountProfileDetails
+                  profileUser={profileUser}
+                  currentUser={currentUser}
+                  setEdit={setEdit}
+                />
+              ) : (
+                <AccountProfileDetails
+                  profileUser={profileUser}
+                  setProfileUser={setProfileUser}
+                  setEdit={setEdit}
+                />
               )}
-            </CardContent>    
-          </Card>
-        </Grid>
-        <Grid
-          item
-          lg={8}
-          md={6}
-          xs={12}
-        >
-          {edit
-            ? <EditAccountProfileDetails profileUser={profileUser} currentUser={currentUser} setEdit={setEdit} />         
-              : <AccountProfileDetails profileUser={profileUser} setProfileUser={setProfileUser} setEdit={setEdit} />
-          }          
-        </Grid>
-      </Grid>
-      <Grid
-          spacing={3}
-          lg={4}
-          md={6}
-          xs={12}
-        >
-      </Grid>
-    </Container>
-  </Box>
-</>
-);
-}
+            </Grid>
+          </Grid>
+          <Grid spacing={3} lg={4} md={6} xs={12}></Grid>
+        </Container>
+      </Box>
+    </>
+  );
+};
 
-export default ProfilePage
+export default ProfilePage;

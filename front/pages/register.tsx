@@ -1,13 +1,13 @@
-import React, { useState, useContext } from "react"
-import * as Yup from 'yup';
-import { Formik } from 'formik';
-import Cookies from "js-cookie"
-import { signUp } from "../src/api/login/auth"
-import Image from 'next/image'
-import { AuthContext } from "./_app"
-import { useRouter } from 'next/router'
+import React, { useState, useContext } from "react";
+import * as Yup from "yup";
+import { Formik } from "formik";
+import Cookies from "js-cookie";
+import { signUp } from "../src/api/login/auth";
+import Image from "next/image";
+import { AuthContext } from "./_app";
+import { useRouter } from "next/router";
 
-import Regi from '../img/register.png'
+import Regi from "../img/register.png";
 import {
   Box,
   Button,
@@ -16,67 +16,68 @@ import {
   FormHelperText,
   Link,
   TextField,
-  Typography
-} from '@material-ui/core';
-
-
+  Typography,
+} from "@material-ui/core";
 
 const Register = () => {
-  const router = useRouter()
-  const { setIsSignedIn, setCurrentUser, currentUser } = useContext(AuthContext)
+  const router = useRouter();
+  const { setIsSignedIn, setCurrentUser, currentUser } = useContext(
+    AuthContext
+  );
 
-    let style = {
-    margin: "100px 0px 0px 0px"
-    };
+  let style = {
+    margin: "100px 0px 0px 0px",
+  };
 
-  const handleSubmit = async (params:any) => {
+  const handleSubmit = async (params: any) => {
     try {
-      console.log(params)
-      const res = await signUp(params)
-      console.log(res.data.errors)
+      console.log(params);
+      const res = await signUp(params);
+      console.log(res.data.errors);
 
       if (res.data.errors !== "保存できませんでした") {
-        Cookies.set("token", res.data.token)
-        setIsSignedIn(true)
-        setCurrentUser(res.data)
+        Cookies.set("token", res.data.token);
+        setIsSignedIn(true);
+        setCurrentUser(res.data);
 
-        router.push({ pathname: '/'})
+        router.push({ pathname: "/" });
 
-        console.log("Signed in successfully!")
+        console.log("Signed in successfully!");
       }
     } catch (err) {
-      console.log(err)
-      alert("すでに登録されているメールアドレスの可能性があります。")
+      console.log(err);
+      alert("すでに登録されているメールアドレスの可能性があります。");
     }
-  }
-
-
+  };
 
   return (
     <div>
       <Box
         sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          height: '100%',
-          justifyContent: 'center'
+          display: "flex",
+          flexDirection: "column",
+          height: "100%",
+          justifyContent: "center",
         }}
       >
         <Container maxWidth="sm">
           <Formik
             initialValues={{
-                name: '',
-                email: '',
-                password: '',
-                password_confirmation: '',  
+              name: "",
+              email: "",
+              password: "",
+              password_confirmation: "",
             }}
-            validationSchema={
-            Yup.object().shape({
-              name: Yup.string().max(255).required('名前を入力してください'),
-              email: Yup.string().email('メールアドレスが必要です').max(255).required('メールアドレスを入力してください'),
-              password: Yup.string().max(255).required('パスワードを入力してください'),
-            })
-          }
+            validationSchema={Yup.object().shape({
+              name: Yup.string().max(255).required("名前を入力してください"),
+              email: Yup.string()
+                .email("メールアドレスが必要です")
+                .max(255)
+                .required("メールアドレスを入力してください"),
+              password: Yup.string()
+                .max(255)
+                .required("パスワードを入力してください"),
+            })}
             onSubmit={handleSubmit}
           >
             {({
@@ -86,30 +87,32 @@ const Register = () => {
               handleSubmit,
               isSubmitting,
               touched,
-              values
+              values,
             }) => (
               <form onSubmit={handleSubmit}>
                 <Box sx={{ mb: 3 }}>
-                  <Typography
-                    color="textPrimary"
-                    variant="h3"
-                  >
+                  <Typography color="textPrimary" variant="h3">
                     アカウント作成
                   </Typography>
                   <Box
-                  sx={{
-                    pb: 1,
-                    pt: 3
-                  }}
-                >
-                  <Typography
-                    align="center"
-                    color="textSecondary"
-                    variant="body1"
+                    sx={{
+                      pb: 1,
+                      pt: 3,
+                    }}
                   >
-                    <Image alt="resister" src={Regi} width="140" height="140"/>
-                  </Typography>
-                </Box>
+                    <Typography
+                      align="center"
+                      color="textSecondary"
+                      variant="body1"
+                    >
+                      <Image
+                        alt="resister"
+                        src={Regi}
+                        width="140"
+                        height="140"
+                      />
+                    </Typography>
+                  </Box>
                 </Box>
                 <TextField
                   error={Boolean(touched.name && errors.name)}
@@ -150,7 +153,7 @@ const Register = () => {
                   value={values.password}
                   variant="outlined"
                 />
-                  <TextField
+                <TextField
                   error={Boolean(touched.password && errors.password)}
                   fullWidth
                   helperText={touched.password && errors.password}
@@ -175,15 +178,9 @@ const Register = () => {
                     アカウント作成
                   </Button>
                 </Box>
-                <Typography
-                  color="textSecondary"
-                  variant="body1"
-                >
-                  アカウントをお持ちですか？
-                  {' '}
-                  <Link href={"/login"}>
-                    ログイン
-                  </Link>
+                <Typography color="textSecondary" variant="body1">
+                  アカウントをお持ちですか？{" "}
+                  <Link href={"/login"}>ログイン</Link>
                 </Typography>
               </form>
             )}
@@ -194,4 +191,4 @@ const Register = () => {
   );
 };
 
-export default Register
+export default Register;

@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react';
-import Logo from '../../../img/logo.png'
-import Image from 'next/image'
-import {User, Message} from '../../type/interfaces'
-import {updateUser} from '../../api/user/UpdateUser'
-import Cookies from 'js-cookie'
+import { useState, useEffect } from "react";
+import Logo from "../../../img/logo.png";
+import Image from "next/image";
+import { User, Message } from "../../type/interfaces";
+import { updateUser } from "../../api/user/UpdateUser";
+import Cookies from "js-cookie";
 import {
   Box,
   Button,
@@ -13,127 +13,93 @@ import {
   Divider,
   Grid,
   TextField,
-  TextareaAutosize
-} from '@material-ui/core';
+  TextareaAutosize,
+} from "@material-ui/core";
 
 interface UserProfile {
-  profileUser: User | undefined
-  currentUser: User | undefined
-  setEdit: any
+  profileUser: User | undefined;
+  currentUser: User | undefined;
+  setEdit: any;
 }
 
- const EditAccountProfileDetails:React.FC<UserProfile> = ({profileUser, currentUser, setEdit}) => {
-
-  useEffect(() => {
-  }, [])
+const EditAccountProfileDetails: React.FC<UserProfile> = ({
+  profileUser,
+  currentUser,
+  setEdit,
+}) => {
+  useEffect(() => {}, []);
 
   const [values, setValues] = useState<any>({
     name: profileUser?.name,
     email: profileUser?.email,
-    // live: profileUser?.live,
-    // details: profileUser.details,
-    // age: user.age
+    live: profileUser?.live,
+    details: profileUser?.details,
+    age: profileUser?.age,
   });
-  
+
   const patchButton = () => {
-    if(profileUser?.email === currentUser?.email) {
+    if (profileUser?.email === currentUser?.email) {
       return (
         <Box
           sx={{
-            display: 'flex',
-            justifyContent: 'flex-end',
-            p: 2
+            display: "flex",
+            justifyContent: "flex-end",
+            p: 2,
           }}
         >
           <Button
             color="secondary"
             variant="contained"
-            onClick={() =>{setEdit(false)}}
+            onClick={() => {
+              setEdit(false);
+            }}
           >
             編集
           </Button>
-        </Box>  
-      )
+        </Box>
+      );
     }
   };
 
-
-
-  const handleChange = (event: any) => {    
+  const handleChange = (event: any) => {
     setValues({
       ...values,
-      [event.target.name]: event.target.value
+      [event.target.name]: event.target.value,
     });
   };
-
 
   return (
     <div className="profile-details">
       <Card>
-        <CardHeader
-          title="プロフィール"
-        />
+        <CardHeader title="プロフィール" />
         <Divider />
         <CardContent>
-          <Grid
-            container
-            spacing={3}
-          >
-            <Grid
-              item
-              md={12}
-              xs={12}
-            >
+          <Grid container spacing={3}>
+            <Grid item md={12} xs={12}>
               <p>{profileUser?.name}</p>
             </Grid>
-            <Grid
-              item
-              md={12}
-              xs={12}
-            >
+            <Grid item md={12} xs={12}>
               <p>メールアドレス：{profileUser?.email}</p>
             </Grid>
-            <Grid
-              item
-              md={6}
-              xs={12}
-            >
-              {/* <p>年齢：{user.age}歳</p> */}
+            <Grid item md={6} xs={12}>
+              <p>年齢：{profileUser?.age}歳</p>
             </Grid>
-            <Grid
-              item
-              md={6}
-              xs={12}
-            >
-              {/* <p>居住都道府県：{user.live}</p> */}
+            <Grid item md={6} xs={12}>
+              <p>居住都道府県：{profileUser?.live}</p>
             </Grid>
-            <Grid
-            item
-            lg={12}
-            md={12}
-            xs={12}
-          >
+            <Grid item lg={12} md={12} xs={12}></Grid>
+            <Grid item lg={12} md={12} xs={12}>
+              <p>詳細プロフィール</p>
+              <p>{profileUser?.details}</p>
+            </Grid>
           </Grid>
-            <Grid
-            item
-            lg={12}
-            md={12}
-            xs={12}
-          >
-            <p>詳細プロフィール</p>
-            {/* <p>{user.details}</p> */}
-          </Grid>
-
-          </Grid>
-          <Grid>
-          </Grid>
+          <Grid></Grid>
         </CardContent>
         <Divider />
         {patchButton()}
-
       </Card>
-      </div>
+    </div>
   );
 };
 
-export default EditAccountProfileDetails
+export default EditAccountProfileDetails;

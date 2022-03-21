@@ -1,7 +1,6 @@
-import {api} from '../common/client'
-import {User} from '../../type/interfaces'
+import { api } from "../common/client";
+import { User } from "../../type/interfaces";
 
 export const getUsers = () => {
-    return api.get<{user: User[]}>("/users")
-  }
-  
+  return api.get<{ user: User[] }>("/users");
+};

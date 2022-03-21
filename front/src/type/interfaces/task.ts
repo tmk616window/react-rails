@@ -1,8 +1,3 @@
-
-  export type Task = {
-    title: string
-  }
-
-
-
-
+export type Task = {
+  title: string;
+};

@@ -1,36 +1,36 @@
-import React, { useCallback, useState } from "react"
+import React, { useCallback, useState } from "react";
 
-import { makeStyles, Theme } from "@material-ui/core/styles"
-import TextField from "@material-ui/core/TextField"
-import Button from "@material-ui/core/Button"
-import Box from "@material-ui/core/Box"
-import IconButton from "@material-ui/core/IconButton"
-import PhotoCameraIcon from "@material-ui/icons/PhotoCamera"
-import CancelIcon from "@material-ui/icons/Cancel"
+import { makeStyles, Theme } from "@material-ui/core/styles";
+import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
+import Box from "@material-ui/core/Box";
+import IconButton from "@material-ui/core/IconButton";
+import PhotoCameraIcon from "@material-ui/icons/PhotoCamera";
+import CancelIcon from "@material-ui/icons/Cancel";
 
-import { createPost } from "../src/api/tpost"
+import { createPost } from "../src/api/tpost";
 
 const useStyles = makeStyles((theme: Theme) => ({
   form: {
     display: "flex",
     flexWrap: "wrap",
-    width: 320
+    width: 320,
   },
   inputFileBtn: {
-    marginTop: "10px"
+    marginTop: "10px",
   },
   submitBtn: {
     marginTop: "10px",
-    marginLeft: "auto"
+    marginLeft: "auto",
   },
   box: {
     margin: "2rem 0 4rem",
-    width: 320
+    width: 320,
   },
   preview: {
-    width: "100%"
-  }
-}))
+    width: "100%",
+  },
+}));
 
 // const Input = styled("input")({
 //   display: "none"
@@ -39,51 +39,50 @@ const useStyles = makeStyles((theme: Theme) => ({
 const borderStyles = {
   bgcolor: "background.paper",
   border: 1,
-}
+};
 
 interface PostFormProps {
-  handleGetPosts: Function
+  handleGetPosts: Function;
 }
 
 const PostForm = ({ handleGetPosts }: PostFormProps) => {
-  const classes = useStyles()
+  const classes = useStyles();
 
-  const [content, setContent] = useState<string>("")
-  const [image, setImage] = useState<File>()
-  const [preview, setPreview] = useState<string>("")
+  const [content, setContent] = useState<string>("");
+  const [image, setImage] = useState<File>();
+  const [preview, setPreview] = useState<string>("");
 
   const uploadImage = useCallback((e) => {
-    const file = e.target.files[0]
-    setImage(file)
-  }, [])
+    const file = e.target.files[0];
+    setImage(file);
+  }, []);
 
   // プレビュー機能
   const previewImage = useCallback((e) => {
-    const file = e.target.files[0]
-    setPreview(window.URL.createObjectURL(file))
-  }, [])
+    const file = e.target.files[0];
+    setPreview(window.URL.createObjectURL(file));
+  }, []);
 
   // FormData形式でデータを作成
   const createFormData = (): FormData => {
-    const formData = new FormData()
-    formData.append("content", content)
-    if (image) formData.append("image", image)
-    return formData
-  }
+    const formData = new FormData();
+    formData.append("content", content);
+    if (image) formData.append("image", image);
+    return formData;
+  };
 
-  const handleCreatePost  = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
+  const handleCreatePost = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
-    const data = createFormData()
+    const data = createFormData();
 
-    await createPost(data)
-    .then(() => {
-      setContent("")
-      setPreview("")
-      setImage(undefined)
+    await createPost(data).then(() => {
+      setContent("");
+      setPreview("");
+      setImage(undefined);
       // handleGetPosts()
-    })
-  }
+    });
+  };
 
   return (
     <>
@@ -96,18 +95,18 @@ const PostForm = ({ handleGetPosts }: PostFormProps) => {
           rows="4"
           value={content}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-            setContent(e.target.value)
+            setContent(e.target.value);
           }}
         />
         <div className={classes.inputFileBtn}>
           <label htmlFor="icon-button-file">
             <input
               accept="image/*"
-              id="icon-button-file" 
+              id="icon-button-file"
               type="file"
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                uploadImage(e)
-                previewImage(e)
+                uploadImage(e);
+                previewImage(e);
               }}
             />
             <IconButton color="inherit" component="span">
@@ -128,26 +127,19 @@ const PostForm = ({ handleGetPosts }: PostFormProps) => {
           </Button>
         </div>
       </form>
-      { preview ?
+      {preview ? (
         <Box
           sx={{ ...borderStyles, borderRadius: 1, borderColor: "grey.400" }}
           className={classes.box}
         >
-          <IconButton
-            color="inherit"
-            onClick={() => setPreview("")}
-          >
+          <IconButton color="inherit" onClick={() => setPreview("")}>
             <CancelIcon />
           </IconButton>
-          <img
-            src={preview}
-            alt="preview img"
-            className={classes.preview}
-          />
-        </Box> : null
-      }
+          <img src={preview} alt="preview img" className={classes.preview} />
+        </Box>
+      ) : null}
     </>
-  )
-}
+  );
+};
 
-export default PostForm
+export default PostForm;
