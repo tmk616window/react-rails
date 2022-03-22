@@ -1,11 +1,12 @@
 class Task < ApplicationRecord
   belongs_to :user
+  mount_uploader :image, ImageUploader
   has_many :pro_languages, dependent: :destroy
   has_many :tools, dependent: :destroy
   has_many :comments, dependent: :destroy
   has_many :contents, dependent: :destroy
   has_many :likes, dependent: :destroy
-
+  
   validates :title, presence: true
   validates :image, presence: true
   validates :details, presence: true

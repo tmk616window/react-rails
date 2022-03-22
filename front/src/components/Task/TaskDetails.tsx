@@ -52,7 +52,12 @@ const TaskDetails: React.FC<Props> = ({
       <CardContent>
         <Grid container spacing={3}>
           <Grid item md={12} xs={12}>
-            <img alt="logo" height="400px" width="100%" />
+            <img
+              src={`http://localhost:8080/${task?.image?.url}`}
+              alt="logo"
+              height="400px"
+              width="100%"
+            />
           </Grid>
           <Grid item md={12} xs={12}></Grid>
           <Grid item md={12} xs={12}>

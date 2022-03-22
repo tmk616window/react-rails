@@ -12,6 +12,7 @@ class Api::UsersController < ApplicationController
         email: @user.email,
         live: @user.live,
         age: @user.age,
+        image: @user.image,
         details: @user.details,
         tasks: @user.tasks
       }

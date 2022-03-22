@@ -22,8 +22,6 @@ interface UserProfile {
 }
 
 const AccountProfile: React.FC<UserProfile> = ({ profileUser }) => {
-  useEffect(() => {}, []);
-
   return (
     <>
       <Card>
@@ -36,7 +34,8 @@ const AccountProfile: React.FC<UserProfile> = ({ profileUser }) => {
             }}
           >
             <Avatar
-            // src={displayImage(`https://enjob.work/${user.image?.url}`)}
+              src={`http://localhost:8080/${profileUser?.image?.url}`}
+              style={{ height: "200px", width: "200px" }}
             />
             <br />
             <Typography color="textPrimary" gutterBottom variant="h3">

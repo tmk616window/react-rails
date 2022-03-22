@@ -36,7 +36,7 @@ export interface Task {
   id: number;
   title: string;
   details: string;
-  logoImage?: {
+  image?: {
     url: string;
   };
   url: string;

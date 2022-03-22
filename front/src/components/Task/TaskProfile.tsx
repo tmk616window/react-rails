@@ -28,7 +28,8 @@ const TaskProfile: React.FC<Props> = ({ taskUser }) => {
             }}
           >
             <Avatar
-            // src={displayImage(`https://enjob.work/${user.image?.url}`)}
+              src={`http://localhost:8080/${taskUser?.image?.url}`}
+              style={{ height: "200px", width: "200px" }}
             />
             <Typography color="textPrimary" gutterBottom variant="h5">
               <Link

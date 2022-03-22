@@ -49,3 +49,5 @@ gem 'active_model_serializers'
 gem 'jwt'
 gem 'openssl'
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
+gem 'carrierwave'
+gem 'mini_magick'

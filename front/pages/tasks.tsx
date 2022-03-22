@@ -5,11 +5,8 @@ import Logo from "../img/logo.png";
 import { Task, ProlLanguage } from "../src/type/interfaces";
 import Link from "next/link";
 import { displayImage } from "../src/api/common/DisplayImage";
-import { useRouter } from "next/router";
 
 export const TaskList = () => {
-  const router = useRouter();
-  const taskId = Number(router.query.id);
   const [tasks, setTasks] = useState<any>([]);
   useEffect(() => {
     (async () => {
@@ -30,7 +27,13 @@ export const TaskList = () => {
               className="list-group-item list-group-item-primary list-item"
             >
               <div className="item-image">
-                {/* <img src={displayImage(`https://enjob.work/${task.logoImage?.url}`)} alt="..." width = "250" height="250" className="logo-image" /> */}
+                <img
+                  src={`http://localhost:8080/${task?.image?.url}`}
+                  alt="..."
+                  width="250"
+                  height="250"
+                  className="logo-image"
+                />
               </div>
               <div className="item-content">
                 <h1>{task.title}</h1>

@@ -97,6 +97,12 @@ const Top: React.FC = () => {
                     <div className="col-md-4" key={index}>
                       <p>{index + 1}位</p>
                       <div className="card card-1">
+                        <img
+                          src={`http://localhost:8080/${task?.image?.url}`}
+                          alt="..."
+                          width="100%"
+                          height="200%"
+                        />
                         <div className="cardContent">
                           <h3>タイトル：{task.title}</h3>
                           {task.pro_languages.map(
