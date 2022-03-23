@@ -27,7 +27,6 @@ const TaskLikes: React.FC<LikesProps> = ({
     deleteLike(id);
     const gLikes = await getLikes(taskId);
     if (gLikes.status == 200) {
-      console.log(gLikes.data);
       setLikeId([]);
     }
   };

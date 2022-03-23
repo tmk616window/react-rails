@@ -9,6 +9,7 @@ import { AuthContext } from "../../pages/_app";
 import SwipeableTemporaryDrawer from "./Drawer1";
 import { useRouter } from "next/router";
 import Axios from "axios";
+import { api } from "../contexts/api";
 
 const Navbar = () => {
   const router = useRouter();
@@ -33,18 +34,6 @@ const Navbar = () => {
   const classes = useStyles();
 
   const handleSignOut = async () => {
-    const token = Cookies.get("token");
-
-    const api = Axios.create({
-      baseURL: "http://localhost:8080/",
-      headers: {
-        Accept: "application/json",
-        Authorization: "Bearer " + token,
-        "Content-Type": "application/json",
-      },
-    });
-
-    console.log("aaaaaa");
     api
       .delete("/api/session")
       .then(() => {

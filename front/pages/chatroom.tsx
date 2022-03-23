@@ -40,22 +40,18 @@ const ChatRoom = (props: any) => {
   const userId = Number(props.room.rooms.user);
   const [form, setForm] = useState<string>("");
   const [ms, setMs] = useState<any[]>(messages);
-  useEffect(() => {
-    console.log("aaaaa", props.room.rooms.user);
-  }, []);
+  useEffect(() => {}, []);
 
   const addMessage = async () => {
     if (currentId != chatId) {
       const message = (await createMessage(id, form, currentId, chatId)).data
         .message;
       setMs([...ms, message]);
-      console.log(message);
       setForm("");
     } else {
       const message = (await createMessage(id, form, currentId, userId)).data
         .message;
       setMs([...ms, message]);
-      console.log(message);
       setForm("");
     }
   };

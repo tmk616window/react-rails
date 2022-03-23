@@ -61,7 +61,6 @@ const AccountProfileDetails: React.FC<UserProfile> = ({
   const patchUser = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const data = createFormData();
-    console.log(data);
     await updateUser(Number(profileUser?.id), data).then((res) => {
       setProfileUser(res.data.user);
       setEdit(true);

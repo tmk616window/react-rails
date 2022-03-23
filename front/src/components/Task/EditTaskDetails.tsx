@@ -103,6 +103,7 @@ const EditTaskDetails: React.FC<EditTaskProps> = ({
     const patchContents = await patchContent();
     const task = (await updateTask(taskId, Data)).data.task;
     task.contents = patchContents;
+    console.log(task);
     setTask(task);
   };
 

@@ -28,10 +28,7 @@ const ChatPage = (props: any) => {
     return cm;
   });
 
-  // console.log(chatMessages);
-
   useEffect(() => {
-    console.log(id, currentId);
     messages.filter((m: any) => {
       if (
         (m.chat_id == currentId && m.user_id == id) ||

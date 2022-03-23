@@ -9,12 +9,13 @@ import { parseCookies, setCookie } from "nookies";
 import { NextPageContext } from "next";
 import Axios from "axios";
 import { api } from "../src/contexts/api";
+import { useRouter } from "next/router";
 
 export const AuthContext = createContext(
   {} as {
     isSignedIn: boolean;
     setIsSignedIn: React.Dispatch<React.SetStateAction<boolean>>;
-    currentUser: User;
+    currentUser: User | undefined;
     setCurrentUser: React.Dispatch<React.SetStateAction<any>>;
   }
 );
@@ -22,7 +23,7 @@ export const AuthContext = createContext(
 const MyApp = ({ Component, pageProps }: AppProps, ctx: NextPageContext) => {
   const [currentUser, setCurrentUser] = useState<User | undefined>();
   const [isSignedIn, setIsSignedIn] = useState<boolean>(false);
-
+  const router = useRouter();
   const handleGetCurrentUser = async () => {
     api
       .get("/api/session")
@@ -32,7 +33,6 @@ const MyApp = ({ Component, pageProps }: AppProps, ctx: NextPageContext) => {
         setCurrentUser(user);
       })
       .catch((error) => {
-        console.log("error", error);
         setIsSignedIn(false);
         setCurrentUser(undefined);
         Cookies.set("token", "");
@@ -41,6 +41,7 @@ const MyApp = ({ Component, pageProps }: AppProps, ctx: NextPageContext) => {
 
   useEffect(() => {
     handleGetCurrentUser();
+    router.events?.on("routeChangeStart", () => {});
   }, []);
 
   return (

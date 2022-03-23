@@ -3,16 +3,19 @@ import Ranking from "../../img/ranking.jpg";
 import Hire from "../../img/hire.jpg";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { Task, ProlLanguage } from "../type/interfaces";
 import { displayImage } from "../api/common/DisplayImage";
 import { api } from "../contexts/api";
+import { AuthContext } from "../../pages/_app";
 
 const Top: React.FC = () => {
   const [rankingTasks, setRankingTasks] = useState<Task[]>([]);
+  const { isSignedIn, setIsSignedIn, currentUser } = useContext(AuthContext);
+
   useEffect(() => {
     api.get("http://localhost:8080/api/ranking").then((res: any) => {
-      console.log(res.data.tasks);
+      console.log(currentUser, res.data.tasks);
       setRankingTasks(res.data.tasks);
     });
   }, []);

@@ -5,6 +5,7 @@ import Logo from "../img/logo.png";
 import { Task, ProlLanguage } from "../src/type/interfaces";
 import Link from "next/link";
 import { displayImage } from "../src/api/common/DisplayImage";
+import Cookies from "js-cookie";
 
 export const TaskList = () => {
   const [tasks, setTasks] = useState<any>([]);

@@ -31,6 +31,7 @@ class Api::UsersController < ApplicationController
   end
 
   def update
+    puts @user.image
     if @user.update(user_params)
       render json: {
         user: {

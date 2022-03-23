@@ -44,7 +44,6 @@ const ProfilePage = () => {
       }
     })();
   }, []);
-  console.log(currentUser);
   return (
     <>
       <Box
