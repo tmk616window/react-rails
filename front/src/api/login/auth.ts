@@ -8,7 +8,7 @@ import {
   User,
   Token,
 } from "../../type/interfaces";
-import api from "../../contexts/api";
+import { api } from "../../contexts/api";
 
 // サインアップ（新規アカウント作成）
 export const signUp = (params: SignUpParams) => {
@@ -28,7 +28,7 @@ export const signIn = (params: SignInParams) => {
 
 // サインイン（ゲストログイン）
 export const gustSignIn = () => {
-  return client.post<{ data: SignIn }>("auth/sign_in", {
+  return api.post<{ data: any }>("/api/session", {
     email: "test1234@example.com",
     password: "test1234test1234",
   });

@@ -44,8 +44,21 @@ const Login: React.FC = () => {
   };
 
   const handleGustSubmit = async () => {
-    const res = await gustSignIn();
-    console.log(res.data);
+    try {
+      const res = await gustSignIn();
+      console.log(res);
+      if (res.status === 200) {
+        Cookies.set("token", res.data.token);
+        setIsSignedIn(true);
+        const gLoginUser = (await getLoginUser(res.data.token)).data;
+        router.push({ pathname: "/" });
+        setCurrentUser(gLoginUser);
+        location.reload();
+      }
+    } catch (err) {
+      console.log(err);
+      alert("パスワードとメールアドレスが一致していない可能性があります");
+    }
   };
 
   return (
