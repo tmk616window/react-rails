@@ -2,23 +2,37 @@ import Axios from "axios";
 import Cookies from "js-cookie";
 import { parseCookies, setCookie } from "nookies";
 import { NextPageContext } from "next";
-
+import { useContext } from "react";
+import { AuthContext } from "../../pages/_app";
 // cookie取得
+import axios, { AxiosInstance } from "axios";
+
 export const getCookie: any = (token: string) => {
   return Cookies.set("token", token);
 };
 
 // const tokenApi = Cookies.get("token");
+// const { setIsSignedIn, setCurrentUser,  } = useContext(AuthContext);
 export const api = Axios.create({
   baseURL: "http://localhost:8080/",
   headers: {
     Accept: "application/json",
-    Authorization: "Bearer " + Cookies.get("token"),
+    Authorization: "Bearer " + Cookies.get("_access_token"),
     "Content-Type": "application/json",
     "Access-Control-Allow-Origin": "*",
   },
   responseType: "json",
 });
+
+export const tokenApi = (token: string) => {
+  return axios.create({
+    baseURL: "http://localhost:8080/",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token,
+    },
+  });
+};
 
 export const serverApi = Axios.create({
   baseURL: "http://nginx/",
