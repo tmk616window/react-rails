@@ -12,10 +12,7 @@ import EditAccountProfileDetails from "../src/components/Account/EditAccountProf
 import { getUser } from "../src/api/user/GetUser";
 import { useEffect, useState, useContext } from "react";
 import Link from "next/link";
-import { getProLangs } from "../src/api/prolang/GetProLang";
-import { getUserMessage } from "../src/api/chat/GetUserMessage";
 import { getRooms } from "../src/api/chat/room/GetRooms";
-import Cookies from "js-cookie";
 import { makeStyles } from "@material-ui/core/styles";
 import { AuthContext } from "./_app";
 import { useRouter } from "next/router";
@@ -36,11 +33,17 @@ const ProfilePage = () => {
   const [profileUserTasks, setProfileUserTasks] = useState<Task[]>([]);
 
   useEffect(() => {
+    console.log(router);
     (async () => {
-      const gUser = await getUser(userId);
-      if (gUser.status == 200) {
-        setProfileUser(gUser.data.user);
-        setProfileUserTasks(gUser.data.user.tasks);
+      try {
+        const user = await getUser(userId);
+        setProfileUser(user.data.user);
+        setProfileUserTasks(user.data.user.tasks);
+      } catch (error) {
+        console.log(error.response);
+        alert(error.response.status);
+        router.push("/");
+        location.reload();
       }
     })();
   }, []);

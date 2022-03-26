@@ -1,6 +1,6 @@
-import { api } from "../../contexts/api";
 import { Task } from "../../type/interfaces";
+import { tokenApi } from "../../contexts/api";
 
 export const createTask = (data: FormData) => {
-  return api.post<{ task: Task }>("/api/tasks", data);
+  return tokenApi().post<{ task: Task }>("/api/tasks", data);
 };

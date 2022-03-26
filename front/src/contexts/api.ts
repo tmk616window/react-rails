@@ -11,20 +11,18 @@ export const getCookie: any = (token: string) => {
   return Cookies.set("token", token);
 };
 
-// const tokenApi = Cookies.get("token");
-// const { setIsSignedIn, setCurrentUser,  } = useContext(AuthContext);
 export const api = Axios.create({
   baseURL: "http://localhost:8080/",
   headers: {
     Accept: "application/json",
-    Authorization: "Bearer " + Cookies.get("_access_token"),
     "Content-Type": "application/json",
     "Access-Control-Allow-Origin": "*",
   },
   responseType: "json",
 });
 
-export const tokenApi = (token: string) => {
+export const tokenApi = () => {
+  const token = Cookies.get("_access_token");
   return axios.create({
     baseURL: "http://localhost:8080/",
     headers: {
@@ -33,14 +31,3 @@ export const tokenApi = (token: string) => {
     },
   });
 };
-
-export const serverApi = Axios.create({
-  baseURL: "http://nginx/",
-  headers: {
-    Accept: "application/json",
-    Authorization: "Bearer " + getCookie(),
-    "Content-Type": "application/json",
-    "Access-Control-Allow-Origin": "*",
-  },
-  responseType: "json",
-});

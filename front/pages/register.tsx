@@ -34,14 +34,11 @@ const Register = () => {
       console.log(params);
       const res = await signUp(params);
       console.log(res.data.errors);
-
       if (res.data.errors !== "保存できませんでした") {
         Cookies.set("token", res.data.token);
         setIsSignedIn(true);
         setCurrentUser(res.data);
-
         router.push({ pathname: "/" });
-
         console.log("Signed in successfully!");
       }
     } catch (err) {

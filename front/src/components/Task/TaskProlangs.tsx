@@ -16,7 +16,7 @@ interface Props {
   setProLanguages: any;
   taskId: number;
   taskUser: User | undefined;
-  currentUser: User;
+  currentUser: User | undefined;
 }
 const TaskProlangs: React.FC<Props> = ({
   proLanguages,
@@ -36,10 +36,8 @@ const TaskProlangs: React.FC<Props> = ({
   };
 
   const addContent = async () => {
-    console.log(form, taskId);
     const proLanguage = (await createProLanguage(form, taskId)).data
       .pro_Language;
-    console.log(proLanguage);
     setProLanguages([...proLanguages, proLanguage]);
     setForm("");
   };

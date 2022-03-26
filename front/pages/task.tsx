@@ -9,9 +9,7 @@ import TaskTools from "../src/components/Task/TaskTools";
 import TaskComment from "../src/components/Task/TaskComment";
 import TaskLikes from "../src/components/Task/TaskLikes";
 import { AuthContext } from "./_app";
-import Cookies from "js-cookie";
 import { useRouter } from "next/router";
-import { api } from "../src/contexts/api";
 import {
   Task,
   ProlLanguage,
@@ -38,8 +36,8 @@ const Tasks = () => {
 
   useEffect(() => {
     (async () => {
-      const gtask = await getTask(router.query.id);
-      if (gtask.status == 200) {
+      try {
+        const gtask = await getTask(router.query.id);
         setTask(gtask.data.task);
         setProLanguages(gtask.data.task.pro_languages);
         setTools(gtask.data.task.tools);
@@ -47,6 +45,11 @@ const Tasks = () => {
         setContents(gtask.data.task.contents);
         setTaskUser(gtask.data.task.user);
         setComments(gtask.data.task.comments);
+      } catch (error) {
+        console.log(error.response);
+        alert(error.response.status);
+        router.push("/");
+        location.reload();
       }
     })();
   }, []);

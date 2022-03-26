@@ -1,7 +1,7 @@
 import { useState, useCallback } from "react";
 import { User } from "../../type/interfaces";
+import { useRouter } from "next/router";
 import { updateUser } from "../../api/user/UpdateUser";
-
 import {
   Box,
   Button,
@@ -25,6 +25,7 @@ const AccountProfileDetails: React.FC<UserProfile> = ({
   setProfileUser,
   setEdit,
 }) => {
+  const router = useRouter();
   const [image, setImage] = useState<File>();
   const [values, setValues] = useState<any>({
     name: profileUser?.name,
@@ -59,12 +60,18 @@ const AccountProfileDetails: React.FC<UserProfile> = ({
   }, []);
 
   const patchUser = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const data = createFormData();
-    await updateUser(Number(profileUser?.id), data).then((res) => {
-      setProfileUser(res.data.user);
-      setEdit(true);
-    });
+    try {
+      e.preventDefault();
+      const data = createFormData();
+      await updateUser(Number(profileUser?.id), data).then((res) => {
+        setProfileUser(res.data.user);
+        setEdit(true);
+      });
+    } catch (error) {
+      console.log(error.response);
+      alert(error.response.status);
+      router.push("/");
+    }
   };
 
   return (

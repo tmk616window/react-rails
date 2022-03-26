@@ -14,13 +14,14 @@ export const TaskList = () => {
 
   useEffect(() => {
     (async () => {
-      const gtasks = await getTasks();
-      console.log("gtasks", gtasks);
-      if (gtasks.status == 200) {
+      try {
+        const gtasks = await getTasks();
         setTasks(gtasks.data.tasks);
-      } else if (gtasks.status == 401) {
-        console.log(gtasks.status);
-        router.push({ pathname: "/" });
+      } catch (error) {
+        console.log(error.response);
+        alert(error.response.status);
+        router.push("/");
+        location.reload();
       }
     })();
   }, []);

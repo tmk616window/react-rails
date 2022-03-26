@@ -2,11 +2,10 @@ import { Like, User } from "../../type/interfaces";
 import { getLikes } from "../../api/like/GetLike";
 import { createLike } from "../../api/like/CreateLike";
 import { deleteLike } from "../../api/like/DeleteLike";
-import { IconButton, Button } from "@material-ui/core";
-import Favorite from "@material-ui/icons/Favorite";
+import { Button } from "@material-ui/core";
 import FavoriteBorderIcon from "@material-ui/icons/Favorite";
-import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 
 interface LikesProps {
   likes: Like[];
@@ -15,13 +14,8 @@ interface LikesProps {
   taskId: number;
 }
 
-const TaskLikes: React.FC<LikesProps> = ({
-  likes,
-  setLikes,
-  currentUser,
-  taskId,
-}) => {
-  const [isLike, setIsLike] = useState<boolean>();
+const TaskLikes: React.FC<LikesProps> = ({ currentUser, taskId }) => {
+  const router = useRouter();
   const [likeId, setLikeId] = useState<number[]>([]);
   const destroyLike = async (id: number | undefined) => {
     deleteLike(id);
@@ -38,9 +32,13 @@ const TaskLikes: React.FC<LikesProps> = ({
 
   useEffect(() => {
     (async () => {
-      const gLikes = await getLikes(taskId);
-      if (gLikes.status == 200) {
-        setLikeId(gLikes.data.current_user_like);
+      try {
+        const Likes = await getLikes(taskId);
+        setLikeId(Likes.data.current_user_like);
+      } catch (error) {
+        console.log(error.response);
+        alert(error.response.status);
+        router.push("/");
       }
     })();
   }, []);

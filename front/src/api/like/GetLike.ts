@@ -1,6 +1,6 @@
-import { api } from "../../contexts/api";
 import { ResLike } from "../../type/interfaces";
+import { tokenApi } from "../../contexts/api";
 
 export const getLikes = (id: number) => {
-  return api.get<{ is_like: boolean }>("/api/likes/" + id);
+  return tokenApi().get<{ current_user_like: number[] }>("/api/likes/" + id);
 };

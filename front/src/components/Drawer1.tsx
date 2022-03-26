@@ -9,15 +9,13 @@ import {
 } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import Link from "next/link";
-import Cookies from "js-cookie";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { AuthContext } from "../../pages/_app";
 
 type Anchor = "top" | "left" | "bottom" | "right";
 
 const SwipeableTemporaryDrawer = ({ handleSignOut }: any) => {
-  const { currentUser } = useContext(AuthContext);
-  const { isSignedIn, setIsSignedIn } = useContext(AuthContext);
+  const { isSignedIn, currentUser } = useContext(AuthContext);
   const [state, setState] = React.useState({
     right: false,
   });
@@ -34,10 +32,6 @@ const SwipeableTemporaryDrawer = ({ handleSignOut }: any) => {
     {
       title: "ログイン",
       href: "/login",
-    },
-    {
-      title: "一覧",
-      href: "/tasks",
     },
   ];
 
@@ -71,7 +65,6 @@ const SwipeableTemporaryDrawer = ({ handleSignOut }: any) => {
     ) {
       return;
     }
-
     setState({ ...state, [anchor]: open });
   };
 

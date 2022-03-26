@@ -28,16 +28,11 @@ const Login: React.FC = () => {
   const handleSubmit = async (params: any) => {
     try {
       const res = await signIn(params);
-      console.log(res);
-      if (res.status === 200) {
-        Cookies.set("token", res.data.token);
-        Cookies.set("_access_token", res.data.token);
-        setIsSignedIn(true);
-        const gLoginUser = (await getLoginUser(res.data.token)).data;
-        router.push({ pathname: "/" });
-        setCurrentUser(gLoginUser);
-        // location.reload();
-      }
+      Cookies.set("_access_token", res.data.token);
+      const loginUser = (await getLoginUser(res.data.token)).data.current_user;
+      router.push({ pathname: "/" });
+      setIsSignedIn(true);
+      setCurrentUser(loginUser);
     } catch (err) {
       console.log(err);
       alert("パスワードとメールアドレスが一致していない可能性があります");
@@ -47,15 +42,12 @@ const Login: React.FC = () => {
   const handleGustSubmit = async () => {
     try {
       const res = await gustSignIn();
-      console.log(res);
-      if (res.status === 200) {
-        Cookies.set("token", res.data.token);
-        setIsSignedIn(true);
-        const gLoginUser = (await getLoginUser(res.data.token)).data;
-        router.push({ pathname: "/" });
-        setCurrentUser(gLoginUser);
-        location.reload();
-      }
+      Cookies.set("_access_token", res.data.token);
+      const gustLoginUser = (await getLoginUser(res.data.token)).data
+        .current_user;
+      router.push({ pathname: "/" });
+      setIsSignedIn(true);
+      setCurrentUser(gustLoginUser);
     } catch (err) {
       console.log(err);
       alert("パスワードとメールアドレスが一致していない可能性があります");

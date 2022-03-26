@@ -34,18 +34,17 @@ const Navbar = () => {
   const classes = useStyles();
 
   const handleSignOut = async () => {
-    api
-      .delete("/api/session")
-      .then(() => {
-        Cookies.set("token", "");
-        Cookies.set("_access_token", "");
-        setIsSignedIn(false);
-        router.push("/");
-        console.log("Succeeded in sign out");
-      })
-      .catch(() => {
-        console.log("Failed in sign out");
-      });
+    try {
+      Cookies.set("token", "");
+      Cookies.set("_access_token", "");
+      setIsSignedIn(false);
+      router.push("/");
+      console.log("Succeeded in sign out");
+    } catch (error) {
+      console.log(error.response);
+      alert(error.response.status);
+      router.push("/");
+    }
   };
 
   return (

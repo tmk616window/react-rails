@@ -15,5 +15,5 @@ const loginApi = (token: Token) => {
 };
 
 export const getLoginUser = (token: Token) => {
-  return loginApi(token).get<{ user: User }>("/api/session");
+  return loginApi(token).get<{ current_user: User }>("/api/session");
 };

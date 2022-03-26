@@ -72,7 +72,7 @@ const NewTaskDetails = () => {
     if (image) formData.append("image", image);
     formData.append("url", purl);
     formData.append("details", desc);
-    formData.append("user_id", String(currentUser.id));
+    formData.append("user_id", String(currentUser?.id));
     return formData;
   };
 
@@ -82,14 +82,20 @@ const NewTaskDetails = () => {
   }, []);
 
   const postTask = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const data = createFormData();
-    const taskRes = (await createTask(data)).data.task;
-    postContent(taskRes.id);
-    router.push({
-      pathname: "/task",
-      query: { id: taskRes.id },
-    });
+    try {
+      e.preventDefault();
+      const data = createFormData();
+      const taskRes = (await createTask(data)).data.task;
+      postContent(taskRes.id);
+      router.push({
+        pathname: "/task",
+        query: { id: taskRes.id },
+      });
+    } catch (error) {
+      console.log(error);
+      alert(error);
+      router.push("/");
+    }
   };
 
   return (
