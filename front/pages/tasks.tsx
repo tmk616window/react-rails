@@ -6,14 +6,21 @@ import { Task, ProlLanguage } from "../src/type/interfaces";
 import Link from "next/link";
 import { displayImage } from "../src/api/common/DisplayImage";
 import Cookies from "js-cookie";
+import { useRouter } from "next/router";
 
 export const TaskList = () => {
   const [tasks, setTasks] = useState<any>([]);
+  const router = useRouter();
+
   useEffect(() => {
     (async () => {
       const gtasks = await getTasks();
+      console.log("gtasks", gtasks);
       if (gtasks.status == 200) {
         setTasks(gtasks.data.tasks);
+      } else if (gtasks.status == 401) {
+        console.log(gtasks.status);
+        router.push({ pathname: "/" });
       }
     })();
   }, []);

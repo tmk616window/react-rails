@@ -10,6 +10,7 @@ import { NextPageContext } from "next";
 import Axios from "axios";
 import { api } from "../src/contexts/api";
 import { useRouter } from "next/router";
+import { signIn, gustSignIn } from "../src/api/login/auth";
 
 export const AuthContext = createContext(
   {} as {
@@ -30,18 +31,24 @@ const MyApp = ({ Component, pageProps }: AppProps, ctx: NextPageContext) => {
       .then((response) => {
         const user: any = response.data;
         setIsSignedIn(true);
+        console.log(user);
         setCurrentUser(user);
+        // const params = { email: user.email, password: user.password };
+        // const res = signIn(params);
+        const t = Cookies.get("_access_token");
+        Cookies.set("token", String(t));
       })
       .catch((error) => {
+        console.log(error);
         setIsSignedIn(false);
         setCurrentUser(undefined);
         Cookies.set("token", "");
+        Cookies.set("_access_token", "");
       });
   };
 
   useEffect(() => {
     handleGetCurrentUser();
-    router.events?.on("routeChangeStart", () => {});
   }, []);
 
   return (

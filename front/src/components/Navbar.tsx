@@ -38,6 +38,7 @@ const Navbar = () => {
       .delete("/api/session")
       .then(() => {
         Cookies.set("token", "");
+        Cookies.set("_access_token", "");
         setIsSignedIn(false);
         router.push("/");
         console.log("Succeeded in sign out");

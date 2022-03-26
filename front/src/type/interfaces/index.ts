@@ -8,8 +8,8 @@ export interface SignUpParams {
 export interface SignInParams {
   email: string;
   password: string;
-  user: User;
-  data: any;
+  // user: User;
+  // data: any;
 }
 
 export interface currentUser {

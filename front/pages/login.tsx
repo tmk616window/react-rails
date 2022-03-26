@@ -31,11 +31,12 @@ const Login: React.FC = () => {
       console.log(res);
       if (res.status === 200) {
         Cookies.set("token", res.data.token);
+        Cookies.set("_access_token", res.data.token);
         setIsSignedIn(true);
         const gLoginUser = (await getLoginUser(res.data.token)).data;
         router.push({ pathname: "/" });
         setCurrentUser(gLoginUser);
-        location.reload();
+        // location.reload();
       }
     } catch (err) {
       console.log(err);
