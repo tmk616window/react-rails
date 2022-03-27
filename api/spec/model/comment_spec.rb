@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Taskモデルのテスト', type: :model do
+RSpec.describe 'Commentモデルのテスト', type: :model do
   let(:comment) { FactoryBot.create :comment }
 
   describe 'バリデーションのテスト' do
