@@ -20,7 +20,7 @@ jobs:
         environment:
           MYSQL_ROOT_PASSWORD: password
           MYSQL_DATABASE: app_test
-          MYSQL_HOST: db
+          MYSQL_ROOT_HOST: "%"
           MYSQL_USER: root
           MYSQL_PORT: 3306
     environment:
