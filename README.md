@@ -1,4 +1,4 @@
-# techtouch-backend
+# react-rails
 
 ### setting and local development
 
