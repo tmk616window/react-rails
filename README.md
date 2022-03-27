@@ -13,7 +13,7 @@ $ docker-compose build
 $ docker-compose up -d
 ```
 
-### 以下のコマンドでローカル環境を作成する
+### アクセス URL
 
 フロントエンド URL
 http://localhost:3001/
