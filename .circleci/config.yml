@@ -17,19 +17,18 @@ commands:
 jobs:
   build:
     docker:
-      - image: circleci/ruby:2.7.1
+      - image: circleci/ruby:2.7-node
     steps:
       - setup
   test:
     docker:
-      - image: circleci/ruby:2.7
+      - image: circleci/ruby:2.7-node
       - image: circleci/mysql:5.7
         name: "db"
         environment:
           MYSQL_ROOT_USER: root
           MYSQL_ROOT_DB: app_test
           MYSQL_ROOT_PASSWORD: "password"
-          BUNDLER_VERSION: 3.2.4
     environment:
       BUNDLE_JOBS: "4"
       BUNDLE_RETRY: "3"
