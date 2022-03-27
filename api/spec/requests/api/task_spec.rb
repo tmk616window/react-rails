@@ -106,69 +106,70 @@ RSpec.describe 'Task', type: :request do
         expect(response_json['message']).to eq '保存できませんでした'
       end
     end
+  end
 
-    describe 'PATCH #update' do
-      let(:task) { FactoryBot.create :task }
-      context '正常に編集する' do
-        it '期待通りに編集さてれているか' do
-          patch "/api/tasks/#{task.id}", headers: headers,
-                                         params: { title: 'testtest', image: 'testtest', details: 'testtest', url: 'testtest', user_id: user.id }
-          task.reload
-          expect(task.title).to eq('testtest')
-          expect(task.image).to eq('testtest')
-          expect(task.details).to eq('testtest')
-          expect(task.url).to eq('testtest')
-          expect(response.status).to eq 200
-        end
-      end
-
-      context '編集できない' do
-        it 'nameが空' do
-          patch "/api/tasks/#{task.id}", headers: headers,
-                                         params: { title: nil, image: 'testtest', details: 'testtest', url: 'testtest', user_id: user.id }
-          response_json = JSON.parse(response.body)
-          expect(response_json['message']).to eq '更新に失敗しました'
-        end
-
-        it 'imageが空' do
-          patch "/api/tasks/#{task.id}", headers: headers,
-                                         params: { title: 'testtest', image: nil, details: 'testtest', url: 'testtest', user_id: user.id }
-          response_json = JSON.parse(response.body)
-          expect(response_json['message']).to eq '更新に失敗しました'
-        end
-
-        it 'detailsが空' do
-          patch "/api/tasks/#{task.id}", headers: headers,
-                                         params: { title: 'testtest', image: 'testtest', details: nil, url: 'testtest', user_id: user.id }
-          response_json = JSON.parse(response.body)
-          expect(response_json['message']).to eq '更新に失敗しました'
-        end
-
-        it 'urlが空' do
-          patch "/api/tasks/#{task.id}", headers: headers,
-                                         params: { title: 'testtest', image: 'testtest', details: 'testtest', url: nil, user_id: user.id }
-          response_json = JSON.parse(response.body)
-          expect(response_json['message']).to eq '更新に失敗しました'
-        end
-
-        it 'user_idが空' do
-          patch "/api/tasks/#{task.id}", headers: headers,
-                                         params: { title: 'testtest', image: 'testtest', details: 'testtest', url: 'testtest', user_id: nil }
-          response_json = JSON.parse(response.body)
-          expect(response_json['message']).to eq '更新に失敗しました'
-        end
-      end
-
-      context 'トークンがない' do
-        it 'unauthorizedをレンダリング' do
-          patch "/api/tasks/#{task.id}",
-                params: { title: 'testtest', image: 'testtest', details: 'testtest', url: 'testtest', user_id: user.id }
-          response_json = JSON.parse(response.body)
-          expect(response_json['message']).to eq 'unauthorized'
-        end
-      end
+  describe 'PATCH #update' do
+  let(:task) { FactoryBot.create :task }
+  context '正常に編集する' do
+    it '期待通りに編集さてれているか' do
+      patch "/api/tasks/#{task.id}", headers: headers,
+                                     params: { title: 'testtest', image: 'testtest', details: 'testtest', url: 'testtest', user_id: user.id }
+      task.reload
+      expect(task.title).to eq('testtest')
+      expect(task.image).to eq('testtest')
+      expect(task.details).to eq('testtest')
+      expect(task.url).to eq('testtest')
+      expect(response.status).to eq 200
     end
   end
+
+  context '編集できない' do
+    it 'nameが空' do
+      patch "/api/tasks/#{task.id}", headers: headers,
+                                     params: { title: nil, image: 'testtest', details: 'testtest', url: 'testtest', user_id: user.id }
+      response_json = JSON.parse(response.body)
+      expect(response_json['message']).to eq '更新に失敗しました'
+    end
+
+    it 'imageが空' do
+      patch "/api/tasks/#{task.id}", headers: headers,
+                                     params: { title: 'testtest', image: nil, details: 'testtest', url: 'testtest', user_id: user.id }
+      response_json = JSON.parse(response.body)
+      expect(response_json['message']).to eq '更新に失敗しました'
+    end
+
+    it 'detailsが空' do
+      patch "/api/tasks/#{task.id}", headers: headers,
+                                     params: { title: 'testtest', image: 'testtest', details: nil, url: 'testtest', user_id: user.id }
+      response_json = JSON.parse(response.body)
+      expect(response_json['message']).to eq '更新に失敗しました'
+    end
+
+    it 'urlが空' do
+      patch "/api/tasks/#{task.id}", headers: headers,
+                                     params: { title: 'testtest', image: 'testtest', details: 'testtest', url: nil, user_id: user.id }
+      response_json = JSON.parse(response.body)
+      expect(response_json['message']).to eq '更新に失敗しました'
+    end
+
+    it 'user_idが空' do
+      patch "/api/tasks/#{task.id}", headers: headers,
+                                     params: { title: 'testtest', image: 'testtest', details: 'testtest', url: 'testtest', user_id: nil }
+      response_json = JSON.parse(response.body)
+      expect(response_json['message']).to eq '更新に失敗しました'
+    end
+  end
+
+  context 'トークンがない' do
+    it 'unauthorizedをレンダリング' do
+      patch "/api/tasks/#{task.id}",
+            params: { title: 'testtest', image: 'testtest', details: 'testtest', url: 'testtest', user_id: user.id }
+      response_json = JSON.parse(response.body)
+      expect(response_json['message']).to eq 'unauthorized'
+    end
+  end
+ end
+
 
   describe 'delete' do
     let(:task) { FactoryBot.create :task }
