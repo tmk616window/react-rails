@@ -47,7 +47,6 @@ const Tasks = () => {
         setComments(gtask.data.task.comments);
       } catch (error) {
         console.log(error.response);
-        alert(error.response.status);
         router.push("/");
         location.reload();
       }

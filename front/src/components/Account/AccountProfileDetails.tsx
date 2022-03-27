@@ -69,7 +69,6 @@ const AccountProfileDetails: React.FC<UserProfile> = ({
       });
     } catch (error) {
       console.log(error.response);
-      alert(error.response.status);
       router.push("/");
     }
   };

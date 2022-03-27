@@ -42,7 +42,6 @@ const Navbar = () => {
       console.log("Succeeded in sign out");
     } catch (error) {
       console.log(error.response);
-      alert(error.response.status);
       router.push("/");
     }
   };

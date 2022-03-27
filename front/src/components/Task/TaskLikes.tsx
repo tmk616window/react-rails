@@ -37,7 +37,6 @@ const TaskLikes: React.FC<LikesProps> = ({ currentUser, taskId }) => {
         setLikeId(Likes.data.current_user_like);
       } catch (error) {
         console.log(error.response);
-        alert(error.response.status);
         router.push("/");
       }
     })();

@@ -41,7 +41,6 @@ const ProfilePage = () => {
         setProfileUserTasks(user.data.user.tasks);
       } catch (error) {
         console.log(error.response);
-        alert(error.response.status);
         router.push("/");
         location.reload();
       }

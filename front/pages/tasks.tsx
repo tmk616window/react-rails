@@ -5,7 +5,6 @@ import Logo from "../img/logo.png";
 import { Task, ProlLanguage } from "../src/type/interfaces";
 import Link from "next/link";
 import { displayImage } from "../src/api/common/DisplayImage";
-import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 
 export const TaskList = () => {
@@ -19,7 +18,6 @@ export const TaskList = () => {
         setTasks(gtasks.data.tasks);
       } catch (error) {
         console.log(error.response);
-        alert(error.response.status);
         router.push("/");
         location.reload();
       }

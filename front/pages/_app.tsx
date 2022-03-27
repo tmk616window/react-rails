@@ -5,12 +5,8 @@ import Navbar from "../src/components/Navbar";
 import React, { useState, useEffect, createContext } from "react";
 import { User } from "../src/type/interfaces";
 import Cookies from "js-cookie";
-import { parseCookies, setCookie } from "nookies";
+import { parseCookies } from "nookies";
 import { NextPageContext } from "next";
-import Axios from "axios";
-import { api } from "../src/contexts/api";
-import { useRouter } from "next/router";
-import { signIn, gustSignIn } from "../src/api/login/auth";
 import { getCurrentUser } from "../src/api/login/auth";
 
 export const AuthContext = createContext(
@@ -25,7 +21,6 @@ export const AuthContext = createContext(
 const MyApp = ({ Component, pageProps }: AppProps, ctx: NextPageContext) => {
   const [currentUser, setCurrentUser] = useState<User | undefined>();
   const [isSignedIn, setIsSignedIn] = useState<boolean>(false);
-  const router = useRouter();
   const handleGetCurrentUser = async () => {
     try {
       const user = (await getCurrentUser()).data.current_user;

@@ -93,7 +93,6 @@ const NewTaskDetails = () => {
       });
     } catch (error) {
       console.log(error);
-      alert(error);
       router.push("/");
     }
   };
