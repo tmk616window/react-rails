@@ -33,8 +33,10 @@ jobs:
           path: ~/react-rails
       - ruby/install-deps
       - run:
-          name: Database setup
+          name: Database create
           command: bundle exec rails db:create
+      - run:
+          name: Database setup
           command: bundle exec rails db:migrate
       - run:
           name: Rspec
