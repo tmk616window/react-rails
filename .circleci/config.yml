@@ -22,10 +22,11 @@ jobs:
           MYSQL_DATABASE: app_test
           MYSQL_HOST: db
           MYSQL_USER: root
+          MYSQL_PORT: 3306
     environment:
       BUNDLE_JOBS: "3"
       BUNDLE_RETRY: "3"
-      # APP_DATABASE_HOST: "127.0.0.1"
+      APP_DATABASE_HOST: "127.0.0.1"
       RAILS_ENV: test
     working_directory: ~/react-rails/api
     steps:
