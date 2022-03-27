@@ -21,7 +21,7 @@ jobs:
           MYSQL_ROOT_PASSWORD: password
           MYSQL_DATABASE: app_test
           MYSQL_ROOT_HOST: 127.0.0.1
-          MYSQL_USER: user
+          MYSQL_USER: root
           MYSQL_PORT: 3306
     environment:
       BUNDLE_JOBS: "3"
