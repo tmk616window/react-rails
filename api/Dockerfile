@@ -9,7 +9,8 @@ RUN mkdir /app
 ENV APP_ROOT /app
 WORKDIR $APP_ROOT
 
-RUN mkdir -p ./app/tmp/sockets && mkdir -p ./app/tmp/pids
+RUN mkdir -p ./tmp/sockets && touch ./tmp/sockets/puma.sock
+RUN mkdir -p ./tmp/pids && touch ./tmp/pids/server.pid
 
 ADD ./Gemfile $APP_ROOT/Gemfile
 ADD ./Gemfile.lock $APP_ROOT/Gemfile.lock
