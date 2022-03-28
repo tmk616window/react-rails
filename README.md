@@ -21,3 +21,19 @@ http://localhost:3002/
 
 バックエンド URL
 http://localhost:8080/
+
+## Ruby version
+
+2.7.1
+
+## Rails version
+
+6.0.4
+
+## Node version
+
+16.0
+
+## Mysql version
+
+5.7
