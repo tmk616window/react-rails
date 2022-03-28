@@ -11,7 +11,7 @@ $ git clone https://github.com/tmk616window/react-rails.git
 $ cd ~/Desktop/react-rails
 $ docker-compose build
 $ docker-compose up -d
-$ rails db:create
+$ docker-compose exec web rails db:create
 ```
 
 ### アクセス URL
