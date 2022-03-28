@@ -84,14 +84,14 @@ RSpec.describe 'User', type: :request do
       end
     end
 
-    context 'imageを編集' do
-      it '期待通りに編集さてれているか' do
-        patch "/api/users/#{user.id}", headers: headers, params: { image: 'image' }
-        user.reload
-        expect(user.image).to eq('image')
-        expect(response.status).to eq 200
-      end
-    end
+    # context 'imageを編集' do
+    #   it '期待通りに編集さてれているか' do
+    #     patch "/api/users/#{user.id}", headers: headers, params: { image: 'image' }
+    #     user.reload
+    #     expect(user.image).to eq('image')
+    #     expect(response.status).to eq 200
+    #   end
+    # end
 
     context 'ageを編集' do
       it '期待通りに編集さてれているか' do
