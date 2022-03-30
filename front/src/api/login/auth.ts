@@ -10,7 +10,7 @@ import {
 
 // サインアップ（新規アカウント作成）
 export const signUp = (params: SignUpParams) => {
-  return axios.post<{ data: SignIn }>(
+  return axios.post<{ token: Token; error: string }>(
     "http://localhost:8080/api/users",
     params
   );

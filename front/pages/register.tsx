@@ -31,11 +31,9 @@ const Register = () => {
 
   const handleSubmit = async (params: any) => {
     try {
-      console.log(params);
       const res = await signUp(params);
-      console.log(res.data.errors);
-      if (res.data.errors !== "保存できませんでした") {
-        Cookies.set("token", res.data.token);
+      if (res.data.error !== "保存できませんでした") {
+        Cookies.set("_access_token", res.data.token);
         setIsSignedIn(true);
         setCurrentUser(res.data);
         router.push({ pathname: "/" });
