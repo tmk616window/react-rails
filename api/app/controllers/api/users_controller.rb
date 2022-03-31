@@ -26,7 +26,7 @@ class Api::UsersController < ApplicationController
       cookies[:token] = token
       render json: { token: token }
     else
-      render json: { errors: '保存できませんでした' }
+      render json: { error: '保存できませんでした' }
     end
   end
 

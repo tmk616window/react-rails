@@ -5,8 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState, useContext } from "react";
 import { Task, ProlLanguage } from "../type/interfaces";
-import { displayImage } from "../api/common/DisplayImage";
-import { api } from "../contexts/api";
+import { getTaskRanking } from "../api/ranking";
 import { AuthContext } from "../../pages/_app";
 
 const Top: React.FC = () => {
@@ -14,10 +13,14 @@ const Top: React.FC = () => {
   const { isSignedIn, setIsSignedIn, currentUser } = useContext(AuthContext);
 
   useEffect(() => {
-    api.get("http://localhost:8080/api/ranking").then((res: any) => {
-      console.log(currentUser, res.data.tasks);
-      setRankingTasks(res.data.tasks);
-    });
+    (async () => {
+      try {
+        const gTaskRanking = await getTaskRanking();
+        setRankingTasks(gTaskRanking.data.tasks);
+      } catch (error) {
+        location.reload();
+      }
+    })();
   }, []);
 
   return (
