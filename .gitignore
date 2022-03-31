@@ -2,3 +2,5 @@
 .DS_Store
 *.pem
 /nginx/logs
+
+/docker-compose.yaml

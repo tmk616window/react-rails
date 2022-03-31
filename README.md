@@ -16,7 +16,7 @@ $ docker-compose up -d
 ### アクセス URL
 
 フロントエンド URL
-http://localhost:3001/
+http://localhost:3003/
 
 バックエンド URL
 http://localhost:8080/
