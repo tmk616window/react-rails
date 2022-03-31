@@ -35,7 +35,7 @@ const Register = () => {
       const res = await signUp(params);
       console.log(res.data.errors);
       if (res.data.errors !== "保存できませんでした") {
-        Cookies.set("token", res.data.token);
+        Cookies.set("_access_token", res.data.token);
         setIsSignedIn(true);
         setCurrentUser(res.data);
         router.push({ pathname: "/" });
