@@ -31,7 +31,6 @@ const Register = () => {
 
   const handleSubmit = async (params: any) => {
     try {
-      console.log(params);
       const res = await signUp(params);
       console.log(res.data.errors);
       if (res.data.errors !== "保存できませんでした") {
