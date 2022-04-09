@@ -3,11 +3,10 @@ import Ranking from "../../img/ranking.jpg";
 import Hire from "../../img/hire.jpg";
 import Image from "next/image";
 import Link from "next/link";
+import TaskTopCard from "../components/Task/TaskTopCard ";
 import { useEffect, useState, useContext } from "react";
 import { Task, ProlLanguage } from "../type/interfaces";
 import { getTaskRanking } from "../api/ranking";
-import { AuthContext } from "../../pages/_app";
-
 const Top: React.FC = () => {
   const [rankingTasks, setRankingTasks] = useState<Task[]>([]);
 
@@ -101,24 +100,7 @@ const Top: React.FC = () => {
                   {rankingTasks.map((task: Task, index: number) => (
                     <div className="col-md-4" key={index}>
                       <p>{index + 1}位</p>
-                      <div className="card card-1">
-                        <img
-                          src={`http://localhost:8080/${task?.image?.url}`}
-                          alt="..."
-                          width="100%"
-                          height="200%"
-                        />
-                        <div className="cardContent">
-                          <h3>タイトル：{task.title}</h3>
-                          {task.pro_languages.map(
-                            (proLang: ProlLanguage, index: number) => (
-                              <span className="article" key={index}>
-                                {proLang.language}
-                              </span>
-                            )
-                          )}
-                        </div>
-                      </div>
+                      <TaskTopCard task={task} />
                     </div>
                   ))}
                 </div>
