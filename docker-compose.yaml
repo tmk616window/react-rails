@@ -52,7 +52,7 @@ services:
     volumes:
       - ./front:/app
     ports:
-      - "3001:3001"
+      - "3002:3002"
     tty: true
     stdin_open: true
     command: npm run dev

@@ -92,7 +92,6 @@ const TaskDetails: React.FC<Props> = ({
         >
           {patchButton()}
         </Box>
-
         <Grid></Grid>
       </CardContent>
     </Card>
