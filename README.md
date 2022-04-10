@@ -9,6 +9,7 @@
 ```
 $ git clone https://github.com/tmk616window/react-rails.git
 $ cd ~/Desktop/react-rails
+$ docker network create web
 $ docker-compose build
 $ docker-compose up -d
 $ docker-compose exec web rails db:create
