@@ -10,5 +10,8 @@ Rails.application.routes.draw do
     resources :comments, only: %i[show create update destroy]
     resources :likes, only: %i[show create destroy]
     resources :ranking, only: %i[index]
+    resources :chat_messages, only: [:create]
+    resources :entries, only: [:create]
+    resources :rooms, only: [:create,:show]
   end
 end
